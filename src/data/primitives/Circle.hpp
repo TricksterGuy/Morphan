@@ -27,13 +27,12 @@
 class Circle : public Primitive
 {
     public:
-        Circle(const wxRealPoint& ncenter, const wxRealPoint& nedge);
+        Circle(const wxRealPoint& ncenter, const wxRealPoint& nedge) : center(ncenter), edge(nedge) {}
         std::vector<wxRealPoint> GetControlPoints() const;
         void Draw(wxGCDC& dc) const;
     private:
         wxRealPoint center;
         wxRealPoint edge;
-        float radius;
 };
 
 #endif

@@ -32,3 +32,14 @@ bool BezierTool::CanCreate() const
     return points.size() >= 4;
 }
 
+void BezierTool::Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end)
+{
+    points.push_back(mouse);
+    BezierTool::Draw(dc, points, is_end);
+    points.pop_back();
+}
+
+void BezierTool::Draw(wxGCDC& dc, const std::vector<wxRealPoint>& points, bool is_end)
+{
+
+}

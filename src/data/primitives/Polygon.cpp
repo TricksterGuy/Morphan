@@ -20,9 +20,10 @@
  ******************************************************************************************************/
 
 #include "Polygon.hpp"
+#include "PolygonTool.hpp"
 
 void Polygon::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
-    dc.DrawPolygon(points.size(), reinterpret_cast<const wxPoint*>(points.data()));
+    PolygonTool::Draw(dc, points);
 }

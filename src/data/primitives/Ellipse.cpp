@@ -20,12 +20,7 @@
  ******************************************************************************************************/
 
 #include "Ellipse.hpp"
-
-Ellipse::Ellipse(const wxRealPoint& ncenter, const wxRealPoint& nedge) : center(ncenter), edge(nedge)
-{
-    rw = abs(center.x - edge.x);
-    rh = abs(center.y - edge.y);
-}
+#include "EllipseTool.hpp"
 
 std::vector<wxRealPoint> Ellipse::GetControlPoints() const
 {
@@ -35,5 +30,5 @@ std::vector<wxRealPoint> Ellipse::GetControlPoints() const
 void Ellipse::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
-    dc.DrawEllipse(center.x - rw, center.y - rh, 2 * rw, 2 * rh);
+    EllipseTool::Draw(dc, center, edge);
 }

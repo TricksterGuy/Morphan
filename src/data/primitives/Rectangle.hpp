@@ -27,15 +27,12 @@
 class Rectangle : public Primitive
 {
     public:
-        Rectangle(const wxRealPoint& nstart, const wxRealPoint& nend);
+        Rectangle(const wxRealPoint& nstart, const wxRealPoint& nend) : start(nstart), end(nend) {}
         std::vector<wxRealPoint> GetControlPoints() const;
         void Draw(wxGCDC& dc) const;
     private:
         wxRealPoint start;
         wxRealPoint end;
-
-        // Derived
-        float x, y, width, height;
 };
 
 #endif

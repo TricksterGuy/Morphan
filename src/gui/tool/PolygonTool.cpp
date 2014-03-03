@@ -32,3 +32,18 @@ bool PolygonTool::CanCreate() const
     return points.size() >= 3;
 }
 
+void PolygonTool::Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end)
+{
+    points.push_back(mouse);
+    PolygonTool::Draw(dc, points, is_end);
+    points.pop_back();
+}
+
+void PolygonTool::Draw(wxGCDC& dc, const std::vector<wxRealPoint>& points, bool is_end)
+{
+    std::vector<wxPoint> ppoints(points.begin(), points.end());
+    if (is_end || points.size() < 3)
+        dc.DrawPolygon(ppoints.size(), ppoints.data());
+    else
+        dc.DrawLines(ppoints.size(), ppoints.data());
+}

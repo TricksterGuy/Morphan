@@ -24,6 +24,7 @@
 
 #include <vector>
 #include <wx/clntdata.h>
+#include <wx/dcgraph.h>
 #include "Primitive.hpp"
 
 class Tool : public wxClientData
@@ -35,6 +36,18 @@ class Tool : public wxClientData
         virtual Primitive* Create() = 0;
         /*** Can create primitive with points given? */
         virtual bool CanCreate() const = 0;
+        /*** Can preview object? */
+        virtual bool CanPreview() const {return !points.empty();}
+        /*** Called before the first point is added to the tool */
+        virtual void OnStart() {}
+        /*** Shows a preview of tools results on dc passed in with mouse location and state of shift key */
+        virtual void Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end) = 0;
+        /*** Does tool require user intervention to end since infinite points can be added? (ex. Polygon, Bezier)
+             If this returns true then condition for ending because CanCreate && IsInfinitePoint && UserEndsTool
+             */
+        virtual bool IsInfinitePoint() const {return false;}
+        /*** Get Current Set of Points */
+        const std::vector<wxRealPoint>& GetPoints() const {return points;}
         /*** Add point as a control point */
         void Add(wxRealPoint point) {points.push_back(point);}
         /*** Clears current object */

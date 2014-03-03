@@ -20,6 +20,7 @@
  ******************************************************************************************************/
 
 #include "Line.hpp"
+#include "LineTool.hpp"
 
 std::vector<wxRealPoint> Line::GetControlPoints() const
 {
@@ -29,5 +30,5 @@ std::vector<wxRealPoint> Line::GetControlPoints() const
 void Line::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
-    dc.DrawLine(start, end);
+    LineTool::Draw(dc, start, end);
 }

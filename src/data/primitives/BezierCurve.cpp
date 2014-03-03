@@ -20,8 +20,10 @@
  ******************************************************************************************************/
 
 #include "BezierCurve.hpp"
+#include "BezierTool.hpp"
 
 void BezierCurve::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
+    BezierTool::Draw(dc, points);
 }

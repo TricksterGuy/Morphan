@@ -32,3 +32,15 @@ bool EllipseTool::CanCreate() const
     return points.size() >= 2;
 }
 
+void EllipseTool::Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end)
+{
+    EllipseTool::Draw(dc, points[0], mouse);
+}
+
+void EllipseTool::Draw(wxGCDC& dc, const wxRealPoint& center, const wxRealPoint& edge)
+{
+    float rw = abs(center.x - edge.x);
+    float rh = abs(center.y - edge.y);
+    dc.DrawEllipse(center.x - rw, center.y - rh, 2 * rw, 2 * rh);
+}
+

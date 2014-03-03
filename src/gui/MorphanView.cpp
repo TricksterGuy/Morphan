@@ -21,6 +21,8 @@
 
 #include "MorphanView.hpp"
 #include "MorphanApp.hpp"
+#include <wx/utils.h>
+#include <wx/event.h>
 
 IMPLEMENT_DYNAMIC_CLASS(MorphanView, wxView)
 
@@ -42,6 +44,10 @@ bool MorphanView::OnCreate(wxDocument* doc, long flags)
     panel->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(MorphanView::OnClick), NULL, this);
 	panel->Connect(wxEVT_MOTION, wxMouseEventHandler(MorphanView::OnMotion), NULL, this);
 	panel->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MorphanView::OnCancel), NULL, this);
+	panel->Connect(wxEVT_ENTER_WINDOW, wxMouseEventHandler(MorphanView::OnEnter), NULL, this);
+	panel->Connect(wxEVT_LEAVE_WINDOW, wxMouseEventHandler(MorphanView::OnLeave), NULL, this);
+	panel->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(MorphanView::OnKey), NULL, this);
+	panel->Connect(wxEVT_KEY_UP, wxKeyEventHandler(MorphanView::OnKey), NULL, this);
 	panel->SetView(this);
 
     return true;
@@ -56,6 +62,10 @@ bool MorphanView::OnClose(bool deleteWindow)
 	panel->Disconnect(wxEVT_LEFT_DOWN, wxMouseEventHandler(MorphanView::OnClick), NULL, this);
 	panel->Disconnect(wxEVT_MOTION, wxMouseEventHandler(MorphanView::OnMotion), NULL, this);
 	panel->Disconnect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MorphanView::OnCancel), NULL, this);
+	panel->Disconnect(wxEVT_ENTER_WINDOW, wxMouseEventHandler(MorphanView::OnEnter), NULL, this);
+	panel->Disconnect(wxEVT_LEAVE_WINDOW, wxMouseEventHandler(MorphanView::OnLeave), NULL, this);
+	panel->Disconnect(wxEVT_KEY_DOWN, wxKeyEventHandler(MorphanView::OnKey), NULL, this);
+	panel->Disconnect(wxEVT_KEY_UP, wxKeyEventHandler(MorphanView::OnKey), NULL, this);
     panel->SetView(NULL);
 
     return true;
@@ -89,24 +99,24 @@ void MorphanView::OnDraw(wxDC* dc)
     Morphan* morphan = GetDocument();
     if (!morphan) return;
 
-    printf("DRAWING\n");
     const MorphanKeyFrame& keyFrame = morphan->Get(current_frame);
 
     for (const Primitive* p : keyFrame.GetPrimitives())
-    {
-        printf("Drawing primitive\n");
         p->Draw(gcdc);
-    }
+
+    if (!in_window || !tool->CanPreview()) return;
+    gcdc.SetPen(wxPen(wxColour(255, 0, 0, 255), 10));
+    gcdc.SetBrush(*wxTRANSPARENT_BRUSH);
+    tool->Preview(gcdc, mouse, wxGetKeyState(WXK_SHIFT));
 }
 
 
 void MorphanView::OnClick(wxMouseEvent& event)
 {
-    printf("ADDING POINT\n");
     tool->Add(wxRealPoint(event.GetX(), event.GetY()));
-    if (tool->CanCreate())
+    if ((tool->CanCreate() && tool->IsInfinitePoint() && event.ShiftDown()) ||
+        (tool->CanCreate() && !tool->IsInfinitePoint()))
     {
-        printf("CREATING PRIMITIVE\n");
         Primitive* p = tool->Create();
         GetDocument()->Add(current_frame, p);
         tool->Clear();
@@ -116,12 +126,30 @@ void MorphanView::OnClick(wxMouseEvent& event)
 
 void MorphanView::OnMotion(wxMouseEvent& event)
 {
-
+    mouse = event.GetPosition();
+    panel->Refresh();
 }
 
 void MorphanView::OnCancel(wxMouseEvent& event)
 {
 
+}
+
+void MorphanView::OnEnter(wxMouseEvent& event)
+{
+    in_window = true;
+}
+
+void MorphanView::OnLeave(wxMouseEvent& event)
+{
+    in_window = false;
+}
+
+void MorphanView::OnKey(wxKeyEvent& event)
+{
+    printf("%d\n", event.GetKeyCode());
+    if (event.GetKeyCode() == WXK_SHIFT)
+        panel->Refresh();
 }
 
 Morphan* MorphanView::GetDocument()

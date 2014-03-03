@@ -20,11 +20,7 @@
  ******************************************************************************************************/
 
 #include "Circle.hpp"
-
-Circle::Circle(const wxRealPoint& ncenter, const wxRealPoint& nedge) : center(ncenter), edge(nedge)
-{
-    radius = distance(ncenter, nedge);
-}
+#include "CircleTool.hpp"
 
 std::vector<wxRealPoint> Circle::GetControlPoints() const
 {
@@ -34,5 +30,5 @@ std::vector<wxRealPoint> Circle::GetControlPoints() const
 void Circle::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
-    dc.DrawCircle(center, radius);
+    CircleTool::Draw(dc, center, edge);
 }

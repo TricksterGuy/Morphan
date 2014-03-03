@@ -27,16 +27,13 @@
 class ConvexPolygon : public Primitive
 {
     public:
-        ConvexPolygon(const wxRealPoint& ncenter, const wxRealPoint& nedge, int points);
+        ConvexPolygon(const wxRealPoint& ncenter, const wxRealPoint& nedge, int nsides) : center(ncenter), edge(nedge), num_sides(nsides) {}
         std::vector<wxRealPoint> GetControlPoints() const;
         void Draw(wxGCDC& dc) const;
     private:
         wxRealPoint center;
         wxRealPoint edge;
-        int num_points;
-
-        // Derived
-        std::vector<wxPoint> points;
+        int num_sides;
 };
 
 #endif

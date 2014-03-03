@@ -32,6 +32,8 @@ class ConvexPolygonTool : public Tool
         bool CanCreate() const;
         void SetNumSides(int nsides) {num_sides = nsides;}
         int GetNumSides() const {return num_sides;}
+        void Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end);
+        static void Draw(wxGCDC& dc, const wxRealPoint& center, const wxRealPoint& edge, int num_sides);
     private:
         int num_sides;
 };

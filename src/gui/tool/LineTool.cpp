@@ -32,3 +32,15 @@ bool LineTool::CanCreate() const
     return points.size() >= 2;
 }
 
+void LineTool::Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end)
+{
+    LineTool::Draw(dc, points[0], mouse);
+}
+
+void LineTool::Draw(wxGCDC& dc, const wxRealPoint& start, const wxRealPoint& end)
+{
+    dc.DrawLine(start, end);
+}
+
+
+

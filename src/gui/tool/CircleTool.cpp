@@ -32,3 +32,13 @@ bool CircleTool::CanCreate() const
     return points.size() >= 2;
 }
 
+void CircleTool::Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end)
+{
+    CircleTool::Draw(dc, points[0], mouse);
+}
+
+void CircleTool::Draw(wxGCDC& dc, const wxRealPoint& center, const wxRealPoint& edge)
+{
+    float radius = distance(center, edge);
+    dc.DrawCircle(center, radius);
+}

@@ -30,6 +30,8 @@ class CircleTool : public Tool
         CircleTool() {}
         Primitive* Create();
         bool CanCreate() const;
+        void Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end);
+        static void Draw(wxGCDC& dc, const wxRealPoint& center, const wxRealPoint& edge);
 };
 
 #endif

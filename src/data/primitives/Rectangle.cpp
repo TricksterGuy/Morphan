@@ -20,14 +20,7 @@
  ******************************************************************************************************/
 
 #include "Rectangle.hpp"
-
-Rectangle::Rectangle(const wxRealPoint& nstart, const wxRealPoint& nend) : start(nstart), end(nend)
-{
-    x = min(start.x, end.x);
-    y = min(start.y, end.y);
-    width = abs(start.x - end.x);
-    height = abs(start.y - end.y);
-}
+#include "RectangleTool.hpp"
 
 std::vector<wxRealPoint> Rectangle::GetControlPoints() const
 {
@@ -37,5 +30,5 @@ std::vector<wxRealPoint> Rectangle::GetControlPoints() const
 void Rectangle::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
-    dc.DrawRectangle(x, y, width, height);
+    RectangleTool::Draw(dc, start, end);
 }

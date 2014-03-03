@@ -20,6 +20,7 @@
  ******************************************************************************************************/
 
 #include "Arc.hpp"
+#include "ArcTool.hpp"
 
 Arc::Arc(const wxRealPoint& nstart, const wxRealPoint& nsecond, const wxRealPoint& nend) : start(nstart), second(nsecond), end(nend)
 {
@@ -33,4 +34,6 @@ std::vector<wxRealPoint> Arc::GetControlPoints() const
 void Arc::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
+    dc.SetBrush(*wxTRANSPARENT_BRUSH);
+    ArcTool::Draw(dc, start, second, end);
 }

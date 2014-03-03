@@ -31,3 +31,17 @@ bool RectangleTool::CanCreate() const
 {
     return points.size() >= 2;
 }
+
+void RectangleTool::Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end)
+{
+    RectangleTool::Draw(dc, points[0], mouse);
+}
+
+void RectangleTool::Draw(wxGCDC& dc, const wxRealPoint& start, const wxRealPoint& end)
+{
+    float x = min(start.x, end.x);
+    float y = min(start.y, end.y);
+    float width = abs(start.x - end.x);
+    float height = abs(start.y - end.y);
+    dc.DrawRectangle(x, y, width, height);
+}

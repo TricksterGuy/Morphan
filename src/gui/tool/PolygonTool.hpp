@@ -30,6 +30,9 @@ class PolygonTool : public Tool
         PolygonTool() {}
         Primitive* Create();
         bool CanCreate() const;
+        bool IsInfinitePoint() const {return true;}
+        void Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end);
+        static void Draw(wxGCDC& dc, const std::vector<wxRealPoint>& points, bool is_end = true);
 };
 
 #endif
