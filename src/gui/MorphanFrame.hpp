@@ -39,6 +39,7 @@ class MorphanFrame : public MorphanGUI
         MorphanFrame(wxDocManager* manager, wxFrame* window);
         ~MorphanFrame();
         MorphanPanel* GetPanel() {return morphanPanel;}
+        Tool* GetTool() {return tool;}
         void OnTool(wxCommandEvent& event);
     private:
         wxDocManager* manager;

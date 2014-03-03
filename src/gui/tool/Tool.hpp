@@ -37,8 +37,8 @@ class Tool : public wxClientData
         virtual bool CanCreate() const = 0;
         /*** Add point as a control point */
         void Add(wxRealPoint point) {points.push_back(point);}
-        /*** Cancels current object */
-        void Cancel() {points.clear();}
+        /*** Clears current object */
+        void Clear() {points.clear();}
     protected:
         std::vector<wxRealPoint> points;
 

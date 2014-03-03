@@ -28,7 +28,7 @@
 class Primitive
 {
     public:
-        Primitive(unsigned long nid = 0) : id(nid) {}
+        Primitive(unsigned long nid = 0) : id(nid), outline(0, 0, 0), fill(0, 0, 0, 0), width(10) {}
         virtual ~Primitive() {}
         virtual std::vector<wxRealPoint> GetControlPoints() const = 0;
         virtual void Draw(wxGCDC& dc) const;

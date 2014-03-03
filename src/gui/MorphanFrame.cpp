@@ -34,7 +34,7 @@
 #include "BezierTool.hpp"
 #include "icons.hpp"
 
-MorphanFrame::MorphanFrame(wxDocManager* manager, wxFrame* window) : MorphanGUI(manager, window)
+MorphanFrame::MorphanFrame(wxDocManager* nmanager, wxFrame* window) : MorphanGUI(nmanager, window), manager(nmanager)
 {
     new wxDocTemplate(manager, "Morphan", "*.morph", ".", "morph", "Morphan", "Morphan View",
                       CLASSINFO(Morphan), CLASSINFO(MorphanView));
@@ -73,6 +73,9 @@ void MorphanFrame::OnTool(wxCommandEvent& event)
         if (sides == -1) sides = 3;
         cptool->SetNumSides(sides);
     }
+
+    MorphanView* view = dynamic_cast<MorphanView*>(manager->GetAnyUsableView());
+    view->SetTool(tool);
 }
 
 void MorphanFrame::InitializeButtons()
@@ -86,7 +89,8 @@ void MorphanFrame::InitializeButtons()
     toolbtn7->Connect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler(MorphanFrame::OnTool), NULL, this);
     toolbtn8->Connect(wxEVT_COMMAND_TOGGLEBUTTON_CLICKED, wxCommandEventHandler(MorphanFrame::OnTool), NULL, this);
 
-    toolbtn1->SetClientObject(new LineTool());
+    LineTool* line_tool = new LineTool();
+    toolbtn1->SetClientObject(line_tool);
     toolbtn2->SetClientObject(new RectangleTool());
     toolbtn3->SetClientObject(new CircleTool());
     toolbtn4->SetClientObject(new ConvexPolygonTool());
@@ -105,4 +109,5 @@ void MorphanFrame::InitializeButtons()
     toolbtn8->SetBitmap(wxMEMORY_BITMAP(BezierCurve_png));
 
     toolbtn1->SetValue(true);
+    tool = line_tool;
 }

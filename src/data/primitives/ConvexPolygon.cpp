@@ -32,7 +32,7 @@ ConvexPolygon::ConvexPolygon(const wxRealPoint& ncenter, const wxRealPoint& nedg
     for (int i = 1; i < num_points; i++)
     {
         angle += 2 * PI / num_points;
-        points.push_back(wxRealPoint(radius * cos(angle), radius * sin(angle)));
+        points.push_back(wxRealPoint(radius * cos(angle) + center.x, radius * sin(angle) + center.y));
     }
 }
 

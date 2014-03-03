@@ -34,11 +34,12 @@ class MorphanPanel;
 class MorphanView : public wxView
 {
     public:
-        MorphanView() : wxView(), panel(NULL), tool(NULL), grid_width(16), grid_height(16) {}
+        MorphanView() : wxView(), panel(NULL), tool(NULL), grid_width(16), grid_height(16), current_frame(0) {}
         bool OnCreate(wxDocument*, long flags);
         bool OnClose(bool deleteWindow = true);
         void OnUpdate(wxView *sender, wxObject *hint = NULL);
 
+        void SetTool(Tool* ntool) {tool = ntool; printf("SWITCH");}
         void OnDraw(wxDC*);
         void OnClick(wxMouseEvent& event);
         void OnMotion(wxMouseEvent& event);
@@ -48,6 +49,7 @@ class MorphanView : public wxView
         MorphanPanel* panel;
         Tool* tool;
         int grid_width, grid_height;
+        int current_frame;
         DECLARE_DYNAMIC_CLASS(MorphanView)
 };
 

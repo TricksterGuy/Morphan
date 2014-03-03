@@ -23,9 +23,19 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Morphan, wxDocument)
 
+void Morphan::Add(int frame, Primitive* primitive)
+{
+    for (unsigned int i = frame; i < frames.size(); i++)
+    {
+        frames[i].Add(primitive);
+    }
+}
+
 bool Morphan::DeleteContents()
 {
     frames.clear();
+    frames.push_back(MorphanKeyFrame());
+    return true;
 }
 
 bool Morphan::DoSaveDocument(const wxString& file)

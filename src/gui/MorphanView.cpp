@@ -33,6 +33,7 @@ bool MorphanView::OnCreate(wxDocument* doc, long flags)
     MorphanApp* app = dynamic_cast<MorphanApp*>(wxTheApp);
     panel = app->GetFrame()->GetPanel();
     SetFrame(app->GetFrame());
+    tool = app->GetFrame()->GetTool();
 
     // Initialize the edit menu Undo and Redo items
     //doc->GetCommandProcessor()->SetEditMenu(app.GetMainWindowEditMenu());
@@ -84,15 +85,32 @@ void MorphanView::OnDraw(wxDC* dc)
     {
         gcdc.DrawLine(j, 0, j, h);
     }
+
+    Morphan* morphan = GetDocument();
+    if (!morphan) return;
+
+    printf("DRAWING\n");
+    const MorphanKeyFrame& keyFrame = morphan->Get(current_frame);
+
+    for (const Primitive* p : keyFrame.GetPrimitives())
+    {
+        printf("Drawing primitive\n");
+        p->Draw(gcdc);
+    }
 }
 
 
 void MorphanView::OnClick(wxMouseEvent& event)
 {
+    printf("ADDING POINT\n");
     tool->Add(wxRealPoint(event.GetX(), event.GetY()));
     if (tool->CanCreate())
     {
-
+        printf("CREATING PRIMITIVE\n");
+        Primitive* p = tool->Create();
+        GetDocument()->Add(current_frame, p);
+        tool->Clear();
+        panel->Refresh();
     }
 }
 

@@ -29,9 +29,11 @@
 class Morphan : public wxDocument
 {
     public:
-        Morphan() {}
+        Morphan() : frames(1) {}
         ~Morphan() {}
         bool DeleteContents();
+        const MorphanKeyFrame& Get(int frame) const {return frames[frame];}
+        void Add(int frame, Primitive* primitive);
     protected:
         bool DoSaveDocument(const wxString& file);
         bool DoOpenDocument(const wxString& file);
