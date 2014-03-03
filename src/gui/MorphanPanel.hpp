@@ -23,22 +23,20 @@
  #define MORPHAN_PANEL_HPP
 
 #include <wx/panel.h>
-#include "Tool.hpp"
+#include "MorphanView.hpp"
 
- class MorphanPanel : public wxPanel
- {
-    public:
-        MorphanPanel(wxWindow* Parent = NULL, wxWindowID Id = wxID_ANY, const wxPoint& Position = wxDefaultPosition, const wxSize& Size = wxDefaultSize, long Style = wxVSCROLL);
-        ~MorphanPanel();
-        void OnPaint(wxPaintEvent& event);
-        void OnDraw(wxDC& dc);
-        void OnClick(wxMouseEvent& event);
-        void OnMotion(wxMouseEvent& event);
-        void OnCancel(wxMouseEvent& event);
-    private:
-        Tool* tool;
-        int grid_width, grid_height;
- };
+class MorphanView;
+
+class MorphanPanel : public wxPanel
+{
+   public:
+       MorphanPanel(wxWindow* Parent = NULL, wxWindowID Id = wxID_ANY, const wxPoint& Position = wxDefaultPosition, const wxSize& Size = wxDefaultSize, long Style = wxVSCROLL);
+       ~MorphanPanel();
+       void SetView(MorphanView* nview) {view = nview;}
+       void OnPaint(wxPaintEvent& event);
+   private:
+       MorphanView* view;
+};
 
 
  #endif

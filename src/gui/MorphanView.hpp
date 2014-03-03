@@ -25,20 +25,29 @@
 #include <wx/docview.h>
 #include <wx/dcgraph.h>
 #include <wx/docview.h>
-#include "MorphanPanel.hpp"
 #include "Morphan.hpp"
+#include "MorphanPanel.hpp"
+#include "Tool.hpp"
+
+class MorphanPanel;
 
 class MorphanView : public wxView
 {
     public:
-        MorphanView() : wxView(), panel(NULL) {}
+        MorphanView() : wxView(), panel(NULL), tool(NULL), grid_width(16), grid_height(16) {}
         bool OnCreate(wxDocument*, long flags);
-        void OnDraw(wxDC*);
         bool OnClose(bool deleteWindow = true);
         void OnUpdate(wxView *sender, wxObject *hint = NULL);
+
+        void OnDraw(wxDC*);
+        void OnClick(wxMouseEvent& event);
+        void OnMotion(wxMouseEvent& event);
+        void OnCancel(wxMouseEvent& event);
         Morphan* GetDocument();
     private:
         MorphanPanel* panel;
+        Tool* tool;
+        int grid_width, grid_height;
         DECLARE_DYNAMIC_CLASS(MorphanView)
 };
 

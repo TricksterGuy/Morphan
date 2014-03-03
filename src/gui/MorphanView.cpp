@@ -31,23 +31,19 @@ bool MorphanView::OnCreate(wxDocument* doc, long flags)
 
     // reuse the existing window and canvas
     MorphanApp* app = dynamic_cast<MorphanApp*>(wxTheApp);
-    //panel = app->GetFrame()->GetPanel();
+    panel = app->GetFrame()->GetPanel();
     SetFrame(app->GetFrame());
 
     // Initialize the edit menu Undo and Redo items
     //doc->GetCommandProcessor()->SetEditMenu(app.GetMainWindowEditMenu());
     //doc->GetCommandProcessor()->Initialize();
 
+    panel->Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(MorphanView::OnClick), NULL, this);
+	panel->Connect(wxEVT_MOTION, wxMouseEventHandler(MorphanView::OnMotion), NULL, this);
+	panel->Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MorphanView::OnCancel), NULL, this);
+	panel->SetView(this);
+
     return true;
-}
-
-void MorphanView::OnDraw(wxDC* dc)
-{
-    wxGraphicsContext* gc = wxGraphicsContext::Create(panel);
-
-    if (!gc) return;
-
-    wxGCDC gcdc(gc);
 }
 
 bool MorphanView::OnClose(bool deleteWindow)
@@ -56,6 +52,10 @@ bool MorphanView::OnClose(bool deleteWindow)
         return false;
 
     Activate(false);
+	panel->Disconnect(wxEVT_LEFT_DOWN, wxMouseEventHandler(MorphanView::OnClick), NULL, this);
+	panel->Disconnect(wxEVT_MOTION, wxMouseEventHandler(MorphanView::OnMotion), NULL, this);
+	panel->Disconnect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MorphanView::OnCancel), NULL, this);
+    panel->SetView(NULL);
 
     return true;
 }
@@ -63,6 +63,46 @@ bool MorphanView::OnClose(bool deleteWindow)
 void MorphanView::OnUpdate(wxView* sender, wxObject* hint)
 {
     wxView::OnUpdate(sender, hint);
+
+}
+
+void MorphanView::OnDraw(wxDC* dc)
+{
+    wxGraphicsContext* gc = wxGraphicsContext::Create(panel);
+    if (!gc) return;
+
+    wxGCDC gcdc(gc);
+
+    int w, h;
+    gcdc.GetSize(&w, &h);
+    for (int i = 16; i < h; i += 16)
+    {
+        gcdc.DrawLine(0, i, w, i);
+    }
+
+    for (int j = 16; j < w; j += 16)
+    {
+        gcdc.DrawLine(j, 0, j, h);
+    }
+}
+
+
+void MorphanView::OnClick(wxMouseEvent& event)
+{
+    tool->Add(wxRealPoint(event.GetX(), event.GetY()));
+    if (tool->CanCreate())
+    {
+
+    }
+}
+
+void MorphanView::OnMotion(wxMouseEvent& event)
+{
+
+}
+
+void MorphanView::OnCancel(wxMouseEvent& event)
+{
 
 }
 

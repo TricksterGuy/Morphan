@@ -23,54 +23,20 @@
 #include <wx/dcclient.h>
 
 MorphanPanel::MorphanPanel(wxWindow* Parent, wxWindowID Id, const wxPoint& Position, const wxSize& Size, long Style) :
-    wxPanel(Parent, Id, Position, Size, Style), grid_width(16), grid_height(16)
+    wxPanel(Parent, Id, Position, Size, Style), view(NULL)
 {
     Connect(wxEVT_PAINT, wxPaintEventHandler(MorphanPanel::OnPaint), NULL, this);
-	Connect(wxEVT_LEFT_DOWN, wxMouseEventHandler(MorphanPanel::OnClick), NULL, this);
-	Connect(wxEVT_MOTION, wxMouseEventHandler(MorphanPanel::OnMotion), NULL, this);
-	Connect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MorphanPanel::OnCancel), NULL, this);
 }
 
 MorphanPanel::~MorphanPanel()
 {
     Disconnect(wxEVT_PAINT, wxPaintEventHandler(MorphanPanel::OnPaint), NULL, this);
-	Disconnect(wxEVT_LEFT_DOWN, wxMouseEventHandler(MorphanPanel::OnClick), NULL, this);
-	Disconnect(wxEVT_MOTION, wxMouseEventHandler(MorphanPanel::OnMotion), NULL, this);
-	Disconnect(wxEVT_RIGHT_DOWN, wxMouseEventHandler(MorphanPanel::OnCancel), NULL, this);
 }
 
 void MorphanPanel::OnPaint(wxPaintEvent& event)
 {
     wxPaintDC dc(this);
-    OnDraw(dc);
+    if (view)
+        view->OnDraw(&dc);
 }
 
-void MorphanPanel::OnDraw(wxDC& dc)
-{
-    int w, h;
-    GetClientSize(&w, &h);
-    for (int i = 16; i < h; i += 16)
-    {
-        dc.DrawLine(0, i, w, i);
-    }
-
-    for (int j = 16; j < w; j += 16)
-    {
-        dc.DrawLine(j, 0, j, h);
-    }
-}
-
-void MorphanPanel::OnClick(wxMouseEvent& event)
-{
-
-}
-
-void MorphanPanel::OnMotion(wxMouseEvent& event)
-{
-
-}
-
-void MorphanPanel::OnCancel(wxMouseEvent& event)
-{
-
-}
