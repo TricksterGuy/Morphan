@@ -31,7 +31,7 @@ bool MorphanView::OnCreate(wxDocument* doc, long flags)
 
     // reuse the existing window and canvas
     MorphanApp* app = dynamic_cast<MorphanApp*>(wxTheApp);
-    panel = app->GetFrame()->GetPanel();
+    //panel = app->GetFrame()->GetPanel();
     SetFrame(app->GetFrame());
 
     // Initialize the edit menu Undo and Redo items
@@ -57,11 +57,6 @@ bool MorphanView::OnClose(bool deleteWindow)
 
     Activate(false);
 
-    if (deleteWindow && GetFrame())
-    {
-        GetFrame()->Destroy();
-        SetFrame(NULL);
-    }
     return true;
 }
 

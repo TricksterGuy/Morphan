@@ -34,23 +34,21 @@
 #include "BezierTool.hpp"
 #include "icons.hpp"
 
-MorphanFrame::MorphanFrame(wxFrame* frame) : MorphanGUI(frame)
+MorphanFrame::MorphanFrame(wxDocManager* manager, wxFrame* window) : MorphanGUI(manager, window)
 {
-    manager = new wxDocManager();
     new wxDocTemplate(manager, "Morphan", "*.morph", ".", "morph", "Morphan", "Morphan View",
                       CLASSINFO(Morphan), CLASSINFO(MorphanView));
 
     manager->FileHistoryLoad(*wxConfig::Get());
     manager->FileHistoryUseMenu(menuRecent);
     manager->FileHistoryAddFilesToMenu();
+    manager->SetMaxDocsOpen(1);
 
     InitializeButtons();
 }
 
 MorphanFrame::~MorphanFrame()
 {
-    manager->FileHistorySave(*wxConfig::Get());
-    delete manager;
 }
 
 void MorphanFrame::OnTool(wxCommandEvent& event)

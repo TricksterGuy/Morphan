@@ -30,6 +30,7 @@ class wxBitmapToggleButton;
 #include <wx/clrpicker.h>
 #include <wx/bmpbuttn.h>
 #include <wx/frame.h>
+#include <wx/docview.h>
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -42,10 +43,10 @@ class wxBitmapToggleButton;
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MorphanGUI
 ///////////////////////////////////////////////////////////////////////////////
-class MorphanGUI : public wxFrame 
+class MorphanGUI : public wxDocParentFrame
 {
 	private:
-	
+
 	protected:
 		wxMenuBar* m_menubar1;
 		wxMenu* file;
@@ -87,13 +88,13 @@ class MorphanGUI : public wxFrame
 		wxBitmapToggleButton* toolbtn6;
 		wxBitmapToggleButton* toolbtn7;
 		wxBitmapToggleButton* toolbtn8;
-	
+
 	public:
-		
-		MorphanGUI( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Morphan"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
-		
+
+		MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Morphan"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 680,480 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+
 		~MorphanGUI();
-	
+
 };
 
 #endif //__MORPHANGUI_H__

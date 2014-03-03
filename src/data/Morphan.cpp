@@ -30,10 +30,10 @@ bool Morphan::DeleteContents()
 
 bool Morphan::DoSaveDocument(const wxString& file)
 {
-
+    return true;
 }
 
 bool Morphan::DoOpenDocument(const wxString& file)
 {
-
+    return true;
 }

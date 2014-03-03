@@ -23,15 +23,18 @@
 #define MorphanAPP_HPP
 
 #include <wx/app.h>
+#include <wx/docview.h>
 #include "MorphanFrame.hpp"
 
 class MorphanApp : public wxApp
 {
     public:
-        virtual bool OnInit();
+        bool OnInit();
+        int OnExit();
         MorphanFrame* GetFrame() {return frame;}
     private:
         MorphanFrame* frame;
+        wxDocManager* manager;
 };
 
 DECLARE_APP(MorphanApp);

@@ -21,6 +21,7 @@
 
 #include "MorphanApp.hpp"
 #include "MorphanFrame.hpp"
+#include <wx/config.h>
 
 IMPLEMENT_APP(MorphanApp);
 
@@ -33,10 +34,19 @@ bool MorphanApp::OnInit()
     SetAppName("wx_docview_sample");
     SetAppDisplayName("wxWidgets DocView Sample");
 
-    frame = new MorphanFrame(NULL);
+    manager = new wxDocManager();
+    frame = new MorphanFrame(manager, NULL);
+    manager->CreateNewDocument();
     SetTopWindow(frame);
     frame->Centre();
     frame->Show();
 
     return true;
+}
+
+int MorphanApp::OnExit()
+{
+    manager->FileHistorySave(*wxConfig::Get());
+    delete manager;
+    return wxApp::OnExit();
 }
