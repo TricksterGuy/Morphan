@@ -101,8 +101,21 @@ void MorphanView::OnDraw(wxDC* dc)
 
     const MorphanKeyFrame& keyFrame = morphan->Get(current_frame);
 
+    wxPen cpbox(*wxBLACK, 2);
+    wxBrush cpfill(*wxWHITE);
+
     for (const Primitive* p : keyFrame.GetPrimitives())
+    {
         p->Draw(gcdc);
+
+        gcdc.SetPen(cpbox);
+        gcdc.SetBrush(cpfill);
+        const std::vector<wxRealPoint> points = p->GetControlPoints();
+        for (const auto& point : points)
+        {
+            gcdc.DrawRectangle(point.x - 4, point.y - 4, 8, 8);
+        }
+    }
 
     if (!in_window || !tool->CanPreview()) return;
     gcdc.SetPen(wxPen(wxColour(255, 0, 0, 255), 10));

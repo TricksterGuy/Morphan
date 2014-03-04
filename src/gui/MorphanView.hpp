@@ -34,7 +34,7 @@ class MorphanPanel;
 class MorphanView : public wxView
 {
     public:
-        MorphanView() : wxView(), panel(NULL), tool(NULL), grid_width(16), grid_height(16), current_frame(0), in_window(false) {}
+        MorphanView() : wxView(), panel(NULL), tool(NULL), grid_width(16), grid_height(16), snap_grid(false), zoomx(1.0f), zoomy(1.0f), current_frame(0), in_window(false) {}
         bool OnCreate(wxDocument*, long flags);
         bool OnClose(bool deleteWindow = true);
         void OnUpdate(wxView *sender, wxObject *hint = NULL);
@@ -52,6 +52,8 @@ class MorphanView : public wxView
         MorphanPanel* panel;
         Tool* tool;
         int grid_width, grid_height;
+        bool snap_grid;
+        float zoomx, zoomy;
         int current_frame;
         bool in_window;
         wxPoint mouse;

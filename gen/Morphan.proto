@@ -1,0 +1,52 @@
+enum Type
+{
+	INVALID = 0;
+	LINE = 1;
+	RECTANGLE = 2;
+	CIRCLE = 3;
+	CONVEX_POLYGON = 4;
+	POLYGON = 5;
+	ELLIPSE = 6;
+	ARC = 7;
+	BEZIER_CURVE = 8;
+}
+
+message Color
+{
+	required int32 r = 1;
+	required int32 g = 2;
+	required int32 b = 3;
+	optional int32 a = 4;
+}
+message Point
+{
+	required float x = 1;
+	required float y = 2;
+}
+
+message Primitive
+{
+	optional int64 id = 1;
+	required Type type = 2;
+	repeated Point controls = 3;
+	optional Color outline = 4;
+	optional int32 width = 5 [default = 1];
+	optional Color fill = 6;
+}
+
+message MorphanKeyFrame
+{
+	optional int32 x = 1;
+	optional int32 y = 2;
+	optional float scale_x = 3 [default = 1.0];
+	optional float scale_y = 4 [default = 1.0];
+	optional float rotation = 5;
+	optional float opacity = 6;
+	repeated Primitive primitives = 7;
+	optional float secs = 8;
+}
+
+message Morphan
+{
+	repeated MorphanKeyFrame frames = 1;
+}
