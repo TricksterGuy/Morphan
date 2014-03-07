@@ -27,6 +27,16 @@ std::vector<wxRealPoint> Ellipse::GetControlPoints() const
     return {center, edge};
 }
 
+bool Ellipse::SetControlPoints(const std::vector<wxRealPoint>& points)
+{
+    if (points.size() != 2) return false;
+
+    center = points[0];
+    edge = points[1];
+
+    return true;
+}
+
 void Ellipse::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);

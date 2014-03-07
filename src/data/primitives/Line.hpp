@@ -27,9 +27,12 @@
 class Line : public Primitive
 {
     public:
+        Line() {}
         Line(const wxRealPoint& nstart, const wxRealPoint& nend) : start(nstart), end(nend) {}
         std::vector<wxRealPoint> GetControlPoints() const;
+        bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
+        Type GetType() const {return Type::LINE;}
     private:
         wxRealPoint start;
         wxRealPoint end;

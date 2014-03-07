@@ -22,12 +22,14 @@
 #include "MorphanApp.hpp"
 #include "MorphanFrame.hpp"
 #include <wx/config.h>
+#include <wx/dialog.h>
 
 IMPLEMENT_APP(MorphanApp);
 
 bool MorphanApp::OnInit()
 {
     wxInitAllImageHandlers();
+    wxDialog::EnableLayoutAdaptation(true);
 
     // Fill in the application information fields before creating wxConfig.
     SetVendorName("wxWidgets");
@@ -40,6 +42,8 @@ bool MorphanApp::OnInit()
     SetTopWindow(frame);
     frame->Centre();
     frame->Show();
+
+    frame->UpdateStatusBar();
 
     return true;
 }

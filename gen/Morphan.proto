@@ -24,17 +24,24 @@ message Point
 	required float y = 2;
 }
 
-message Primitive
+message ExtraParams
+{
+	// Convex Polygon
+	optional int32 num_sides = 1;
+}
+
+message PrimitiveProto
 {
 	optional int64 id = 1;
 	required Type type = 2;
-	repeated Point controls = 3;
+	repeated Point points = 3;
 	optional Color outline = 4;
 	optional int32 width = 5 [default = 1];
 	optional Color fill = 6;
+	optional ExtraParams params = 7;
 }
 
-message MorphanKeyFrame
+message MorphanKeyFrameProto
 {
 	optional int32 x = 1;
 	optional int32 y = 2;
@@ -42,11 +49,11 @@ message MorphanKeyFrame
 	optional float scale_y = 4 [default = 1.0];
 	optional float rotation = 5;
 	optional float opacity = 6;
-	repeated Primitive primitives = 7;
+	repeated PrimitiveProto primitives = 7;
 	optional float secs = 8;
 }
 
-message Morphan
+message MorphanProto
 {
-	repeated MorphanKeyFrame frames = 1;
+	repeated MorphanKeyFrameProto frames = 1;
 }

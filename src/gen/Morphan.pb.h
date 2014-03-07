@@ -34,9 +34,10 @@ void protobuf_ShutdownFile_Morphan_2eproto();
 
 class Color;
 class Point;
-class Primitive;
-class MorphanKeyFrame;
-class Morphan;
+class ExtraParams;
+class PrimitiveProto;
+class MorphanKeyFrameProto;
+class MorphanProto;
 
 enum Type {
   INVALID = 0,
@@ -270,14 +271,14 @@ class Point : public ::google::protobuf::Message {
 };
 // -------------------------------------------------------------------
 
-class Primitive : public ::google::protobuf::Message {
+class ExtraParams : public ::google::protobuf::Message {
  public:
-  Primitive();
-  virtual ~Primitive();
+  ExtraParams();
+  virtual ~ExtraParams();
 
-  Primitive(const Primitive& from);
+  ExtraParams(const ExtraParams& from);
 
-  inline Primitive& operator=(const Primitive& from) {
+  inline ExtraParams& operator=(const ExtraParams& from) {
     CopyFrom(from);
     return *this;
   }
@@ -291,17 +292,99 @@ class Primitive : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Primitive& default_instance();
+  static const ExtraParams& default_instance();
 
-  void Swap(Primitive* other);
+  void Swap(ExtraParams* other);
 
   // implements Message ----------------------------------------------
 
-  Primitive* New() const;
+  ExtraParams* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Primitive& from);
-  void MergeFrom(const Primitive& from);
+  void CopyFrom(const ExtraParams& from);
+  void MergeFrom(const ExtraParams& from);
+  void Clear();
+  bool IsInitialized() const;
+
+  int ByteSize() const;
+  bool MergePartialFromCodedStream(
+      ::google::protobuf::io::CodedInputStream* input);
+  void SerializeWithCachedSizes(
+      ::google::protobuf::io::CodedOutputStream* output) const;
+  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
+  int GetCachedSize() const { return _cached_size_; }
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const;
+  public:
+
+  ::google::protobuf::Metadata GetMetadata() const;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // optional int32 num_sides = 1;
+  inline bool has_num_sides() const;
+  inline void clear_num_sides();
+  static const int kNumSidesFieldNumber = 1;
+  inline ::google::protobuf::int32 num_sides() const;
+  inline void set_num_sides(::google::protobuf::int32 value);
+
+  // @@protoc_insertion_point(class_scope:ExtraParams)
+ private:
+  inline void set_has_num_sides();
+  inline void clear_has_num_sides();
+
+  ::google::protobuf::UnknownFieldSet _unknown_fields_;
+
+  ::google::protobuf::int32 num_sides_;
+
+  mutable int _cached_size_;
+  ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
+
+  friend void  protobuf_AddDesc_Morphan_2eproto();
+  friend void protobuf_AssignDesc_Morphan_2eproto();
+  friend void protobuf_ShutdownFile_Morphan_2eproto();
+
+  void InitAsDefaultInstance();
+  static ExtraParams* default_instance_;
+};
+// -------------------------------------------------------------------
+
+class PrimitiveProto : public ::google::protobuf::Message {
+ public:
+  PrimitiveProto();
+  virtual ~PrimitiveProto();
+
+  PrimitiveProto(const PrimitiveProto& from);
+
+  inline PrimitiveProto& operator=(const PrimitiveProto& from) {
+    CopyFrom(from);
+    return *this;
+  }
+
+  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
+    return _unknown_fields_;
+  }
+
+  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
+    return &_unknown_fields_;
+  }
+
+  static const ::google::protobuf::Descriptor* descriptor();
+  static const PrimitiveProto& default_instance();
+
+  void Swap(PrimitiveProto* other);
+
+  // implements Message ----------------------------------------------
+
+  PrimitiveProto* New() const;
+  void CopyFrom(const ::google::protobuf::Message& from);
+  void MergeFrom(const ::google::protobuf::Message& from);
+  void CopyFrom(const PrimitiveProto& from);
+  void MergeFrom(const PrimitiveProto& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -338,17 +421,17 @@ class Primitive : public ::google::protobuf::Message {
   inline ::Type type() const;
   inline void set_type(::Type value);
 
-  // repeated .Point controls = 3;
-  inline int controls_size() const;
-  inline void clear_controls();
-  static const int kControlsFieldNumber = 3;
-  inline const ::Point& controls(int index) const;
-  inline ::Point* mutable_controls(int index);
-  inline ::Point* add_controls();
+  // repeated .Point points = 3;
+  inline int points_size() const;
+  inline void clear_points();
+  static const int kPointsFieldNumber = 3;
+  inline const ::Point& points(int index) const;
+  inline ::Point* mutable_points(int index);
+  inline ::Point* add_points();
   inline const ::google::protobuf::RepeatedPtrField< ::Point >&
-      controls() const;
+      points() const;
   inline ::google::protobuf::RepeatedPtrField< ::Point >*
-      mutable_controls();
+      mutable_points();
 
   // optional .Color outline = 4;
   inline bool has_outline() const;
@@ -375,7 +458,16 @@ class Primitive : public ::google::protobuf::Message {
   inline ::Color* release_fill();
   inline void set_allocated_fill(::Color* fill);
 
-  // @@protoc_insertion_point(class_scope:Primitive)
+  // optional .ExtraParams params = 7;
+  inline bool has_params() const;
+  inline void clear_params();
+  static const int kParamsFieldNumber = 7;
+  inline const ::ExtraParams& params() const;
+  inline ::ExtraParams* mutable_params();
+  inline ::ExtraParams* release_params();
+  inline void set_allocated_params(::ExtraParams* params);
+
+  // @@protoc_insertion_point(class_scope:PrimitiveProto)
  private:
   inline void set_has_id();
   inline void clear_has_id();
@@ -387,36 +479,39 @@ class Primitive : public ::google::protobuf::Message {
   inline void clear_has_width();
   inline void set_has_fill();
   inline void clear_has_fill();
+  inline void set_has_params();
+  inline void clear_has_params();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
   ::google::protobuf::int64 id_;
-  ::google::protobuf::RepeatedPtrField< ::Point > controls_;
+  ::google::protobuf::RepeatedPtrField< ::Point > points_;
   int type_;
   ::google::protobuf::int32 width_;
   ::Color* outline_;
   ::Color* fill_;
+  ::ExtraParams* params_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(6 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
 
   friend void  protobuf_AddDesc_Morphan_2eproto();
   friend void protobuf_AssignDesc_Morphan_2eproto();
   friend void protobuf_ShutdownFile_Morphan_2eproto();
 
   void InitAsDefaultInstance();
-  static Primitive* default_instance_;
+  static PrimitiveProto* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class MorphanKeyFrame : public ::google::protobuf::Message {
+class MorphanKeyFrameProto : public ::google::protobuf::Message {
  public:
-  MorphanKeyFrame();
-  virtual ~MorphanKeyFrame();
+  MorphanKeyFrameProto();
+  virtual ~MorphanKeyFrameProto();
 
-  MorphanKeyFrame(const MorphanKeyFrame& from);
+  MorphanKeyFrameProto(const MorphanKeyFrameProto& from);
 
-  inline MorphanKeyFrame& operator=(const MorphanKeyFrame& from) {
+  inline MorphanKeyFrameProto& operator=(const MorphanKeyFrameProto& from) {
     CopyFrom(from);
     return *this;
   }
@@ -430,17 +525,17 @@ class MorphanKeyFrame : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const MorphanKeyFrame& default_instance();
+  static const MorphanKeyFrameProto& default_instance();
 
-  void Swap(MorphanKeyFrame* other);
+  void Swap(MorphanKeyFrameProto* other);
 
   // implements Message ----------------------------------------------
 
-  MorphanKeyFrame* New() const;
+  MorphanKeyFrameProto* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const MorphanKeyFrame& from);
-  void MergeFrom(const MorphanKeyFrame& from);
+  void CopyFrom(const MorphanKeyFrameProto& from);
+  void MergeFrom(const MorphanKeyFrameProto& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -505,16 +600,16 @@ class MorphanKeyFrame : public ::google::protobuf::Message {
   inline float opacity() const;
   inline void set_opacity(float value);
 
-  // repeated .Primitive primitives = 7;
+  // repeated .PrimitiveProto primitives = 7;
   inline int primitives_size() const;
   inline void clear_primitives();
   static const int kPrimitivesFieldNumber = 7;
-  inline const ::Primitive& primitives(int index) const;
-  inline ::Primitive* mutable_primitives(int index);
-  inline ::Primitive* add_primitives();
-  inline const ::google::protobuf::RepeatedPtrField< ::Primitive >&
+  inline const ::PrimitiveProto& primitives(int index) const;
+  inline ::PrimitiveProto* mutable_primitives(int index);
+  inline ::PrimitiveProto* add_primitives();
+  inline const ::google::protobuf::RepeatedPtrField< ::PrimitiveProto >&
       primitives() const;
-  inline ::google::protobuf::RepeatedPtrField< ::Primitive >*
+  inline ::google::protobuf::RepeatedPtrField< ::PrimitiveProto >*
       mutable_primitives();
 
   // optional float secs = 8;
@@ -524,7 +619,7 @@ class MorphanKeyFrame : public ::google::protobuf::Message {
   inline float secs() const;
   inline void set_secs(float value);
 
-  // @@protoc_insertion_point(class_scope:MorphanKeyFrame)
+  // @@protoc_insertion_point(class_scope:MorphanKeyFrameProto)
  private:
   inline void set_has_x();
   inline void clear_has_x();
@@ -549,7 +644,7 @@ class MorphanKeyFrame : public ::google::protobuf::Message {
   float scale_y_;
   float rotation_;
   float opacity_;
-  ::google::protobuf::RepeatedPtrField< ::Primitive > primitives_;
+  ::google::protobuf::RepeatedPtrField< ::PrimitiveProto > primitives_;
   float secs_;
 
   mutable int _cached_size_;
@@ -560,18 +655,18 @@ class MorphanKeyFrame : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_Morphan_2eproto();
 
   void InitAsDefaultInstance();
-  static MorphanKeyFrame* default_instance_;
+  static MorphanKeyFrameProto* default_instance_;
 };
 // -------------------------------------------------------------------
 
-class Morphan : public ::google::protobuf::Message {
+class MorphanProto : public ::google::protobuf::Message {
  public:
-  Morphan();
-  virtual ~Morphan();
+  MorphanProto();
+  virtual ~MorphanProto();
 
-  Morphan(const Morphan& from);
+  MorphanProto(const MorphanProto& from);
 
-  inline Morphan& operator=(const Morphan& from) {
+  inline MorphanProto& operator=(const MorphanProto& from) {
     CopyFrom(from);
     return *this;
   }
@@ -585,17 +680,17 @@ class Morphan : public ::google::protobuf::Message {
   }
 
   static const ::google::protobuf::Descriptor* descriptor();
-  static const Morphan& default_instance();
+  static const MorphanProto& default_instance();
 
-  void Swap(Morphan* other);
+  void Swap(MorphanProto* other);
 
   // implements Message ----------------------------------------------
 
-  Morphan* New() const;
+  MorphanProto* New() const;
   void CopyFrom(const ::google::protobuf::Message& from);
   void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const Morphan& from);
-  void MergeFrom(const Morphan& from);
+  void CopyFrom(const MorphanProto& from);
+  void MergeFrom(const MorphanProto& from);
   void Clear();
   bool IsInitialized() const;
 
@@ -618,24 +713,24 @@ class Morphan : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // repeated .MorphanKeyFrame frames = 1;
+  // repeated .MorphanKeyFrameProto frames = 1;
   inline int frames_size() const;
   inline void clear_frames();
   static const int kFramesFieldNumber = 1;
-  inline const ::MorphanKeyFrame& frames(int index) const;
-  inline ::MorphanKeyFrame* mutable_frames(int index);
-  inline ::MorphanKeyFrame* add_frames();
-  inline const ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrame >&
+  inline const ::MorphanKeyFrameProto& frames(int index) const;
+  inline ::MorphanKeyFrameProto* mutable_frames(int index);
+  inline ::MorphanKeyFrameProto* add_frames();
+  inline const ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrameProto >&
       frames() const;
-  inline ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrame >*
+  inline ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrameProto >*
       mutable_frames();
 
-  // @@protoc_insertion_point(class_scope:Morphan)
+  // @@protoc_insertion_point(class_scope:MorphanProto)
  private:
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrame > frames_;
+  ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrameProto > frames_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(1 + 31) / 32];
@@ -645,7 +740,7 @@ class Morphan : public ::google::protobuf::Message {
   friend void protobuf_ShutdownFile_Morphan_2eproto();
 
   void InitAsDefaultInstance();
-  static Morphan* default_instance_;
+  static MorphanProto* default_instance_;
 };
 // ===================================================================
 
@@ -792,107 +887,133 @@ inline void Point::set_y(float value) {
 
 // -------------------------------------------------------------------
 
-// Primitive
+// ExtraParams
 
-// optional int64 id = 1;
-inline bool Primitive::has_id() const {
+// optional int32 num_sides = 1;
+inline bool ExtraParams::has_num_sides() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Primitive::set_has_id() {
+inline void ExtraParams::set_has_num_sides() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Primitive::clear_has_id() {
+inline void ExtraParams::clear_has_num_sides() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Primitive::clear_id() {
+inline void ExtraParams::clear_num_sides() {
+  num_sides_ = 0;
+  clear_has_num_sides();
+}
+inline ::google::protobuf::int32 ExtraParams::num_sides() const {
+  return num_sides_;
+}
+inline void ExtraParams::set_num_sides(::google::protobuf::int32 value) {
+  set_has_num_sides();
+  num_sides_ = value;
+}
+
+// -------------------------------------------------------------------
+
+// PrimitiveProto
+
+// optional int64 id = 1;
+inline bool PrimitiveProto::has_id() const {
+  return (_has_bits_[0] & 0x00000001u) != 0;
+}
+inline void PrimitiveProto::set_has_id() {
+  _has_bits_[0] |= 0x00000001u;
+}
+inline void PrimitiveProto::clear_has_id() {
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline void PrimitiveProto::clear_id() {
   id_ = GOOGLE_LONGLONG(0);
   clear_has_id();
 }
-inline ::google::protobuf::int64 Primitive::id() const {
+inline ::google::protobuf::int64 PrimitiveProto::id() const {
   return id_;
 }
-inline void Primitive::set_id(::google::protobuf::int64 value) {
+inline void PrimitiveProto::set_id(::google::protobuf::int64 value) {
   set_has_id();
   id_ = value;
 }
 
 // required .Type type = 2;
-inline bool Primitive::has_type() const {
+inline bool PrimitiveProto::has_type() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void Primitive::set_has_type() {
+inline void PrimitiveProto::set_has_type() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void Primitive::clear_has_type() {
+inline void PrimitiveProto::clear_has_type() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void Primitive::clear_type() {
+inline void PrimitiveProto::clear_type() {
   type_ = 0;
   clear_has_type();
 }
-inline ::Type Primitive::type() const {
+inline ::Type PrimitiveProto::type() const {
   return static_cast< ::Type >(type_);
 }
-inline void Primitive::set_type(::Type value) {
+inline void PrimitiveProto::set_type(::Type value) {
   assert(::Type_IsValid(value));
   set_has_type();
   type_ = value;
 }
 
-// repeated .Point controls = 3;
-inline int Primitive::controls_size() const {
-  return controls_.size();
+// repeated .Point points = 3;
+inline int PrimitiveProto::points_size() const {
+  return points_.size();
 }
-inline void Primitive::clear_controls() {
-  controls_.Clear();
+inline void PrimitiveProto::clear_points() {
+  points_.Clear();
 }
-inline const ::Point& Primitive::controls(int index) const {
-  return controls_.Get(index);
+inline const ::Point& PrimitiveProto::points(int index) const {
+  return points_.Get(index);
 }
-inline ::Point* Primitive::mutable_controls(int index) {
-  return controls_.Mutable(index);
+inline ::Point* PrimitiveProto::mutable_points(int index) {
+  return points_.Mutable(index);
 }
-inline ::Point* Primitive::add_controls() {
-  return controls_.Add();
+inline ::Point* PrimitiveProto::add_points() {
+  return points_.Add();
 }
 inline const ::google::protobuf::RepeatedPtrField< ::Point >&
-Primitive::controls() const {
-  return controls_;
+PrimitiveProto::points() const {
+  return points_;
 }
 inline ::google::protobuf::RepeatedPtrField< ::Point >*
-Primitive::mutable_controls() {
-  return &controls_;
+PrimitiveProto::mutable_points() {
+  return &points_;
 }
 
 // optional .Color outline = 4;
-inline bool Primitive::has_outline() const {
+inline bool PrimitiveProto::has_outline() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void Primitive::set_has_outline() {
+inline void PrimitiveProto::set_has_outline() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void Primitive::clear_has_outline() {
+inline void PrimitiveProto::clear_has_outline() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void Primitive::clear_outline() {
+inline void PrimitiveProto::clear_outline() {
   if (outline_ != NULL) outline_->::Color::Clear();
   clear_has_outline();
 }
-inline const ::Color& Primitive::outline() const {
+inline const ::Color& PrimitiveProto::outline() const {
   return outline_ != NULL ? *outline_ : *default_instance_->outline_;
 }
-inline ::Color* Primitive::mutable_outline() {
+inline ::Color* PrimitiveProto::mutable_outline() {
   set_has_outline();
   if (outline_ == NULL) outline_ = new ::Color;
   return outline_;
 }
-inline ::Color* Primitive::release_outline() {
+inline ::Color* PrimitiveProto::release_outline() {
   clear_has_outline();
   ::Color* temp = outline_;
   outline_ = NULL;
   return temp;
 }
-inline void Primitive::set_allocated_outline(::Color* outline) {
+inline void PrimitiveProto::set_allocated_outline(::Color* outline) {
   delete outline_;
   outline_ = outline;
   if (outline) {
@@ -903,56 +1024,56 @@ inline void Primitive::set_allocated_outline(::Color* outline) {
 }
 
 // optional int32 width = 5 [default = 1];
-inline bool Primitive::has_width() const {
+inline bool PrimitiveProto::has_width() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void Primitive::set_has_width() {
+inline void PrimitiveProto::set_has_width() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void Primitive::clear_has_width() {
+inline void PrimitiveProto::clear_has_width() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void Primitive::clear_width() {
+inline void PrimitiveProto::clear_width() {
   width_ = 1;
   clear_has_width();
 }
-inline ::google::protobuf::int32 Primitive::width() const {
+inline ::google::protobuf::int32 PrimitiveProto::width() const {
   return width_;
 }
-inline void Primitive::set_width(::google::protobuf::int32 value) {
+inline void PrimitiveProto::set_width(::google::protobuf::int32 value) {
   set_has_width();
   width_ = value;
 }
 
 // optional .Color fill = 6;
-inline bool Primitive::has_fill() const {
+inline bool PrimitiveProto::has_fill() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void Primitive::set_has_fill() {
+inline void PrimitiveProto::set_has_fill() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void Primitive::clear_has_fill() {
+inline void PrimitiveProto::clear_has_fill() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void Primitive::clear_fill() {
+inline void PrimitiveProto::clear_fill() {
   if (fill_ != NULL) fill_->::Color::Clear();
   clear_has_fill();
 }
-inline const ::Color& Primitive::fill() const {
+inline const ::Color& PrimitiveProto::fill() const {
   return fill_ != NULL ? *fill_ : *default_instance_->fill_;
 }
-inline ::Color* Primitive::mutable_fill() {
+inline ::Color* PrimitiveProto::mutable_fill() {
   set_has_fill();
   if (fill_ == NULL) fill_ = new ::Color;
   return fill_;
 }
-inline ::Color* Primitive::release_fill() {
+inline ::Color* PrimitiveProto::release_fill() {
   clear_has_fill();
   ::Color* temp = fill_;
   fill_ = NULL;
   return temp;
 }
-inline void Primitive::set_allocated_fill(::Color* fill) {
+inline void PrimitiveProto::set_allocated_fill(::Color* fill) {
   delete fill_;
   fill_ = fill;
   if (fill) {
@@ -962,215 +1083,253 @@ inline void Primitive::set_allocated_fill(::Color* fill) {
   }
 }
 
+// optional .ExtraParams params = 7;
+inline bool PrimitiveProto::has_params() const {
+  return (_has_bits_[0] & 0x00000040u) != 0;
+}
+inline void PrimitiveProto::set_has_params() {
+  _has_bits_[0] |= 0x00000040u;
+}
+inline void PrimitiveProto::clear_has_params() {
+  _has_bits_[0] &= ~0x00000040u;
+}
+inline void PrimitiveProto::clear_params() {
+  if (params_ != NULL) params_->::ExtraParams::Clear();
+  clear_has_params();
+}
+inline const ::ExtraParams& PrimitiveProto::params() const {
+  return params_ != NULL ? *params_ : *default_instance_->params_;
+}
+inline ::ExtraParams* PrimitiveProto::mutable_params() {
+  set_has_params();
+  if (params_ == NULL) params_ = new ::ExtraParams;
+  return params_;
+}
+inline ::ExtraParams* PrimitiveProto::release_params() {
+  clear_has_params();
+  ::ExtraParams* temp = params_;
+  params_ = NULL;
+  return temp;
+}
+inline void PrimitiveProto::set_allocated_params(::ExtraParams* params) {
+  delete params_;
+  params_ = params;
+  if (params) {
+    set_has_params();
+  } else {
+    clear_has_params();
+  }
+}
+
 // -------------------------------------------------------------------
 
-// MorphanKeyFrame
+// MorphanKeyFrameProto
 
 // optional int32 x = 1;
-inline bool MorphanKeyFrame::has_x() const {
+inline bool MorphanKeyFrameProto::has_x() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void MorphanKeyFrame::set_has_x() {
+inline void MorphanKeyFrameProto::set_has_x() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void MorphanKeyFrame::clear_has_x() {
+inline void MorphanKeyFrameProto::clear_has_x() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void MorphanKeyFrame::clear_x() {
+inline void MorphanKeyFrameProto::clear_x() {
   x_ = 0;
   clear_has_x();
 }
-inline ::google::protobuf::int32 MorphanKeyFrame::x() const {
+inline ::google::protobuf::int32 MorphanKeyFrameProto::x() const {
   return x_;
 }
-inline void MorphanKeyFrame::set_x(::google::protobuf::int32 value) {
+inline void MorphanKeyFrameProto::set_x(::google::protobuf::int32 value) {
   set_has_x();
   x_ = value;
 }
 
 // optional int32 y = 2;
-inline bool MorphanKeyFrame::has_y() const {
+inline bool MorphanKeyFrameProto::has_y() const {
   return (_has_bits_[0] & 0x00000002u) != 0;
 }
-inline void MorphanKeyFrame::set_has_y() {
+inline void MorphanKeyFrameProto::set_has_y() {
   _has_bits_[0] |= 0x00000002u;
 }
-inline void MorphanKeyFrame::clear_has_y() {
+inline void MorphanKeyFrameProto::clear_has_y() {
   _has_bits_[0] &= ~0x00000002u;
 }
-inline void MorphanKeyFrame::clear_y() {
+inline void MorphanKeyFrameProto::clear_y() {
   y_ = 0;
   clear_has_y();
 }
-inline ::google::protobuf::int32 MorphanKeyFrame::y() const {
+inline ::google::protobuf::int32 MorphanKeyFrameProto::y() const {
   return y_;
 }
-inline void MorphanKeyFrame::set_y(::google::protobuf::int32 value) {
+inline void MorphanKeyFrameProto::set_y(::google::protobuf::int32 value) {
   set_has_y();
   y_ = value;
 }
 
 // optional float scale_x = 3 [default = 1];
-inline bool MorphanKeyFrame::has_scale_x() const {
+inline bool MorphanKeyFrameProto::has_scale_x() const {
   return (_has_bits_[0] & 0x00000004u) != 0;
 }
-inline void MorphanKeyFrame::set_has_scale_x() {
+inline void MorphanKeyFrameProto::set_has_scale_x() {
   _has_bits_[0] |= 0x00000004u;
 }
-inline void MorphanKeyFrame::clear_has_scale_x() {
+inline void MorphanKeyFrameProto::clear_has_scale_x() {
   _has_bits_[0] &= ~0x00000004u;
 }
-inline void MorphanKeyFrame::clear_scale_x() {
+inline void MorphanKeyFrameProto::clear_scale_x() {
   scale_x_ = 1;
   clear_has_scale_x();
 }
-inline float MorphanKeyFrame::scale_x() const {
+inline float MorphanKeyFrameProto::scale_x() const {
   return scale_x_;
 }
-inline void MorphanKeyFrame::set_scale_x(float value) {
+inline void MorphanKeyFrameProto::set_scale_x(float value) {
   set_has_scale_x();
   scale_x_ = value;
 }
 
 // optional float scale_y = 4 [default = 1];
-inline bool MorphanKeyFrame::has_scale_y() const {
+inline bool MorphanKeyFrameProto::has_scale_y() const {
   return (_has_bits_[0] & 0x00000008u) != 0;
 }
-inline void MorphanKeyFrame::set_has_scale_y() {
+inline void MorphanKeyFrameProto::set_has_scale_y() {
   _has_bits_[0] |= 0x00000008u;
 }
-inline void MorphanKeyFrame::clear_has_scale_y() {
+inline void MorphanKeyFrameProto::clear_has_scale_y() {
   _has_bits_[0] &= ~0x00000008u;
 }
-inline void MorphanKeyFrame::clear_scale_y() {
+inline void MorphanKeyFrameProto::clear_scale_y() {
   scale_y_ = 1;
   clear_has_scale_y();
 }
-inline float MorphanKeyFrame::scale_y() const {
+inline float MorphanKeyFrameProto::scale_y() const {
   return scale_y_;
 }
-inline void MorphanKeyFrame::set_scale_y(float value) {
+inline void MorphanKeyFrameProto::set_scale_y(float value) {
   set_has_scale_y();
   scale_y_ = value;
 }
 
 // optional float rotation = 5;
-inline bool MorphanKeyFrame::has_rotation() const {
+inline bool MorphanKeyFrameProto::has_rotation() const {
   return (_has_bits_[0] & 0x00000010u) != 0;
 }
-inline void MorphanKeyFrame::set_has_rotation() {
+inline void MorphanKeyFrameProto::set_has_rotation() {
   _has_bits_[0] |= 0x00000010u;
 }
-inline void MorphanKeyFrame::clear_has_rotation() {
+inline void MorphanKeyFrameProto::clear_has_rotation() {
   _has_bits_[0] &= ~0x00000010u;
 }
-inline void MorphanKeyFrame::clear_rotation() {
+inline void MorphanKeyFrameProto::clear_rotation() {
   rotation_ = 0;
   clear_has_rotation();
 }
-inline float MorphanKeyFrame::rotation() const {
+inline float MorphanKeyFrameProto::rotation() const {
   return rotation_;
 }
-inline void MorphanKeyFrame::set_rotation(float value) {
+inline void MorphanKeyFrameProto::set_rotation(float value) {
   set_has_rotation();
   rotation_ = value;
 }
 
 // optional float opacity = 6;
-inline bool MorphanKeyFrame::has_opacity() const {
+inline bool MorphanKeyFrameProto::has_opacity() const {
   return (_has_bits_[0] & 0x00000020u) != 0;
 }
-inline void MorphanKeyFrame::set_has_opacity() {
+inline void MorphanKeyFrameProto::set_has_opacity() {
   _has_bits_[0] |= 0x00000020u;
 }
-inline void MorphanKeyFrame::clear_has_opacity() {
+inline void MorphanKeyFrameProto::clear_has_opacity() {
   _has_bits_[0] &= ~0x00000020u;
 }
-inline void MorphanKeyFrame::clear_opacity() {
+inline void MorphanKeyFrameProto::clear_opacity() {
   opacity_ = 0;
   clear_has_opacity();
 }
-inline float MorphanKeyFrame::opacity() const {
+inline float MorphanKeyFrameProto::opacity() const {
   return opacity_;
 }
-inline void MorphanKeyFrame::set_opacity(float value) {
+inline void MorphanKeyFrameProto::set_opacity(float value) {
   set_has_opacity();
   opacity_ = value;
 }
 
-// repeated .Primitive primitives = 7;
-inline int MorphanKeyFrame::primitives_size() const {
+// repeated .PrimitiveProto primitives = 7;
+inline int MorphanKeyFrameProto::primitives_size() const {
   return primitives_.size();
 }
-inline void MorphanKeyFrame::clear_primitives() {
+inline void MorphanKeyFrameProto::clear_primitives() {
   primitives_.Clear();
 }
-inline const ::Primitive& MorphanKeyFrame::primitives(int index) const {
+inline const ::PrimitiveProto& MorphanKeyFrameProto::primitives(int index) const {
   return primitives_.Get(index);
 }
-inline ::Primitive* MorphanKeyFrame::mutable_primitives(int index) {
+inline ::PrimitiveProto* MorphanKeyFrameProto::mutable_primitives(int index) {
   return primitives_.Mutable(index);
 }
-inline ::Primitive* MorphanKeyFrame::add_primitives() {
+inline ::PrimitiveProto* MorphanKeyFrameProto::add_primitives() {
   return primitives_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::Primitive >&
-MorphanKeyFrame::primitives() const {
+inline const ::google::protobuf::RepeatedPtrField< ::PrimitiveProto >&
+MorphanKeyFrameProto::primitives() const {
   return primitives_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::Primitive >*
-MorphanKeyFrame::mutable_primitives() {
+inline ::google::protobuf::RepeatedPtrField< ::PrimitiveProto >*
+MorphanKeyFrameProto::mutable_primitives() {
   return &primitives_;
 }
 
 // optional float secs = 8;
-inline bool MorphanKeyFrame::has_secs() const {
+inline bool MorphanKeyFrameProto::has_secs() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
-inline void MorphanKeyFrame::set_has_secs() {
+inline void MorphanKeyFrameProto::set_has_secs() {
   _has_bits_[0] |= 0x00000080u;
 }
-inline void MorphanKeyFrame::clear_has_secs() {
+inline void MorphanKeyFrameProto::clear_has_secs() {
   _has_bits_[0] &= ~0x00000080u;
 }
-inline void MorphanKeyFrame::clear_secs() {
+inline void MorphanKeyFrameProto::clear_secs() {
   secs_ = 0;
   clear_has_secs();
 }
-inline float MorphanKeyFrame::secs() const {
+inline float MorphanKeyFrameProto::secs() const {
   return secs_;
 }
-inline void MorphanKeyFrame::set_secs(float value) {
+inline void MorphanKeyFrameProto::set_secs(float value) {
   set_has_secs();
   secs_ = value;
 }
 
 // -------------------------------------------------------------------
 
-// Morphan
+// MorphanProto
 
-// repeated .MorphanKeyFrame frames = 1;
-inline int Morphan::frames_size() const {
+// repeated .MorphanKeyFrameProto frames = 1;
+inline int MorphanProto::frames_size() const {
   return frames_.size();
 }
-inline void Morphan::clear_frames() {
+inline void MorphanProto::clear_frames() {
   frames_.Clear();
 }
-inline const ::MorphanKeyFrame& Morphan::frames(int index) const {
+inline const ::MorphanKeyFrameProto& MorphanProto::frames(int index) const {
   return frames_.Get(index);
 }
-inline ::MorphanKeyFrame* Morphan::mutable_frames(int index) {
+inline ::MorphanKeyFrameProto* MorphanProto::mutable_frames(int index) {
   return frames_.Mutable(index);
 }
-inline ::MorphanKeyFrame* Morphan::add_frames() {
+inline ::MorphanKeyFrameProto* MorphanProto::add_frames() {
   return frames_.Add();
 }
-inline const ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrame >&
-Morphan::frames() const {
+inline const ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrameProto >&
+MorphanProto::frames() const {
   return frames_;
 }
-inline ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrame >*
-Morphan::mutable_frames() {
+inline ::google::protobuf::RepeatedPtrField< ::MorphanKeyFrameProto >*
+MorphanProto::mutable_frames() {
   return &frames_;
 }
 

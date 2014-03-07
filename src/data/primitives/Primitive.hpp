@@ -25,16 +25,22 @@
 #include <vector>
 #include <wx/dcgraph.h>
 
+#include "Morphan.pb.h"
+
 class Primitive
 {
     public:
-        Primitive(unsigned long nid = 0) : id(nid), outline(0, 0, 0), fill(0, 0, 0, 0), width(10) {}
+        Primitive(unsigned long nid = 0) : id(nid), outline(0, 0, 0), fill(0, 0, 0), width(10) {}
         virtual ~Primitive() {}
         virtual std::vector<wxRealPoint> GetControlPoints() const = 0;
+        virtual bool SetControlPoints(const std::vector<wxRealPoint>& points) = 0;
         virtual void Draw(wxGCDC& dc) const;
+        virtual Type GetType() const {return Type::INVALID;}
+        void SetId(unsigned long nid) {id = nid;}
         void SetOutline(const wxColour& ncolor) {outline = ncolor;}
         void SetWidth(float nwidth) {width = nwidth;}
         void SetFill(const wxColour& ncolor) {fill = ncolor;}
+        unsigned long GetId() const {return id;}
         const wxColour& GetOutline() const {return outline;}
         float GetWidth() const {return width;}
         const wxColour& GetFill() const {return fill;}
@@ -53,4 +59,5 @@ static inline float distance(const wxRealPoint& a, const wxRealPoint& b)
 
 static inline float min(float x, float y) {return x > y ? y : x;}
 static inline float max(float x, float y) {return x > y ? x : y;}
+
 #endif

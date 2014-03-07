@@ -20,14 +20,61 @@
  ******************************************************************************************************/
 
 #include "MorphanKeyFrame.hpp"
+#include "PrimitiveFactory.hpp"
 
 MorphanKeyFrame::~MorphanKeyFrame()
 {
-    for (const Primitive* primitive : primitives)
+    for (Primitive* primitive : primitives)
         delete primitive;
 }
 
 void MorphanKeyFrame::Add(Primitive* primitive)
 {
     primitives.push_back(primitive);
+}
+
+void MorphanKeyFrame::SetPosition(int nx, int ny)
+{
+    x = nx;
+    y = ny;
+}
+
+void MorphanKeyFrame::SetScale(float nsx, float nsy)
+{
+    scale_x = nsx;
+    scale_y = nsy;
+}
+
+void MorphanKeyFrame::Write(MorphanKeyFrameProto* proto) const
+{
+    proto->set_x(x);
+    proto->set_y(y);
+    proto->set_scale_x(scale_x);
+    proto->set_scale_y(scale_y);
+    proto->set_rotation(rotation);
+    proto->set_opacity(opacity);
+    proto->set_secs(secs);
+    for (unsigned int j = 0; j < primitives.size(); j++)
+    {
+        PrimitiveProto* pproto = proto->add_primitives();
+        PrimitiveFactory::Write(primitives[j], pproto);
+    }
+}
+
+void MorphanKeyFrame::Read(const MorphanKeyFrameProto& proto)
+{
+    x = proto.x();
+    y = proto.y();
+    scale_x = proto.scale_x();
+    scale_y = proto.scale_y();
+    rotation = proto.rotation();
+    opacity = proto.opacity();
+    secs = proto.secs();
+
+    for (const auto& pproto : proto.primitives())
+    {
+        Primitive* primitive = PrimitiveFactory::Read(pproto);
+        if (primitive)
+            primitives.push_back(primitive);
+    }
 }

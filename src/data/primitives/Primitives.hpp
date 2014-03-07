@@ -18,24 +18,16 @@
  *
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
+ #ifndef PRIMITIVES_HPP
+ #define PRIMITIVES_HPP
 
-#ifndef CIRCLE_HPP
-#define CIRCLE_HPP
+ #include "Arc.hpp"
+ #include "BezierCurve.hpp"
+ #include "Circle.hpp"
+ #include "ConvexPolygon.hpp"
+ #include "Ellipse.hpp"
+ #include "Line.hpp"
+ #include "Polygon.hpp"
+ #include "Rectangle.hpp"
 
-#include "Primitive.hpp"
-
-class Circle : public Primitive
-{
-    public:
-        Circle() {}
-        Circle(const wxRealPoint& ncenter, const wxRealPoint& nedge) : center(ncenter), edge(nedge) {}
-        std::vector<wxRealPoint> GetControlPoints() const;
-        bool SetControlPoints(const std::vector<wxRealPoint>& points);
-        void Draw(wxGCDC& dc) const;
-        Type GetType() const {return Type::CIRCLE;}
-    private:
-        wxRealPoint center;
-        wxRealPoint edge;
-};
-
-#endif
+ #endif

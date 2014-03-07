@@ -27,9 +27,12 @@
 class Ellipse : public Primitive
 {
     public:
+        Ellipse() {}
         Ellipse(const wxRealPoint& ncenter, const wxRealPoint& nedge) : center(ncenter), edge(nedge) {}
         std::vector<wxRealPoint> GetControlPoints() const;
+        bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
+        Type GetType() const {return Type::ELLIPSE;}
     private:
         wxRealPoint center;
         wxRealPoint edge;

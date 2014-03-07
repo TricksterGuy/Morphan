@@ -34,6 +34,8 @@
 #include "BezierTool.hpp"
 #include "icons.hpp"
 
+#include "GridSizeDialog.hpp"
+
 MorphanFrame::MorphanFrame(wxDocManager* nmanager, wxFrame* window) : MorphanGUI(nmanager, window), manager(nmanager)
 {
     new wxDocTemplate(manager, "Morphan", "*.morph", ".", "morph", "Morphan", "Morphan View",
@@ -74,7 +76,7 @@ void MorphanFrame::OnTool(wxCommandEvent& event)
         cptool->SetNumSides(sides);
     }
 
-    MorphanView* view = dynamic_cast<MorphanView*>(manager->GetAnyUsableView());
+    MorphanView* view = GetMorphanView();
     view->SetTool(tool);
 }
 
@@ -107,7 +109,128 @@ void MorphanFrame::InitializeButtons()
     toolbtn6->SetBitmap(wxMEMORY_BITMAP(Ellipse_png));
     toolbtn7->SetBitmap(wxMEMORY_BITMAP(Arc_png));
     toolbtn8->SetBitmap(wxMEMORY_BITMAP(BezierCurve_png));
+    toolbtn9->SetBitmap(wxMEMORY_BITMAP(BezierCurve_png));
 
     toolbtn1->SetValue(true);
     tool = line_tool;
+}
+
+void MorphanFrame::InitializeStatusBar()
+{
+    const int widths[5] = {-8, -2, -2, -2, -2};
+    const int styles[5] = {wxSB_NORMAL, wxSB_NORMAL, wxSB_NORMAL, wxSB_NORMAL, wxSB_NORMAL};
+    statusBar->SetStatusWidths(5, widths);
+    statusBar->SetStatusStyles(5, styles);
+    UpdateStatusBar();
+}
+
+void MorphanFrame::UpdateStatusBar()
+{
+    Morphan* morphan = GetMorphan();
+    MorphanView* view = GetMorphanView();
+
+    wxSize size = view->GetSize();
+    wxPoint mouse = view->GetMouse();
+    statusBar->SetStatusText(wxString::Format("(%d / %d)", view->GetCurrentFrameId() + 1, morphan->NumFrames()), 1);
+    statusBar->SetStatusText(wxString::Format("(%d %d)", size.GetWidth(), size.GetHeight()), 2);
+    statusBar->SetStatusText(wxString::Format("%d%%", (int)(100 * view->GetZoom())), 3);
+    statusBar->SetStatusText(wxString::Format("(%d, %d)", mouse.x, mouse.y), 4);
+}
+
+void MorphanFrame::OnZoomIn(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    float zoom = view->GetZoom() * 2;
+    if (zoom > 20) zoom = 20;
+    view->SetZoom(zoom);
+}
+
+void MorphanFrame::OnZoomOut(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    float zoom = view->GetZoom() / 2;
+    if (zoom < 1/20.f) zoom = 1/20.f;
+    view->SetZoom(zoom);
+}
+
+void MorphanFrame::OnResetZoom(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    view->SetZoom(1.0f);
+}
+
+void MorphanFrame::OnZoom(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    float zoom = view->GetZoom();
+    long newzoom = wxGetNumberFromUser("Enter zoom value", "Zoom (5-2000)", "Zoom", zoom * 100, 5, 2000, this);
+    if (newzoom != -1)
+        view->SetZoom(newzoom / 100.f);
+}
+
+void MorphanFrame::OnModifyGrid(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    int width, height;
+    view->GetGridSize(width, height);
+    GridSizeDialog dialog(width, height);
+    if (dialog.ShowModal() == wxID_OK)
+    {
+        dialog.GetGridSize(width, height);
+        view->SetGridSize(width, height);
+    }
+}
+
+void MorphanFrame::OnShowGrid(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    view->SetGrid(event.IsChecked());
+}
+
+void MorphanFrame::OnSnapToGrid(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    view->SetGridSnap(event.IsChecked());
+}
+
+void MorphanFrame::OnKeyFrameChanged(wxSpinEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    int x, y;
+    float scale_x, scale_y;
+    float rotation;
+    float opacity;
+    float secs = 1.0f;
+
+    x = keyFrameX->GetValue();
+    y = keyFrameY->GetValue();
+    scale_x = keyFrameScaleX->GetValue();
+    scale_y = keyFrameScaleY->GetValue();
+    rotation = keyFrameRotation->GetValue();
+    opacity = keyFrameOpacity->GetValue();
+
+    MorphanKeyFrame& keyFrame = view->GetCurrentFrame();
+    keyFrame.SetPosition(x, y);
+    keyFrame.SetScale(scale_x / 100.f, scale_y / 100.f);
+    keyFrame.SetRotation(rotation);
+    keyFrame.SetOpacity(opacity / 100.f);
+    keyFrame.SetSecs(secs);
+}
+
+void MorphanFrame::OnOutlineChanged(wxColourPickerEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    view->SetOutlineColor(event.GetColour());
+}
+
+void MorphanFrame::OnWidthChanged(wxSpinEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    view->SetOutlineWidth(event.GetValue());
+}
+
+void MorphanFrame::OnFillChanged(wxColourPickerEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    view->SetFillColor(event.GetColour());
 }

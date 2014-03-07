@@ -28,11 +28,22 @@
 class MorphanKeyFrame
 {
     public:
-        MorphanKeyFrame() : secs(1.0f) {}
+        MorphanKeyFrame() : x(0), y(0), scale_x(1.0f), scale_y(1.0f), rotation(0), opacity(100), secs(1.0f) {}
         ~MorphanKeyFrame();
         const std::vector<Primitive*> GetPrimitives() const {return primitives;}
         void Add(Primitive* primitive);
+        void Write(MorphanKeyFrameProto* proto) const;
+        void Read(const MorphanKeyFrameProto& proto);
+        void SetPosition(int nx, int ny);
+        void SetScale(float nsx, float nsy);
+        void SetRotation(float nrotation) {rotation = nrotation;}
+        void SetOpacity(float nopacity) {opacity = nopacity;}
+        void SetSecs(float nsecs) {secs = nsecs;}
     private:
+        int x, y;
+        float scale_x, scale_y;
+        float rotation;
+        float opacity;
         float secs;
         std::vector<Primitive*> primitives;
 };

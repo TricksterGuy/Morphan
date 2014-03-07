@@ -84,17 +84,10 @@ void MorphanView::OnDraw(wxDC* dc)
 
     wxGCDC gcdc(gc);
 
-    int w, h;
-    gcdc.GetSize(&w, &h);
-    for (int i = 16; i < h; i += 16)
-    {
-        gcdc.DrawLine(0, i, w, i);
-    }
+    gcdc.SetUserScale(zoom, zoom);
 
-    for (int j = 16; j < w; j += 16)
-    {
-        gcdc.DrawLine(j, 0, j, h);
-    }
+    if (show_grid)
+        DrawGrid(gcdc);
 
     Morphan* morphan = GetDocument();
     if (!morphan) return;
@@ -108,30 +101,50 @@ void MorphanView::OnDraw(wxDC* dc)
     {
         p->Draw(gcdc);
 
-        gcdc.SetPen(cpbox);
-        gcdc.SetBrush(cpfill);
-        const std::vector<wxRealPoint> points = p->GetControlPoints();
-        for (const auto& point : points)
+        if (show_points)
         {
-            gcdc.DrawRectangle(point.x - 4, point.y - 4, 8, 8);
+            gcdc.SetPen(cpbox);
+            gcdc.SetBrush(cpfill);
+            const std::vector<wxRealPoint> points = p->GetControlPoints();
+            for (const auto& point : points)
+                gcdc.DrawRectangle(point.x - 3, point.y - 3, 6, 6);
         }
     }
 
     if (!in_window || !tool->CanPreview()) return;
-    gcdc.SetPen(wxPen(wxColour(255, 0, 0, 255), 10));
+    gcdc.SetPen(wxPen(wxColour(255, 0, 0, 255), outlineWidth));
     gcdc.SetBrush(*wxTRANSPARENT_BRUSH);
     tool->Preview(gcdc, mouse, wxGetKeyState(WXK_SHIFT));
 }
 
+void MorphanView::DrawGrid(wxGCDC& gcdc)
+{
+    int w, h;
+    gcdc.GetSize(&w, &h);
+
+    float gridw = grid_width;// * zoom;
+    float gridh = grid_height;// * zoom;
+
+    for (float i = gridh; i < h; i += gridh)
+        gcdc.DrawLine(0, i, w, i);
+
+    for (float j = gridw; j < w; j += gridw)
+        gcdc.DrawLine(j, 0, j, h);
+}
 
 void MorphanView::OnClick(wxMouseEvent& event)
 {
-    tool->Add(wxRealPoint(event.GetX(), event.GetY()));
+    mouse = GetRealPosition(event.GetPosition());
+    tool->Add(mouse);
     if ((tool->CanCreate() && tool->IsInfinitePoint() && event.ShiftDown()) ||
         (tool->CanCreate() && !tool->IsInfinitePoint()))
     {
         Primitive* p = tool->Create();
+        p->SetFill(fillColor);
+        p->SetOutline(outlineColor);
+        p->SetWidth(outlineWidth);
         GetDocument()->Add(current_frame, p);
+        GetDocument()->Modify(true);
         tool->Clear();
         panel->Refresh();
     }
@@ -139,7 +152,12 @@ void MorphanView::OnClick(wxMouseEvent& event)
 
 void MorphanView::OnMotion(wxMouseEvent& event)
 {
-    mouse = event.GetPosition();
+    mouse = GetRealPosition(event.GetPosition());
+    MorphanApp* app = dynamic_cast<MorphanApp*>(wxTheApp);
+    MorphanFrame* frame = dynamic_cast<MorphanFrame*>(app->GetFrame());
+    if (frame)
+        frame->UpdateStatusBar();
+
     panel->Refresh();
 }
 
@@ -160,7 +178,6 @@ void MorphanView::OnLeave(wxMouseEvent& event)
 
 void MorphanView::OnKey(wxKeyEvent& event)
 {
-    printf("%d\n", event.GetKeyCode());
     if (event.GetKeyCode() == WXK_SHIFT)
         panel->Refresh();
 }
@@ -168,4 +185,48 @@ void MorphanView::OnKey(wxKeyEvent& event)
 Morphan* MorphanView::GetDocument()
 {
     return wxStaticCast(wxView::GetDocument(), Morphan);
+}
+
+MorphanKeyFrame& MorphanView::GetCurrentFrame()
+{
+    return GetDocument()->Get(current_frame);
+}
+
+wxSize MorphanView::GetSize()
+{
+    return panel->GetSize();
+}
+
+void MorphanView::GetGridSize(int& width, int& height) const
+{
+    width = grid_width;
+    height = grid_height;
+}
+
+void MorphanView::SetGridSize(int width, int height)
+{
+    grid_width = width;
+    grid_height = height;
+    panel->Refresh();
+}
+
+void MorphanView::SetZoom(float nzoom)
+{
+    zoom = nzoom;
+    panel->Refresh();
+}
+
+wxRealPoint MorphanView::GetRealPosition(const wxPoint& point)
+{
+    wxRealPoint ret(point);
+    if (snap_grid)
+    {
+        float gridw = grid_width * zoom;
+        float gridh = grid_height * zoom;
+        ret.x = round(point.x / gridw) * gridw;
+        ret.y = round(point.y / gridh) * gridh;
+    }
+    ret.x = ret.x / zoom;
+    ret.y = ret.y / zoom;
+    return ret;
 }

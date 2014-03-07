@@ -27,9 +27,14 @@
 class ConvexPolygon : public Primitive
 {
     public:
+        ConvexPolygon() : num_sides(3) {}
         ConvexPolygon(const wxRealPoint& ncenter, const wxRealPoint& nedge, int nsides) : center(ncenter), edge(nedge), num_sides(nsides) {}
         std::vector<wxRealPoint> GetControlPoints() const;
+        bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
+        Type GetType() const {return Type::CONVEX_POLYGON;}
+        int GetNumSides() const {return num_sides;}
+        void SetNumSides(int sides) {num_sides = sides;}
     private:
         wxRealPoint center;
         wxRealPoint edge;

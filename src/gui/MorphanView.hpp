@@ -34,12 +34,13 @@ class MorphanPanel;
 class MorphanView : public wxView
 {
     public:
-        MorphanView() : wxView(), panel(NULL), tool(NULL), grid_width(16), grid_height(16), snap_grid(false), zoomx(1.0f), zoomy(1.0f), current_frame(0), in_window(false) {}
+        MorphanView() : wxView(), panel(NULL), tool(NULL), outlineColor(0, 0, 0), outlineWidth(1), fillColor(0, 0, 0),
+                        grid_width(16), grid_height(16), snap_grid(false), show_grid(false), show_points(true), zoom(1.0f),
+                        current_frame(0), in_window(false) {}
         bool OnCreate(wxDocument*, long flags);
         bool OnClose(bool deleteWindow = true);
         void OnUpdate(wxView *sender, wxObject *hint = NULL);
 
-        void SetTool(Tool* ntool) {tool = ntool; printf("SWITCH");}
         void OnDraw(wxDC*);
         void OnClick(wxMouseEvent& event);
         void OnMotion(wxMouseEvent& event);
@@ -47,16 +48,42 @@ class MorphanView : public wxView
         void OnEnter(wxMouseEvent& event);
         void OnLeave(wxMouseEvent& event);
         void OnKey(wxKeyEvent& event);
+
         Morphan* GetDocument();
+        wxSize GetSize();
+        wxPoint GetMouse() const {return mouse;}
+        float GetZoom() const {return zoom;}
+        int GetCurrentFrameId() const {return current_frame;}
+        MorphanKeyFrame& GetCurrentFrame();
+        void GetGridSize(int& width, int& height) const;
+
+        void SetOutlineColor(const wxColour& color) {outlineColor = color;}
+        void SetOutlineWidth(int width) {outlineWidth = width;}
+        void SetFillColor(const wxColour& color) {fillColor = color;}
+
+        void SetTool(Tool* ntool) {tool = ntool;}
+        void SetGridSize(int width, int height);
+        void SetGrid(bool on) {show_grid = on;}
+        void SetGridSnap(bool on) {snap_grid = on;}
+        void SetZoom(float nzoom);
+        wxRealPoint GetRealPosition(const wxPoint& point);
+
     private:
         MorphanPanel* panel;
         Tool* tool;
+        wxColour outlineColor;
+        int outlineWidth;
+        wxColour fillColor;
         int grid_width, grid_height;
         bool snap_grid;
-        float zoomx, zoomy;
+        bool show_grid;
+        bool show_points;
+        float zoom;
         int current_frame;
         bool in_window;
-        wxPoint mouse;
+        wxRealPoint mouse;
+
+        void DrawGrid(wxGCDC& gcdc);
         DECLARE_DYNAMIC_CLASS(MorphanView)
 };
 

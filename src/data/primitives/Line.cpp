@@ -27,6 +27,16 @@ std::vector<wxRealPoint> Line::GetControlPoints() const
     return {start, end};
 }
 
+bool Line::SetControlPoints(const std::vector<wxRealPoint>& points)
+{
+    if (points.size() != 2) return false;
+
+    start = points[0];
+    end = points[1];
+
+    return true;
+}
+
 void Line::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);

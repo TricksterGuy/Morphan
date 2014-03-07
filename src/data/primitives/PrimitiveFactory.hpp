@@ -18,24 +18,21 @@
  *
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
-
-#ifndef CIRCLE_HPP
-#define CIRCLE_HPP
+#ifndef PRIMITIVE_FACTORY_HPP
+#define PRIMITIVE_FACTORY_HPP
 
 #include "Primitive.hpp"
+#include "Morphan.pb.h"
 
-class Circle : public Primitive
+class PrimitiveFactory
 {
     public:
-        Circle() {}
-        Circle(const wxRealPoint& ncenter, const wxRealPoint& nedge) : center(ncenter), edge(nedge) {}
-        std::vector<wxRealPoint> GetControlPoints() const;
-        bool SetControlPoints(const std::vector<wxRealPoint>& points);
-        void Draw(wxGCDC& dc) const;
-        Type GetType() const {return Type::CIRCLE;}
+        static void Write(Primitive* primitive, PrimitiveProto* proto);
+        static Primitive* Read(const PrimitiveProto& proto);
     private:
-        wxRealPoint center;
-        wxRealPoint edge;
+        PrimitiveFactory() {}
+        ~PrimitiveFactory() {}
+
 };
 
 #endif

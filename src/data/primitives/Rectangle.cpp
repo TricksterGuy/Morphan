@@ -27,6 +27,16 @@ std::vector<wxRealPoint> Rectangle::GetControlPoints() const
     return {start, end};
 }
 
+bool Rectangle::SetControlPoints(const std::vector<wxRealPoint>& points)
+{
+    if (points.size() != 2) return false;
+
+    start = points[0];
+    end = points[1];
+
+    return true;
+}
+
 void Rectangle::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);

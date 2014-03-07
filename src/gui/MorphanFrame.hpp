@@ -41,10 +41,29 @@ class MorphanFrame : public MorphanGUI
         MorphanPanel* GetPanel() {return morphanPanel;}
         Tool* GetTool() {return tool;}
         void OnTool(wxCommandEvent& event);
+        void UpdateStatusBar();
+
+        // View
+		void OnZoomIn(wxCommandEvent& event);
+        void OnZoomOut(wxCommandEvent& event);
+		void OnResetZoom(wxCommandEvent& event);
+		void OnZoom(wxCommandEvent& event);
+        void OnModifyGrid(wxCommandEvent& event);
+		void OnShowGrid(wxCommandEvent& event);
+		void OnSnapToGrid(wxCommandEvent& event);
+		// Misc
+        void OnKeyFrameChanged(wxSpinEvent& event);
+		void OnOutlineChanged(wxColourPickerEvent& event);
+		void OnWidthChanged(wxSpinEvent& event);
+		void OnFillChanged(wxColourPickerEvent& event);
     private:
         wxDocManager* manager;
         Tool* tool;
+
+        inline Morphan* GetMorphan() {return dynamic_cast<Morphan*>(manager->GetCurrentDocument());}
+        MorphanView* GetMorphanView() {return dynamic_cast<MorphanView*>(manager->GetCurrentView());}
         void InitializeButtons();
+        void InitializeStatusBar();
 };
 
 #endif

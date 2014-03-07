@@ -18,10 +18,12 @@
  *
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
+
 #include "Primitive.hpp"
 
 void Primitive::Draw(wxGCDC& dc) const
 {
+    printf("%d %d %d %d\n", fill.Red(), fill.Green(), fill.Blue(), fill.Alpha());
     dc.SetPen(wxPen(outline, width));
     dc.SetBrush(wxBrush(fill));
 }

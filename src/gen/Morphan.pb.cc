@@ -24,15 +24,18 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* Point_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   Point_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Primitive_descriptor_ = NULL;
+const ::google::protobuf::Descriptor* ExtraParams_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  Primitive_reflection_ = NULL;
-const ::google::protobuf::Descriptor* MorphanKeyFrame_descriptor_ = NULL;
+  ExtraParams_reflection_ = NULL;
+const ::google::protobuf::Descriptor* PrimitiveProto_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  MorphanKeyFrame_reflection_ = NULL;
-const ::google::protobuf::Descriptor* Morphan_descriptor_ = NULL;
+  PrimitiveProto_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MorphanKeyFrameProto_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
-  Morphan_reflection_ = NULL;
+  MorphanKeyFrameProto_reflection_ = NULL;
+const ::google::protobuf::Descriptor* MorphanProto_descriptor_ = NULL;
+const ::google::protobuf::internal::GeneratedMessageReflection*
+  MorphanProto_reflection_ = NULL;
 const ::google::protobuf::EnumDescriptor* Type_descriptor_ = NULL;
 
 }  // namespace
@@ -78,63 +81,79 @@ void protobuf_AssignDesc_Morphan_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(Point));
-  Primitive_descriptor_ = file->message_type(2);
-  static const int Primitive_offsets_[6] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Primitive, id_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Primitive, type_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Primitive, controls_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Primitive, outline_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Primitive, width_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Primitive, fill_),
+  ExtraParams_descriptor_ = file->message_type(2);
+  static const int ExtraParams_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ExtraParams, num_sides_),
   };
-  Primitive_reflection_ =
+  ExtraParams_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      Primitive_descriptor_,
-      Primitive::default_instance_,
-      Primitive_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Primitive, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Primitive, _unknown_fields_),
+      ExtraParams_descriptor_,
+      ExtraParams::default_instance_,
+      ExtraParams_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ExtraParams, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(ExtraParams, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Primitive));
-  MorphanKeyFrame_descriptor_ = file->message_type(3);
-  static const int MorphanKeyFrame_offsets_[8] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, y_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, scale_x_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, scale_y_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, rotation_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, opacity_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, primitives_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, secs_),
+      sizeof(ExtraParams));
+  PrimitiveProto_descriptor_ = file->message_type(3);
+  static const int PrimitiveProto_offsets_[7] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, id_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, type_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, points_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, outline_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, width_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, fill_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, params_),
   };
-  MorphanKeyFrame_reflection_ =
+  PrimitiveProto_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      MorphanKeyFrame_descriptor_,
-      MorphanKeyFrame::default_instance_,
-      MorphanKeyFrame_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrame, _unknown_fields_),
+      PrimitiveProto_descriptor_,
+      PrimitiveProto::default_instance_,
+      PrimitiveProto_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(MorphanKeyFrame));
-  Morphan_descriptor_ = file->message_type(4);
-  static const int Morphan_offsets_[1] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Morphan, frames_),
+      sizeof(PrimitiveProto));
+  MorphanKeyFrameProto_descriptor_ = file->message_type(4);
+  static const int MorphanKeyFrameProto_offsets_[8] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, x_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, y_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, scale_x_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, scale_y_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, rotation_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, opacity_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, primitives_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, secs_),
   };
-  Morphan_reflection_ =
+  MorphanKeyFrameProto_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
-      Morphan_descriptor_,
-      Morphan::default_instance_,
-      Morphan_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Morphan, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Morphan, _unknown_fields_),
+      MorphanKeyFrameProto_descriptor_,
+      MorphanKeyFrameProto::default_instance_,
+      MorphanKeyFrameProto_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, _unknown_fields_),
       -1,
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(Morphan));
+      sizeof(MorphanKeyFrameProto));
+  MorphanProto_descriptor_ = file->message_type(5);
+  static const int MorphanProto_offsets_[1] = {
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanProto, frames_),
+  };
+  MorphanProto_reflection_ =
+    new ::google::protobuf::internal::GeneratedMessageReflection(
+      MorphanProto_descriptor_,
+      MorphanProto::default_instance_,
+      MorphanProto_offsets_,
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanProto, _has_bits_[0]),
+      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanProto, _unknown_fields_),
+      -1,
+      ::google::protobuf::DescriptorPool::generated_pool(),
+      ::google::protobuf::MessageFactory::generated_factory(),
+      sizeof(MorphanProto));
   Type_descriptor_ = file->enum_type(0);
 }
 
@@ -153,11 +172,13 @@ void protobuf_RegisterTypes(const ::std::string&) {
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     Point_descriptor_, &Point::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Primitive_descriptor_, &Primitive::default_instance());
+    ExtraParams_descriptor_, &ExtraParams::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    MorphanKeyFrame_descriptor_, &MorphanKeyFrame::default_instance());
+    PrimitiveProto_descriptor_, &PrimitiveProto::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    Morphan_descriptor_, &Morphan::default_instance());
+    MorphanKeyFrameProto_descriptor_, &MorphanKeyFrameProto::default_instance());
+  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
+    MorphanProto_descriptor_, &MorphanProto::default_instance());
 }
 
 }  // namespace
@@ -167,12 +188,14 @@ void protobuf_ShutdownFile_Morphan_2eproto() {
   delete Color_reflection_;
   delete Point::default_instance_;
   delete Point_reflection_;
-  delete Primitive::default_instance_;
-  delete Primitive_reflection_;
-  delete MorphanKeyFrame::default_instance_;
-  delete MorphanKeyFrame_reflection_;
-  delete Morphan::default_instance_;
-  delete Morphan_reflection_;
+  delete ExtraParams::default_instance_;
+  delete ExtraParams_reflection_;
+  delete PrimitiveProto::default_instance_;
+  delete PrimitiveProto_reflection_;
+  delete MorphanKeyFrameProto::default_instance_;
+  delete MorphanKeyFrameProto_reflection_;
+  delete MorphanProto::default_instance_;
+  delete MorphanProto_reflection_;
 }
 
 void protobuf_AddDesc_Morphan_2eproto() {
@@ -184,31 +207,35 @@ void protobuf_AddDesc_Morphan_2eproto() {
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\rMorphan.proto\"3\n\005Color\022\t\n\001r\030\001 \002(\005\022\t\n\001g"
     "\030\002 \002(\005\022\t\n\001b\030\003 \002(\005\022\t\n\001a\030\004 \001(\005\"\035\n\005Point\022\t\n"
-    "\001x\030\001 \002(\002\022\t\n\001y\030\002 \002(\002\"\207\001\n\tPrimitive\022\n\n\002id\030"
-    "\001 \001(\003\022\023\n\004type\030\002 \002(\0162\005.Type\022\030\n\010controls\030\003"
-    " \003(\0132\006.Point\022\027\n\007outline\030\004 \001(\0132\006.Color\022\020\n"
-    "\005width\030\005 \001(\005:\0011\022\024\n\004fill\030\006 \001(\0132\006.Color\"\240\001"
-    "\n\017MorphanKeyFrame\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022"
-    "\022\n\007scale_x\030\003 \001(\002:\0011\022\022\n\007scale_y\030\004 \001(\002:\0011\022"
-    "\020\n\010rotation\030\005 \001(\002\022\017\n\007opacity\030\006 \001(\002\022\036\n\npr"
-    "imitives\030\007 \003(\0132\n.Primitive\022\014\n\004secs\030\010 \001(\002"
-    "\"+\n\007Morphan\022 \n\006frames\030\001 \003(\0132\020.MorphanKey"
-    "Frame*\201\001\n\004Type\022\013\n\007INVALID\020\000\022\010\n\004LINE\020\001\022\r\n"
-    "\tRECTANGLE\020\002\022\n\n\006CIRCLE\020\003\022\022\n\016CONVEX_POLYG"
-    "ON\020\004\022\013\n\007POLYGON\020\005\022\013\n\007ELLIPSE\020\006\022\007\n\003ARC\020\007\022"
-    "\020\n\014BEZIER_CURVE\020\010", 577);
+    "\001x\030\001 \002(\002\022\t\n\001y\030\002 \002(\002\" \n\013ExtraParams\022\021\n\tnu"
+    "m_sides\030\001 \001(\005\"\250\001\n\016PrimitiveProto\022\n\n\002id\030\001"
+    " \001(\003\022\023\n\004type\030\002 \002(\0162\005.Type\022\026\n\006points\030\003 \003("
+    "\0132\006.Point\022\027\n\007outline\030\004 \001(\0132\006.Color\022\020\n\005wi"
+    "dth\030\005 \001(\005:\0011\022\024\n\004fill\030\006 \001(\0132\006.Color\022\034\n\006pa"
+    "rams\030\007 \001(\0132\014.ExtraParams\"\252\001\n\024MorphanKeyF"
+    "rameProto\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022\022\n\007scale"
+    "_x\030\003 \001(\002:\0011\022\022\n\007scale_y\030\004 \001(\002:\0011\022\020\n\010rotat"
+    "ion\030\005 \001(\002\022\017\n\007opacity\030\006 \001(\002\022#\n\nprimitives"
+    "\030\007 \003(\0132\017.PrimitiveProto\022\014\n\004secs\030\010 \001(\002\"5\n"
+    "\014MorphanProto\022%\n\006frames\030\001 \003(\0132\025.MorphanK"
+    "eyFrameProto*\201\001\n\004Type\022\013\n\007INVALID\020\000\022\010\n\004LI"
+    "NE\020\001\022\r\n\tRECTANGLE\020\002\022\n\n\006CIRCLE\020\003\022\022\n\016CONVE"
+    "X_POLYGON\020\004\022\013\n\007POLYGON\020\005\022\013\n\007ELLIPSE\020\006\022\007\n"
+    "\003ARC\020\007\022\020\n\014BEZIER_CURVE\020\010", 664);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Morphan.proto", &protobuf_RegisterTypes);
   Color::default_instance_ = new Color();
   Point::default_instance_ = new Point();
-  Primitive::default_instance_ = new Primitive();
-  MorphanKeyFrame::default_instance_ = new MorphanKeyFrame();
-  Morphan::default_instance_ = new Morphan();
+  ExtraParams::default_instance_ = new ExtraParams();
+  PrimitiveProto::default_instance_ = new PrimitiveProto();
+  MorphanKeyFrameProto::default_instance_ = new MorphanKeyFrameProto();
+  MorphanProto::default_instance_ = new MorphanProto();
   Color::default_instance_->InitAsDefaultInstance();
   Point::default_instance_->InitAsDefaultInstance();
-  Primitive::default_instance_->InitAsDefaultInstance();
-  MorphanKeyFrame::default_instance_->InitAsDefaultInstance();
-  Morphan::default_instance_->InitAsDefaultInstance();
+  ExtraParams::default_instance_->InitAsDefaultInstance();
+  PrimitiveProto::default_instance_->InitAsDefaultInstance();
+  MorphanKeyFrameProto::default_instance_->InitAsDefaultInstance();
+  MorphanProto::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_Morphan_2eproto);
 }
 
@@ -817,73 +844,285 @@ void Point::Swap(Point* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int Primitive::kIdFieldNumber;
-const int Primitive::kTypeFieldNumber;
-const int Primitive::kControlsFieldNumber;
-const int Primitive::kOutlineFieldNumber;
-const int Primitive::kWidthFieldNumber;
-const int Primitive::kFillFieldNumber;
+const int ExtraParams::kNumSidesFieldNumber;
 #endif  // !_MSC_VER
 
-Primitive::Primitive()
+ExtraParams::ExtraParams()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void Primitive::InitAsDefaultInstance() {
-  outline_ = const_cast< ::Color*>(&::Color::default_instance());
-  fill_ = const_cast< ::Color*>(&::Color::default_instance());
+void ExtraParams::InitAsDefaultInstance() {
 }
 
-Primitive::Primitive(const Primitive& from)
+ExtraParams::ExtraParams(const ExtraParams& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void Primitive::SharedCtor() {
+void ExtraParams::SharedCtor() {
+  _cached_size_ = 0;
+  num_sides_ = 0;
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+}
+
+ExtraParams::~ExtraParams() {
+  SharedDtor();
+}
+
+void ExtraParams::SharedDtor() {
+  if (this != default_instance_) {
+  }
+}
+
+void ExtraParams::SetCachedSize(int size) const {
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+}
+const ::google::protobuf::Descriptor* ExtraParams::descriptor() {
+  protobuf_AssignDescriptorsOnce();
+  return ExtraParams_descriptor_;
+}
+
+const ExtraParams& ExtraParams::default_instance() {
+  if (default_instance_ == NULL) protobuf_AddDesc_Morphan_2eproto();
+  return *default_instance_;
+}
+
+ExtraParams* ExtraParams::default_instance_ = NULL;
+
+ExtraParams* ExtraParams::New() const {
+  return new ExtraParams;
+}
+
+void ExtraParams::Clear() {
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    num_sides_ = 0;
+  }
+  ::memset(_has_bits_, 0, sizeof(_has_bits_));
+  mutable_unknown_fields()->Clear();
+}
+
+bool ExtraParams::MergePartialFromCodedStream(
+    ::google::protobuf::io::CodedInputStream* input) {
+#define DO_(EXPRESSION) if (!(EXPRESSION)) return false
+  ::google::protobuf::uint32 tag;
+  while ((tag = input->ReadTag()) != 0) {
+    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
+      // optional int32 num_sides = 1;
+      case 1: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &num_sides_)));
+          set_has_num_sides();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectAtEnd()) return true;
+        break;
+      }
+
+      default: {
+      handle_uninterpreted:
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
+          return true;
+        }
+        DO_(::google::protobuf::internal::WireFormat::SkipField(
+              input, tag, mutable_unknown_fields()));
+        break;
+      }
+    }
+  }
+  return true;
+#undef DO_
+}
+
+void ExtraParams::SerializeWithCachedSizes(
+    ::google::protobuf::io::CodedOutputStream* output) const {
+  // optional int32 num_sides = 1;
+  if (has_num_sides()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->num_sides(), output);
+  }
+
+  if (!unknown_fields().empty()) {
+    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
+        unknown_fields(), output);
+  }
+}
+
+::google::protobuf::uint8* ExtraParams::SerializeWithCachedSizesToArray(
+    ::google::protobuf::uint8* target) const {
+  // optional int32 num_sides = 1;
+  if (has_num_sides()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->num_sides(), target);
+  }
+
+  if (!unknown_fields().empty()) {
+    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
+        unknown_fields(), target);
+  }
+  return target;
+}
+
+int ExtraParams::ByteSize() const {
+  int total_size = 0;
+
+  if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    // optional int32 num_sides = 1;
+    if (has_num_sides()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->num_sides());
+    }
+
+  }
+  if (!unknown_fields().empty()) {
+    total_size +=
+      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
+        unknown_fields());
+  }
+  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
+  _cached_size_ = total_size;
+  GOOGLE_SAFE_CONCURRENT_WRITES_END();
+  return total_size;
+}
+
+void ExtraParams::MergeFrom(const ::google::protobuf::Message& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  const ExtraParams* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const ExtraParams*>(
+      &from);
+  if (source == NULL) {
+    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
+  } else {
+    MergeFrom(*source);
+  }
+}
+
+void ExtraParams::MergeFrom(const ExtraParams& from) {
+  GOOGLE_CHECK_NE(&from, this);
+  if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
+    if (from.has_num_sides()) {
+      set_num_sides(from.num_sides());
+    }
+  }
+  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
+}
+
+void ExtraParams::CopyFrom(const ::google::protobuf::Message& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void ExtraParams::CopyFrom(const ExtraParams& from) {
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool ExtraParams::IsInitialized() const {
+
+  return true;
+}
+
+void ExtraParams::Swap(ExtraParams* other) {
+  if (other != this) {
+    std::swap(num_sides_, other->num_sides_);
+    std::swap(_has_bits_[0], other->_has_bits_[0]);
+    _unknown_fields_.Swap(&other->_unknown_fields_);
+    std::swap(_cached_size_, other->_cached_size_);
+  }
+}
+
+::google::protobuf::Metadata ExtraParams::GetMetadata() const {
+  protobuf_AssignDescriptorsOnce();
+  ::google::protobuf::Metadata metadata;
+  metadata.descriptor = ExtraParams_descriptor_;
+  metadata.reflection = ExtraParams_reflection_;
+  return metadata;
+}
+
+
+// ===================================================================
+
+#ifndef _MSC_VER
+const int PrimitiveProto::kIdFieldNumber;
+const int PrimitiveProto::kTypeFieldNumber;
+const int PrimitiveProto::kPointsFieldNumber;
+const int PrimitiveProto::kOutlineFieldNumber;
+const int PrimitiveProto::kWidthFieldNumber;
+const int PrimitiveProto::kFillFieldNumber;
+const int PrimitiveProto::kParamsFieldNumber;
+#endif  // !_MSC_VER
+
+PrimitiveProto::PrimitiveProto()
+  : ::google::protobuf::Message() {
+  SharedCtor();
+}
+
+void PrimitiveProto::InitAsDefaultInstance() {
+  outline_ = const_cast< ::Color*>(&::Color::default_instance());
+  fill_ = const_cast< ::Color*>(&::Color::default_instance());
+  params_ = const_cast< ::ExtraParams*>(&::ExtraParams::default_instance());
+}
+
+PrimitiveProto::PrimitiveProto(const PrimitiveProto& from)
+  : ::google::protobuf::Message() {
+  SharedCtor();
+  MergeFrom(from);
+}
+
+void PrimitiveProto::SharedCtor() {
   _cached_size_ = 0;
   id_ = GOOGLE_LONGLONG(0);
   type_ = 0;
   outline_ = NULL;
   width_ = 1;
   fill_ = NULL;
+  params_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-Primitive::~Primitive() {
+PrimitiveProto::~PrimitiveProto() {
   SharedDtor();
 }
 
-void Primitive::SharedDtor() {
+void PrimitiveProto::SharedDtor() {
   if (this != default_instance_) {
     delete outline_;
     delete fill_;
+    delete params_;
   }
 }
 
-void Primitive::SetCachedSize(int size) const {
+void PrimitiveProto::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* Primitive::descriptor() {
+const ::google::protobuf::Descriptor* PrimitiveProto::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Primitive_descriptor_;
+  return PrimitiveProto_descriptor_;
 }
 
-const Primitive& Primitive::default_instance() {
+const PrimitiveProto& PrimitiveProto::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_Morphan_2eproto();
   return *default_instance_;
 }
 
-Primitive* Primitive::default_instance_ = NULL;
+PrimitiveProto* PrimitiveProto::default_instance_ = NULL;
 
-Primitive* Primitive::New() const {
-  return new Primitive;
+PrimitiveProto* PrimitiveProto::New() const {
+  return new PrimitiveProto;
 }
 
-void Primitive::Clear() {
+void PrimitiveProto::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     id_ = GOOGLE_LONGLONG(0);
     type_ = 0;
@@ -894,13 +1133,16 @@ void Primitive::Clear() {
     if (has_fill()) {
       if (fill_ != NULL) fill_->::Color::Clear();
     }
+    if (has_params()) {
+      if (params_ != NULL) params_->::ExtraParams::Clear();
+    }
   }
-  controls_.Clear();
+  points_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool Primitive::MergePartialFromCodedStream(
+bool PrimitiveProto::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -938,21 +1180,21 @@ bool Primitive::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_controls;
+        if (input->ExpectTag(26)) goto parse_points;
         break;
       }
 
-      // repeated .Point controls = 3;
+      // repeated .Point points = 3;
       case 3: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
-         parse_controls:
+         parse_points:
           DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-                input, add_controls()));
+                input, add_points()));
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(26)) goto parse_controls;
+        if (input->ExpectTag(26)) goto parse_points;
         if (input->ExpectTag(34)) goto parse_outline;
         break;
       }
@@ -997,6 +1239,20 @@ bool Primitive::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
+        if (input->ExpectTag(58)) goto parse_params;
+        break;
+      }
+
+      // optional .ExtraParams params = 7;
+      case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
+         parse_params:
+          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
+               input, mutable_params()));
+        } else {
+          goto handle_uninterpreted;
+        }
         if (input->ExpectAtEnd()) return true;
         break;
       }
@@ -1017,7 +1273,7 @@ bool Primitive::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void Primitive::SerializeWithCachedSizes(
+void PrimitiveProto::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional int64 id = 1;
   if (has_id()) {
@@ -1030,10 +1286,10 @@ void Primitive::SerializeWithCachedSizes(
       2, this->type(), output);
   }
 
-  // repeated .Point controls = 3;
-  for (int i = 0; i < this->controls_size(); i++) {
+  // repeated .Point points = 3;
+  for (int i = 0; i < this->points_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      3, this->controls(i), output);
+      3, this->points(i), output);
   }
 
   // optional .Color outline = 4;
@@ -1053,13 +1309,19 @@ void Primitive::SerializeWithCachedSizes(
       6, this->fill(), output);
   }
 
+  // optional .ExtraParams params = 7;
+  if (has_params()) {
+    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
+      7, this->params(), output);
+  }
+
   if (!unknown_fields().empty()) {
     ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
         unknown_fields(), output);
   }
 }
 
-::google::protobuf::uint8* Primitive::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* PrimitiveProto::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // optional int64 id = 1;
   if (has_id()) {
@@ -1072,11 +1334,11 @@ void Primitive::SerializeWithCachedSizes(
       2, this->type(), target);
   }
 
-  // repeated .Point controls = 3;
-  for (int i = 0; i < this->controls_size(); i++) {
+  // repeated .Point points = 3;
+  for (int i = 0; i < this->points_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        3, this->controls(i), target);
+        3, this->points(i), target);
   }
 
   // optional .Color outline = 4;
@@ -1098,6 +1360,13 @@ void Primitive::SerializeWithCachedSizes(
         6, this->fill(), target);
   }
 
+  // optional .ExtraParams params = 7;
+  if (has_params()) {
+    target = ::google::protobuf::internal::WireFormatLite::
+      WriteMessageNoVirtualToArray(
+        7, this->params(), target);
+  }
+
   if (!unknown_fields().empty()) {
     target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
         unknown_fields(), target);
@@ -1105,7 +1374,7 @@ void Primitive::SerializeWithCachedSizes(
   return target;
 }
 
-int Primitive::ByteSize() const {
+int PrimitiveProto::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1143,13 +1412,20 @@ int Primitive::ByteSize() const {
           this->fill());
     }
 
+    // optional .ExtraParams params = 7;
+    if (has_params()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
+          this->params());
+    }
+
   }
-  // repeated .Point controls = 3;
-  total_size += 1 * this->controls_size();
-  for (int i = 0; i < this->controls_size(); i++) {
+  // repeated .Point points = 3;
+  total_size += 1 * this->points_size();
+  for (int i = 0; i < this->points_size(); i++) {
     total_size +=
       ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-        this->controls(i));
+        this->points(i));
   }
 
   if (!unknown_fields().empty()) {
@@ -1163,10 +1439,10 @@ int Primitive::ByteSize() const {
   return total_size;
 }
 
-void Primitive::MergeFrom(const ::google::protobuf::Message& from) {
+void PrimitiveProto::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const Primitive* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Primitive*>(
+  const PrimitiveProto* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const PrimitiveProto*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1175,9 +1451,9 @@ void Primitive::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void Primitive::MergeFrom(const Primitive& from) {
+void PrimitiveProto::MergeFrom(const PrimitiveProto& from) {
   GOOGLE_CHECK_NE(&from, this);
-  controls_.MergeFrom(from.controls_);
+  points_.MergeFrom(from.points_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     if (from.has_id()) {
       set_id(from.id());
@@ -1194,27 +1470,30 @@ void Primitive::MergeFrom(const Primitive& from) {
     if (from.has_fill()) {
       mutable_fill()->::Color::MergeFrom(from.fill());
     }
+    if (from.has_params()) {
+      mutable_params()->::ExtraParams::MergeFrom(from.params());
+    }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void Primitive::CopyFrom(const ::google::protobuf::Message& from) {
+void PrimitiveProto::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Primitive::CopyFrom(const Primitive& from) {
+void PrimitiveProto::CopyFrom(const PrimitiveProto& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Primitive::IsInitialized() const {
+bool PrimitiveProto::IsInitialized() const {
   if ((_has_bits_[0] & 0x00000002) != 0x00000002) return false;
 
-  for (int i = 0; i < controls_size(); i++) {
-    if (!this->controls(i).IsInitialized()) return false;
+  for (int i = 0; i < points_size(); i++) {
+    if (!this->points(i).IsInitialized()) return false;
   }
   if (has_outline()) {
     if (!this->outline().IsInitialized()) return false;
@@ -1225,25 +1504,26 @@ bool Primitive::IsInitialized() const {
   return true;
 }
 
-void Primitive::Swap(Primitive* other) {
+void PrimitiveProto::Swap(PrimitiveProto* other) {
   if (other != this) {
     std::swap(id_, other->id_);
     std::swap(type_, other->type_);
-    controls_.Swap(&other->controls_);
+    points_.Swap(&other->points_);
     std::swap(outline_, other->outline_);
     std::swap(width_, other->width_);
     std::swap(fill_, other->fill_);
+    std::swap(params_, other->params_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);
   }
 }
 
-::google::protobuf::Metadata Primitive::GetMetadata() const {
+::google::protobuf::Metadata PrimitiveProto::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Primitive_descriptor_;
-  metadata.reflection = Primitive_reflection_;
+  metadata.descriptor = PrimitiveProto_descriptor_;
+  metadata.reflection = PrimitiveProto_reflection_;
   return metadata;
 }
 
@@ -1251,31 +1531,31 @@ void Primitive::Swap(Primitive* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int MorphanKeyFrame::kXFieldNumber;
-const int MorphanKeyFrame::kYFieldNumber;
-const int MorphanKeyFrame::kScaleXFieldNumber;
-const int MorphanKeyFrame::kScaleYFieldNumber;
-const int MorphanKeyFrame::kRotationFieldNumber;
-const int MorphanKeyFrame::kOpacityFieldNumber;
-const int MorphanKeyFrame::kPrimitivesFieldNumber;
-const int MorphanKeyFrame::kSecsFieldNumber;
+const int MorphanKeyFrameProto::kXFieldNumber;
+const int MorphanKeyFrameProto::kYFieldNumber;
+const int MorphanKeyFrameProto::kScaleXFieldNumber;
+const int MorphanKeyFrameProto::kScaleYFieldNumber;
+const int MorphanKeyFrameProto::kRotationFieldNumber;
+const int MorphanKeyFrameProto::kOpacityFieldNumber;
+const int MorphanKeyFrameProto::kPrimitivesFieldNumber;
+const int MorphanKeyFrameProto::kSecsFieldNumber;
 #endif  // !_MSC_VER
 
-MorphanKeyFrame::MorphanKeyFrame()
+MorphanKeyFrameProto::MorphanKeyFrameProto()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void MorphanKeyFrame::InitAsDefaultInstance() {
+void MorphanKeyFrameProto::InitAsDefaultInstance() {
 }
 
-MorphanKeyFrame::MorphanKeyFrame(const MorphanKeyFrame& from)
+MorphanKeyFrameProto::MorphanKeyFrameProto(const MorphanKeyFrameProto& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void MorphanKeyFrame::SharedCtor() {
+void MorphanKeyFrameProto::SharedCtor() {
   _cached_size_ = 0;
   x_ = 0;
   y_ = 0;
@@ -1287,37 +1567,37 @@ void MorphanKeyFrame::SharedCtor() {
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-MorphanKeyFrame::~MorphanKeyFrame() {
+MorphanKeyFrameProto::~MorphanKeyFrameProto() {
   SharedDtor();
 }
 
-void MorphanKeyFrame::SharedDtor() {
+void MorphanKeyFrameProto::SharedDtor() {
   if (this != default_instance_) {
   }
 }
 
-void MorphanKeyFrame::SetCachedSize(int size) const {
+void MorphanKeyFrameProto::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* MorphanKeyFrame::descriptor() {
+const ::google::protobuf::Descriptor* MorphanKeyFrameProto::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return MorphanKeyFrame_descriptor_;
+  return MorphanKeyFrameProto_descriptor_;
 }
 
-const MorphanKeyFrame& MorphanKeyFrame::default_instance() {
+const MorphanKeyFrameProto& MorphanKeyFrameProto::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_Morphan_2eproto();
   return *default_instance_;
 }
 
-MorphanKeyFrame* MorphanKeyFrame::default_instance_ = NULL;
+MorphanKeyFrameProto* MorphanKeyFrameProto::default_instance_ = NULL;
 
-MorphanKeyFrame* MorphanKeyFrame::New() const {
-  return new MorphanKeyFrame;
+MorphanKeyFrameProto* MorphanKeyFrameProto::New() const {
+  return new MorphanKeyFrameProto;
 }
 
-void MorphanKeyFrame::Clear() {
+void MorphanKeyFrameProto::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
     x_ = 0;
     y_ = 0;
@@ -1332,7 +1612,7 @@ void MorphanKeyFrame::Clear() {
   mutable_unknown_fields()->Clear();
 }
 
-bool MorphanKeyFrame::MergePartialFromCodedStream(
+bool MorphanKeyFrameProto::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
@@ -1433,7 +1713,7 @@ bool MorphanKeyFrame::MergePartialFromCodedStream(
         break;
       }
 
-      // repeated .Primitive primitives = 7;
+      // repeated .PrimitiveProto primitives = 7;
       case 7: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -1480,7 +1760,7 @@ bool MorphanKeyFrame::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void MorphanKeyFrame::SerializeWithCachedSizes(
+void MorphanKeyFrameProto::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
   // optional int32 x = 1;
   if (has_x()) {
@@ -1512,7 +1792,7 @@ void MorphanKeyFrame::SerializeWithCachedSizes(
     ::google::protobuf::internal::WireFormatLite::WriteFloat(6, this->opacity(), output);
   }
 
-  // repeated .Primitive primitives = 7;
+  // repeated .PrimitiveProto primitives = 7;
   for (int i = 0; i < this->primitives_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       7, this->primitives(i), output);
@@ -1529,7 +1809,7 @@ void MorphanKeyFrame::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* MorphanKeyFrame::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MorphanKeyFrameProto::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
   // optional int32 x = 1;
   if (has_x()) {
@@ -1561,7 +1841,7 @@ void MorphanKeyFrame::SerializeWithCachedSizes(
     target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(6, this->opacity(), target);
   }
 
-  // repeated .Primitive primitives = 7;
+  // repeated .PrimitiveProto primitives = 7;
   for (int i = 0; i < this->primitives_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -1580,7 +1860,7 @@ void MorphanKeyFrame::SerializeWithCachedSizes(
   return target;
 }
 
-int MorphanKeyFrame::ByteSize() const {
+int MorphanKeyFrameProto::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1624,7 +1904,7 @@ int MorphanKeyFrame::ByteSize() const {
     }
 
   }
-  // repeated .Primitive primitives = 7;
+  // repeated .PrimitiveProto primitives = 7;
   total_size += 1 * this->primitives_size();
   for (int i = 0; i < this->primitives_size(); i++) {
     total_size +=
@@ -1643,10 +1923,10 @@ int MorphanKeyFrame::ByteSize() const {
   return total_size;
 }
 
-void MorphanKeyFrame::MergeFrom(const ::google::protobuf::Message& from) {
+void MorphanKeyFrameProto::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const MorphanKeyFrame* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const MorphanKeyFrame*>(
+  const MorphanKeyFrameProto* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MorphanKeyFrameProto*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1655,7 +1935,7 @@ void MorphanKeyFrame::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void MorphanKeyFrame::MergeFrom(const MorphanKeyFrame& from) {
+void MorphanKeyFrameProto::MergeFrom(const MorphanKeyFrameProto& from) {
   GOOGLE_CHECK_NE(&from, this);
   primitives_.MergeFrom(from.primitives_);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
@@ -1684,19 +1964,19 @@ void MorphanKeyFrame::MergeFrom(const MorphanKeyFrame& from) {
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void MorphanKeyFrame::CopyFrom(const ::google::protobuf::Message& from) {
+void MorphanKeyFrameProto::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void MorphanKeyFrame::CopyFrom(const MorphanKeyFrame& from) {
+void MorphanKeyFrameProto::CopyFrom(const MorphanKeyFrameProto& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool MorphanKeyFrame::IsInitialized() const {
+bool MorphanKeyFrameProto::IsInitialized() const {
 
   for (int i = 0; i < primitives_size(); i++) {
     if (!this->primitives(i).IsInitialized()) return false;
@@ -1704,7 +1984,7 @@ bool MorphanKeyFrame::IsInitialized() const {
   return true;
 }
 
-void MorphanKeyFrame::Swap(MorphanKeyFrame* other) {
+void MorphanKeyFrameProto::Swap(MorphanKeyFrameProto* other) {
   if (other != this) {
     std::swap(x_, other->x_);
     std::swap(y_, other->y_);
@@ -1720,11 +2000,11 @@ void MorphanKeyFrame::Swap(MorphanKeyFrame* other) {
   }
 }
 
-::google::protobuf::Metadata MorphanKeyFrame::GetMetadata() const {
+::google::protobuf::Metadata MorphanKeyFrameProto::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = MorphanKeyFrame_descriptor_;
-  metadata.reflection = MorphanKeyFrame_reflection_;
+  metadata.descriptor = MorphanKeyFrameProto_descriptor_;
+  metadata.reflection = MorphanKeyFrameProto_reflection_;
   return metadata;
 }
 
@@ -1732,71 +2012,71 @@ void MorphanKeyFrame::Swap(MorphanKeyFrame* other) {
 // ===================================================================
 
 #ifndef _MSC_VER
-const int Morphan::kFramesFieldNumber;
+const int MorphanProto::kFramesFieldNumber;
 #endif  // !_MSC_VER
 
-Morphan::Morphan()
+MorphanProto::MorphanProto()
   : ::google::protobuf::Message() {
   SharedCtor();
 }
 
-void Morphan::InitAsDefaultInstance() {
+void MorphanProto::InitAsDefaultInstance() {
 }
 
-Morphan::Morphan(const Morphan& from)
+MorphanProto::MorphanProto(const MorphanProto& from)
   : ::google::protobuf::Message() {
   SharedCtor();
   MergeFrom(from);
 }
 
-void Morphan::SharedCtor() {
+void MorphanProto::SharedCtor() {
   _cached_size_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
-Morphan::~Morphan() {
+MorphanProto::~MorphanProto() {
   SharedDtor();
 }
 
-void Morphan::SharedDtor() {
+void MorphanProto::SharedDtor() {
   if (this != default_instance_) {
   }
 }
 
-void Morphan::SetCachedSize(int size) const {
+void MorphanProto::SetCachedSize(int size) const {
   GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
   _cached_size_ = size;
   GOOGLE_SAFE_CONCURRENT_WRITES_END();
 }
-const ::google::protobuf::Descriptor* Morphan::descriptor() {
+const ::google::protobuf::Descriptor* MorphanProto::descriptor() {
   protobuf_AssignDescriptorsOnce();
-  return Morphan_descriptor_;
+  return MorphanProto_descriptor_;
 }
 
-const Morphan& Morphan::default_instance() {
+const MorphanProto& MorphanProto::default_instance() {
   if (default_instance_ == NULL) protobuf_AddDesc_Morphan_2eproto();
   return *default_instance_;
 }
 
-Morphan* Morphan::default_instance_ = NULL;
+MorphanProto* MorphanProto::default_instance_ = NULL;
 
-Morphan* Morphan::New() const {
-  return new Morphan;
+MorphanProto* MorphanProto::New() const {
+  return new MorphanProto;
 }
 
-void Morphan::Clear() {
+void MorphanProto::Clear() {
   frames_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
   mutable_unknown_fields()->Clear();
 }
 
-bool Morphan::MergePartialFromCodedStream(
+bool MorphanProto::MergePartialFromCodedStream(
     ::google::protobuf::io::CodedInputStream* input) {
 #define DO_(EXPRESSION) if (!(EXPRESSION)) return false
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // repeated .MorphanKeyFrame frames = 1;
+      // repeated .MorphanKeyFrameProto frames = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
@@ -1827,9 +2107,9 @@ bool Morphan::MergePartialFromCodedStream(
 #undef DO_
 }
 
-void Morphan::SerializeWithCachedSizes(
+void MorphanProto::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // repeated .MorphanKeyFrame frames = 1;
+  // repeated .MorphanKeyFrameProto frames = 1;
   for (int i = 0; i < this->frames_size(); i++) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
       1, this->frames(i), output);
@@ -1841,9 +2121,9 @@ void Morphan::SerializeWithCachedSizes(
   }
 }
 
-::google::protobuf::uint8* Morphan::SerializeWithCachedSizesToArray(
+::google::protobuf::uint8* MorphanProto::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // repeated .MorphanKeyFrame frames = 1;
+  // repeated .MorphanKeyFrameProto frames = 1;
   for (int i = 0; i < this->frames_size(); i++) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
@@ -1857,10 +2137,10 @@ void Morphan::SerializeWithCachedSizes(
   return target;
 }
 
-int Morphan::ByteSize() const {
+int MorphanProto::ByteSize() const {
   int total_size = 0;
 
-  // repeated .MorphanKeyFrame frames = 1;
+  // repeated .MorphanKeyFrameProto frames = 1;
   total_size += 1 * this->frames_size();
   for (int i = 0; i < this->frames_size(); i++) {
     total_size +=
@@ -1879,10 +2159,10 @@ int Morphan::ByteSize() const {
   return total_size;
 }
 
-void Morphan::MergeFrom(const ::google::protobuf::Message& from) {
+void MorphanProto::MergeFrom(const ::google::protobuf::Message& from) {
   GOOGLE_CHECK_NE(&from, this);
-  const Morphan* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const Morphan*>(
+  const MorphanProto* source =
+    ::google::protobuf::internal::dynamic_cast_if_available<const MorphanProto*>(
       &from);
   if (source == NULL) {
     ::google::protobuf::internal::ReflectionOps::Merge(from, this);
@@ -1891,25 +2171,25 @@ void Morphan::MergeFrom(const ::google::protobuf::Message& from) {
   }
 }
 
-void Morphan::MergeFrom(const Morphan& from) {
+void MorphanProto::MergeFrom(const MorphanProto& from) {
   GOOGLE_CHECK_NE(&from, this);
   frames_.MergeFrom(from.frames_);
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
 }
 
-void Morphan::CopyFrom(const ::google::protobuf::Message& from) {
+void MorphanProto::CopyFrom(const ::google::protobuf::Message& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-void Morphan::CopyFrom(const Morphan& from) {
+void MorphanProto::CopyFrom(const MorphanProto& from) {
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Morphan::IsInitialized() const {
+bool MorphanProto::IsInitialized() const {
 
   for (int i = 0; i < frames_size(); i++) {
     if (!this->frames(i).IsInitialized()) return false;
@@ -1917,7 +2197,7 @@ bool Morphan::IsInitialized() const {
   return true;
 }
 
-void Morphan::Swap(Morphan* other) {
+void MorphanProto::Swap(MorphanProto* other) {
   if (other != this) {
     frames_.Swap(&other->frames_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
@@ -1926,11 +2206,11 @@ void Morphan::Swap(Morphan* other) {
   }
 }
 
-::google::protobuf::Metadata Morphan::GetMetadata() const {
+::google::protobuf::Metadata MorphanProto::GetMetadata() const {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::Metadata metadata;
-  metadata.descriptor = Morphan_descriptor_;
-  metadata.reflection = Morphan_reflection_;
+  metadata.descriptor = MorphanProto_descriptor_;
+  metadata.reflection = MorphanProto_reflection_;
   return metadata;
 }
 

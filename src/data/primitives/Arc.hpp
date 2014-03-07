@@ -27,9 +27,12 @@
 class Arc : public Primitive
 {
     public:
+        Arc() {}
         Arc(const wxRealPoint& start, const wxRealPoint& second, const wxRealPoint& end);
         std::vector<wxRealPoint> GetControlPoints() const;
+        bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
+        Type GetType() const {return Type::ARC;}
     private:
         wxRealPoint start;
         wxRealPoint second;

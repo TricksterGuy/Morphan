@@ -31,6 +31,17 @@ std::vector<wxRealPoint> Arc::GetControlPoints() const
     return {start, second, end};
 }
 
+bool Arc::SetControlPoints(const std::vector<wxRealPoint>& points)
+{
+    if (points.size() != 3) return false;
+
+    start = points[0];
+    second = points[1];
+    end = points[2];
+
+    return true;
+}
+
 void Arc::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);

@@ -20,6 +20,8 @@
  ******************************************************************************************************/
 
 #include "Morphan.hpp"
+#include "Morphan.pb.h"
+#include <fstream>
 
 IMPLEMENT_DYNAMIC_CLASS(Morphan, wxDocument)
 
@@ -34,16 +36,57 @@ void Morphan::Add(int frame, Primitive* primitive)
 bool Morphan::DeleteContents()
 {
     frames.clear();
-    frames.push_back(MorphanKeyFrame());
     return true;
 }
 
 bool Morphan::DoSaveDocument(const wxString& file)
 {
-    return true;
+    std::ofstream out(file.c_str());
+    if (!out.good()) return false;
+
+    MorphanProto morphproto;
+    for (unsigned int i = 0; i < frames.size(); i++)
+    {
+        const MorphanKeyFrame& frame = frames[i];
+        MorphanKeyFrameProto* mkfproto = morphproto.add_frames();
+        frame.Write(mkfproto);
+    }
+
+    bool ret = morphproto.SerializeToOstream(&out);
+    out.close();
+
+    return ret;
 }
 
 bool Morphan::DoOpenDocument(const wxString& file)
 {
+    std::ifstream in(file.c_str());
+    if (!in.good()) return false;
+
+    MorphanProto morphproto;
+    if (!morphproto.ParseFromIstream(&in))
+    {
+        in.close();
+        return false;
+    }
+
+    frames.clear();
+    for (const auto& mkfproto : morphproto.frames())
+    {
+        frames.push_back(MorphanKeyFrame());
+        MorphanKeyFrame& frame = frames.back();
+        frame.Read(mkfproto);
+    }
+
     return true;
 }
+
+bool Morphan::OnNewDocument()
+{
+    bool ret = wxDocument::OnNewDocument();
+    frames.clear();
+    frames.push_back(MorphanKeyFrame());
+    return ret;
+}
+
+

@@ -27,3 +27,12 @@ void BezierCurve::Draw(wxGCDC& dc) const
     Primitive::Draw(dc);
     BezierTool::Draw(dc, points);
 }
+
+bool BezierCurve::SetControlPoints(const std::vector<wxRealPoint>& npoints)
+{
+    if (npoints.size() <= 3) return false;
+
+    points = npoints;
+
+    return true;
+}

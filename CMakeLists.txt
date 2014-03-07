@@ -21,6 +21,7 @@ set(CPACK_PACKAGE_FILE_NAME "morphan-1.0.0-i386")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "i386")
 
 include(CPack)
+include(FindPkgConfig)
 
 add_definitions(-DLINUX)
 
@@ -40,10 +41,14 @@ set(SRC_MORPHAN
 	src/data/primitives/Line.cpp
 	src/data/primitives/Polygon.cpp
 	src/data/primitives/Primitive.cpp
+	src/data/primitives/PrimitiveFactory.cpp
 	src/data/primitives/Rectangle.cpp
 
+	src/gen/GridSizeGUI.cpp
 	src/gen/MorphanGUI.cpp
+	src/gen/Morphan.pb.cc
 
+	src/gui/GridSizeDialog.cpp
 	src/gui/MorphanApp.cpp
 	src/gui/MorphanFrame.cpp
 	src/gui/MorphanPanel.cpp
@@ -74,6 +79,7 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 set(wxWidgets_USE_LIBS xrc xml html adv gl net core base)
 find_package(wxWidgets REQUIRED)
 find_package(GTK2 REQUIRED gtk)
+pkg_search_module(PROTOBUF REQUIRED protobuf)
 
 IF(DEBUG_MODE)
     set(CMAKE_CXX_FLAGS "-g -Wall -std=c++0x -DwxUSE_GRAPHICS_CONTEXT=1")
@@ -91,6 +97,7 @@ include_directories(${morphan_SOURCE_DIR}/src/gui)
 include_directories(${morphan_SOURCE_DIR}/src/gui/images)
 include_directories(${morphan_SOURCE_DIR}/src/gui/tool)
 include_directories(${GTK2_INCLUDE_DIRS})
+include_directories(${PROTOBUF_INCLUDEDIR})
 
 add_executable(
 	morphan
@@ -101,6 +108,7 @@ target_link_libraries(
 	morphan
 	${wxWidgets_LIBRARIES}
 	${GTK2_LIBRARIES}
+	${PROTOBUF_LIBRARIES}
 )
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/morphan DESTINATION bin)
