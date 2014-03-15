@@ -29,9 +29,11 @@ class Rectangle : public Primitive
     public:
         Rectangle() {}
         Rectangle(const wxRealPoint& nstart, const wxRealPoint& nend) : start(nstart), end(nend) {}
+        Primitive* Copy() const;
         std::vector<wxRealPoint> GetControlPoints() const;
         bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
+        wxRect GetBounds() const;
         Type GetType() const {return Type::RECTANGLE;}
     private:
         wxRealPoint start;

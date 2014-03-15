@@ -29,9 +29,11 @@ class Circle : public Primitive
     public:
         Circle() {}
         Circle(const wxRealPoint& ncenter, const wxRealPoint& nedge) : center(ncenter), edge(nedge) {}
+        Primitive* Copy() const;
         std::vector<wxRealPoint> GetControlPoints() const;
         bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
+        wxRect GetBounds() const;
         Type GetType() const {return Type::CIRCLE;}
     private:
         wxRealPoint center;

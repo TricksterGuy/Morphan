@@ -23,6 +23,9 @@
 #include "MorphanApp.hpp"
 #include <wx/utils.h>
 #include <wx/event.h>
+#include <wx/time.h>
+
+#define SNAP_SENSITIVITY 15.0f
 
 IMPLEMENT_DYNAMIC_CLASS(MorphanView, wxView)
 
@@ -36,6 +39,7 @@ bool MorphanView::OnCreate(wxDocument* doc, long flags)
     panel = app->GetFrame()->GetPanel();
     SetFrame(app->GetFrame());
     tool = app->GetFrame()->GetTool();
+    modifyTool = app->GetFrame()->GetModifyTool();
 
     // Initialize the edit menu Undo and Redo items
     //doc->GetCommandProcessor()->SetEditMenu(app.GetMainWindowEditMenu());
@@ -49,6 +53,10 @@ bool MorphanView::OnCreate(wxDocument* doc, long flags)
 	panel->Connect(wxEVT_KEY_DOWN, wxKeyEventHandler(MorphanView::OnKey), NULL, this);
 	panel->Connect(wxEVT_KEY_UP, wxKeyEventHandler(MorphanView::OnKey), NULL, this);
 	panel->SetView(this);
+
+	wxSize size = panel->GetClientSize();
+	width = size.GetWidth();
+	height = size.GetHeight();
 
     return true;
 }
@@ -74,17 +82,24 @@ bool MorphanView::OnClose(bool deleteWindow)
 void MorphanView::OnUpdate(wxView* sender, wxObject* hint)
 {
     wxView::OnUpdate(sender, hint);
-
+    panel->Refresh();
 }
 
 void MorphanView::OnDraw(wxDC* dc)
+{
+
+}
+
+void MorphanView::OnDraw(wxDC& dc)
 {
     wxGraphicsContext* gc = wxGraphicsContext::Create(panel);
     if (!gc) return;
 
     wxGCDC gcdc(gc);
 
+    wxPoint origin = dc.GetDeviceOrigin();
     gcdc.SetUserScale(zoom, zoom);
+    gcdc.SetDeviceOrigin(origin.x, origin.y);
 
     if (show_grid)
         DrawGrid(gcdc);
@@ -100,6 +115,7 @@ void MorphanView::OnDraw(wxDC* dc)
     for (const Primitive* p : keyFrame.GetPrimitives())
     {
         p->Draw(gcdc);
+        //gcdc.DrawRectangle(p->GetBounds());
 
         if (show_points)
         {
@@ -111,10 +127,32 @@ void MorphanView::OnDraw(wxDC* dc)
         }
     }
 
-    if (!in_window || !tool->CanPreview()) return;
-    gcdc.SetPen(wxPen(wxColour(255, 0, 0, 255), outlineWidth));
-    gcdc.SetBrush(*wxTRANSPARENT_BRUSH);
-    tool->Preview(gcdc, mouse, wxGetKeyState(WXK_SHIFT));
+    if (in_window && (tool && tool->CanPreview()))
+    {
+        gcdc.SetPen(wxPen(wxColour(255, 0, 0, 255), outlineWidth));
+        gcdc.SetBrush(*wxTRANSPARENT_BRUSH);
+        tool->Preview(gcdc, mouse, wxGetKeyState(WXK_SHIFT));
+    }
+
+    if (in_window && (modifyTool && modifyTool->HasSelection()))
+    {
+        std::set<PrimitiveSelection> selection = modifyTool->PreviewModify(mouse);
+        cpbox.SetColour(*wxRED);
+        for (PrimitiveSelection ps : selection)
+        {
+            ps.primitive->SetOutline(*wxRED);
+            ps.primitive->Draw(gcdc);
+            if (show_points)
+            {
+                gcdc.SetPen(cpbox);
+                gcdc.SetBrush(cpfill);
+                const std::vector<wxRealPoint> points = ps.primitive->GetControlPoints();
+                for (const auto& point : points)
+                    gcdc.DrawRectangle(point.x - 3, point.y - 3, 6, 6);
+            }
+            delete ps.primitive;
+        }
+    }
 }
 
 void MorphanView::DrawGrid(wxGCDC& gcdc)
@@ -135,18 +173,63 @@ void MorphanView::DrawGrid(wxGCDC& gcdc)
 void MorphanView::OnClick(wxMouseEvent& event)
 {
     mouse = GetRealPosition(event.GetPosition());
-    tool->Add(mouse);
-    if ((tool->CanCreate() && tool->IsInfinitePoint() && event.ShiftDown()) ||
-        (tool->CanCreate() && !tool->IsInfinitePoint()))
+    if (tool)
     {
-        Primitive* p = tool->Create();
-        p->SetFill(fillColor);
-        p->SetOutline(outlineColor);
-        p->SetWidth(outlineWidth);
-        GetDocument()->Add(current_frame, p);
-        GetDocument()->Modify(true);
-        tool->Clear();
-        panel->Refresh();
+        tool->Add(mouse);
+        if ((tool->CanCreate() && tool->IsInfinitePoint() && event.ShiftDown()) ||
+            (tool->CanCreate() && !tool->IsInfinitePoint()))
+        {
+            Primitive* p = tool->Create();
+            p->SetFill(fillColor);
+            p->SetOutline(outlineColor);
+            p->SetWidth(outlineWidth);
+
+            p->SetId(timeSinceEpoch());
+            GetDocument()->Add(current_frame, p);
+            GetDocument()->Modify(true);
+            tool->Clear();
+            panel->Refresh();
+        }
+    }
+    else
+    {
+        const std::set<PrimitiveSelection>& selection = modifyTool->GetSelection();
+        std::vector<Primitive*> primitives = GetPrimitivesAt(mouse);
+        // No selection but we got primitives, set our selection.
+        if (selection.empty() && !primitives.empty())
+        {
+            modifyTool->SetSelection(primitives, mouse, true);
+        }
+        // We have a selection, and no primitives gotten perform action
+        else if (!selection.empty() && primitives.empty())
+        {
+            std::vector<Primitive*> added = modifyTool->Modify(mouse);
+            modifyTool->Clear();
+            for (Primitive* p : added)
+            {
+                p->SetId(timeSinceEpoch());
+                GetDocument()->Add(current_frame, p);
+            }
+            GetDocument()->Modify(true);
+            panel->Refresh();
+        }
+        // We have a selection, and a primitive was selected (we perform action)
+        else if (!selection.empty() && !primitives.empty() && !event.ControlDown())
+        {
+            std::vector<Primitive*> added = modifyTool->Modify(mouse);
+            modifyTool->Clear();
+            for (Primitive* p : added)
+            {
+                p->SetId(timeSinceEpoch());
+                GetDocument()->Add(current_frame, p);
+            }
+            GetDocument()->Modify(true);
+            panel->Refresh();
+        }
+        else if (!selection.empty() && !primitives.empty() && event.ControlDown())
+        {
+            modifyTool->SetSelection(primitives, mouse, false);
+        }
     }
 }
 
@@ -182,9 +265,69 @@ void MorphanView::OnKey(wxKeyEvent& event)
         panel->Refresh();
 }
 
+void MorphanView::NextFrame()
+{
+    current_frame = min(current_frame + 1, GetDocument()->NumFrames() - 1);
+    panel->Refresh();
+}
+
+void MorphanView::PrevFrame()
+{
+    current_frame = max(current_frame - 1, 0);
+    panel->Refresh();
+}
+
+void MorphanView::AddFrame()
+{
+    GetDocument()->Add(current_frame);
+    panel->Refresh();
+}
+
+void MorphanView::DeleteFrame()
+{
+    Morphan* morphan = GetDocument();
+    if (morphan->NumFrames() > 1)
+    {
+        GetDocument()->Delete(current_frame);
+        current_frame = min(current_frame + 1, GetDocument()->NumFrames() - 1);
+        panel->Refresh();
+    }
+}
+
 Morphan* MorphanView::GetDocument()
 {
     return wxStaticCast(wxView::GetDocument(), Morphan);
+}
+
+
+void MorphanView::SetOutlineColor(const wxColour& color)
+{
+    outlineColor = color;
+    if (modifyTool && modifyTool->HasSelection())
+    {
+        modifyTool->Modify(color, -1, wxNullColour);
+        panel->Refresh();
+    }
+}
+
+void MorphanView::SetOutlineWidth(int width)
+{
+    outlineWidth = width;
+    if (modifyTool && modifyTool->HasSelection())
+    {
+        modifyTool->Modify(wxNullColour, width, wxNullColour);
+        panel->Refresh();
+    }
+}
+
+void MorphanView::SetFillColor(const wxColour& color)
+{
+    fillColor = color;
+    if (modifyTool && modifyTool->HasSelection())
+    {
+        modifyTool->Modify(wxNullColour, -1, color);
+        panel->Refresh();
+    }
 }
 
 MorphanKeyFrame& MorphanView::GetCurrentFrame()
@@ -213,20 +356,109 @@ void MorphanView::SetGridSize(int width, int height)
 void MorphanView::SetZoom(float nzoom)
 {
     zoom = nzoom;
+    DoSetSize(width, height);
+    panel->Refresh();
+}
+
+void MorphanView::GetCanvasSize(int& nwidth, int& nheight) const
+{
+    nwidth = width;
+    nheight = height;
+}
+
+void MorphanView::SetCanvasSize(int nwidth, int nheight)
+{
+    width = nwidth;
+    height = nheight;
+    DoSetSize(width, height);
+    panel->Refresh();
+}
+
+void MorphanView::DoSetSize(int width, int height)
+{
+    float w = width * zoom;
+    float h = height * zoom;
+    wxSize size = panel->GetClientSize();
+    /*if (w < size.GetWidth() || h < size.GetHeight())
+    {
+        panel->SetClientSize(w, h);
+        panel->SetVirtualSize(w, h);
+    }
+    else*/
+    {
+        panel->SetVirtualSize(w, h);
+    }
+
     panel->Refresh();
 }
 
 wxRealPoint MorphanView::GetRealPosition(const wxPoint& point)
 {
-    wxRealPoint ret(point);
-    if (snap_grid)
+    wxRealPoint ret = panel->CalcUnscrolledPosition(point);
+    bool snapped = false;
+    if (snap_points)
+    {
+        wxRealPoint closest = GetClosestPoint(ret);
+        if (distance(ret, closest) < SNAP_SENSITIVITY)
+        {
+            ret = closest;
+            snapped = true;
+        }
+    }
+    if (snap_grid && !snapped)
     {
         float gridw = grid_width * zoom;
         float gridh = grid_height * zoom;
         ret.x = round(point.x / gridw) * gridw;
         ret.y = round(point.y / gridh) * gridh;
     }
+
     ret.x = ret.x / zoom;
     ret.y = ret.y / zoom;
     return ret;
+}
+
+std::vector<Primitive*> MorphanView::GetPrimitivesAt(const wxRealPoint& position)
+{
+    std::vector<Primitive*> primitives;
+    Morphan* morphan = GetDocument();
+    MorphanKeyFrame& frame = morphan->Get(current_frame);
+
+    for (Primitive* p : frame.GetPrimitives())
+    {
+        std::vector<wxRealPoint> points = p->GetControlPoints();
+        for (unsigned int i = 0; i < points.size(); i++)
+        {
+            if (distance(points[i], position) < SNAP_SENSITIVITY)
+                primitives.push_back(p);
+        }
+    }
+
+    return primitives;
+}
+
+wxRealPoint MorphanView::GetClosestPoint(const wxRealPoint& position)
+{
+    std::vector<Primitive*> primitives;
+    Morphan* morphan = GetDocument();
+    MorphanKeyFrame& frame = morphan->Get(current_frame);
+
+    float shortest = 1e9;
+    wxRealPoint closest = position;
+
+    for (Primitive* p : frame.GetPrimitives())
+    {
+        std::vector<wxRealPoint> points = p->GetControlPoints();
+        for (unsigned int i = 0; i < points.size(); i++)
+        {
+            float dist = distance(points[i], position);
+            if (dist < shortest)
+            {
+                closest = points[i];
+                shortest = dist;
+            }
+        }
+    }
+
+    return closest;
 }

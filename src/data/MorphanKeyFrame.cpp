@@ -24,8 +24,29 @@
 
 MorphanKeyFrame::~MorphanKeyFrame()
 {
+}
+
+void MorphanKeyFrame::Dispose()
+{
     for (Primitive* primitive : primitives)
         delete primitive;
+    primitives.clear();
+}
+
+MorphanKeyFrame MorphanKeyFrame::Copy()
+{
+    MorphanKeyFrame frame;
+    for (Primitive* primitive : primitives)
+        frame.Add(primitive->Copy());
+    frame.x = x;
+    frame.y = y;
+    frame.scale_x = scale_x;
+    frame.scale_y = scale_y;
+    frame.secs = secs;
+    frame.opacity = opacity;
+    frame.rotation = rotation;
+
+    return frame;
 }
 
 void MorphanKeyFrame::Add(Primitive* primitive)

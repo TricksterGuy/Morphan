@@ -22,10 +22,14 @@
 #ifndef ICONS_HPP
 #define ICONS_HPP
 
+extern unsigned char Select_png[898];
 extern unsigned char Rectangle_png[307];
 extern unsigned char Polygon_png[516];
+extern unsigned char MovePoint_png[327];
+extern unsigned char MoveObject_png[530];
 extern unsigned char Line_png[249];
 extern unsigned char Ellipse_png[437];
+extern unsigned char Duplicate_png[402];
 extern unsigned char ConvexPolygon_png[454];
 extern unsigned char Circle_png[474];
 extern unsigned char BezierCurve_png[349];

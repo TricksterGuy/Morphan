@@ -23,20 +23,19 @@
 #include <wx/dcclient.h>
 
 MorphanPanel::MorphanPanel(wxWindow* Parent, wxWindowID Id, const wxPoint& Position, const wxSize& Size, long Style) :
-    wxPanel(Parent, Id, Position, Size, Style), view(NULL)
+    wxScrolledCanvas(Parent, Id, Position, Size, Style), view(NULL)
 {
-    Connect(wxEVT_PAINT, wxPaintEventHandler(MorphanPanel::OnPaint), NULL, this);
+    EnableScrolling(true, true);
+    SetScrollRate(1, 1);
 }
 
 MorphanPanel::~MorphanPanel()
 {
-    Disconnect(wxEVT_PAINT, wxPaintEventHandler(MorphanPanel::OnPaint), NULL, this);
 }
 
-void MorphanPanel::OnPaint(wxPaintEvent& event)
+void MorphanPanel::OnDraw(wxDC& dc)
 {
-    wxPaintDC dc(this);
     if (view)
-        view->OnDraw(&dc);
+        view->OnDraw(dc);
 }
 

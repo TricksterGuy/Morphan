@@ -19,38 +19,17 @@
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
 
-#ifndef MORPHAN_HPP
-#define MORPHAN_HPP
+#ifndef MOVE_POINT_TOOL_HPP
+#define MOVE_POINT_TOOL_HPP
 
-#include "MorphanKeyFrame.hpp"
-#include <wx/docview.h>
-#include <vector>
+#include "ModifyTool.hpp"
 
-class Morphan : public wxDocument
+class MovePointTool : public ModifyTool
 {
     public:
-        Morphan() : frames(1) {}
-        ~Morphan() {}
-        void Dispose();
-        bool DeleteContents();
-        int NumFrames() const {return frames.size();}
-        const MorphanKeyFrame& Get(int frame) const {return frames[frame];}
-        MorphanKeyFrame& Get(int frame) {return frames[frame];}
-        /*** Adds primitive to key frame */
-        void Add(int frame, Primitive* primitive);
-        /*** Adds new key frame */
-        void Add(int frame);
-        /*** Deletes primitive from frame */
-        void Delete(int frame, Primitive* primitive);
-        /*** Deletes keyframe */
-        void Delete(int frame);
-        bool OnNewDocument();
-    protected:
-        bool DoSaveDocument(const wxString& file);
-        bool DoOpenDocument(const wxString& file);
-    private:
-        std::vector<MorphanKeyFrame> frames;
-        DECLARE_DYNAMIC_CLASS(Morphan)
+        MovePointTool() {}
+        /*** Performs the main modification */
+        std::vector<Primitive*> Modify(const wxRealPoint& origin);
 };
 
 #endif

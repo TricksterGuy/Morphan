@@ -21,9 +21,27 @@
 
 #include "Primitive.hpp"
 
+void Primitive::CopyAttributes(Primitive* primitive, bool same_id) const
+{
+    primitive->SetOutline(outline);
+    primitive->SetFill(fill);
+    primitive->SetWidth(width);
+    if (same_id) primitive->SetId(id);
+}
+
+void Primitive::Move(float x, float y)
+{
+    std::vector<wxRealPoint> cpoints = GetControlPoints();
+    for (auto& pt : cpoints)
+    {
+        pt.x += x;
+        pt.y += y;
+    }
+    SetControlPoints(cpoints);
+}
+
 void Primitive::Draw(wxGCDC& dc) const
 {
-    printf("%d %d %d %d\n", fill.Red(), fill.Green(), fill.Blue(), fill.Alpha());
     dc.SetPen(wxPen(outline, width));
     dc.SetBrush(wxBrush(fill));
 }

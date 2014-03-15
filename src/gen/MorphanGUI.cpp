@@ -17,121 +17,136 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
 	m_menubar1 = new wxMenuBar( 0 );
-	file = new wxMenu();
+	fileMenu = new wxMenu();
 	wxMenuItem* newMenu;
-	newMenu = new wxMenuItem( file, wxID_NEW, wxString( wxT("&New") ) + wxT('\t') + wxT("Ctrl+N"), wxEmptyString, wxITEM_NORMAL );
-	file->Append( newMenu );
+	newMenu = new wxMenuItem( fileMenu, wxID_NEW, wxString( wxT("&New") ) + wxT('\t') + wxT("Ctrl+N"), wxEmptyString, wxITEM_NORMAL );
+	fileMenu->Append( newMenu );
 
 	wxMenuItem* open;
-	open = new wxMenuItem( file, wxID_OPEN, wxString( wxT("&Open") ) + wxT('\t') + wxT("Ctrl+O"), wxEmptyString, wxITEM_NORMAL );
-	file->Append( open );
+	open = new wxMenuItem( fileMenu, wxID_OPEN, wxString( wxT("&Open") ) + wxT('\t') + wxT("Ctrl+O"), wxEmptyString, wxITEM_NORMAL );
+	fileMenu->Append( open );
 
 	wxMenuItem* save;
-	save = new wxMenuItem( file, wxID_SAVE, wxString( wxT("&Save") ) + wxT('\t') + wxT("Ctrl+S"), wxEmptyString, wxITEM_NORMAL );
-	file->Append( save );
+	save = new wxMenuItem( fileMenu, wxID_SAVE, wxString( wxT("&Save") ) + wxT('\t') + wxT("Ctrl+S"), wxEmptyString, wxITEM_NORMAL );
+	fileMenu->Append( save );
 
 	wxMenuItem* saveAs;
-	saveAs = new wxMenuItem( file, wxID_SAVEAS, wxString( wxT("Save &As") ) + wxT('\t') + wxT("Ctrl+S"), wxEmptyString, wxITEM_NORMAL );
-	file->Append( saveAs );
+	saveAs = new wxMenuItem( fileMenu, wxID_SAVEAS, wxString( wxT("Save &As") ) + wxT('\t') + wxT("Ctrl+S"), wxEmptyString, wxITEM_NORMAL );
+	fileMenu->Append( saveAs );
 
 	wxMenuItem* revert;
-	revert = new wxMenuItem( file, wxID_REVERT, wxString( wxT("&Revert") ) + wxT('\t') + wxT("Ctrl+R"), wxEmptyString, wxITEM_NORMAL );
-	file->Append( revert );
+	revert = new wxMenuItem( fileMenu, wxID_REVERT, wxString( wxT("&Revert") ) + wxT('\t') + wxT("Ctrl+R"), wxEmptyString, wxITEM_NORMAL );
+	fileMenu->Append( revert );
 
 	menuRecent = new wxMenu();
 	menuRecent->AppendSeparator();
 
-	file->Append( -1, wxT("Recent"), menuRecent );
+	fileMenu->Append( -1, wxT("Recent"), menuRecent );
 
 	wxMenuItem* exit;
-	exit = new wxMenuItem( file, wxID_EXIT, wxString( wxT("&Exit") ) + wxT('\t') + wxT("Alt+F4"), wxEmptyString, wxITEM_NORMAL );
-	file->Append( exit );
+	exit = new wxMenuItem( fileMenu, wxID_EXIT, wxString( wxT("&Exit") ) + wxT('\t') + wxT("Alt+F4"), wxEmptyString, wxITEM_NORMAL );
+	fileMenu->Append( exit );
 
-	m_menubar1->Append( file, wxT("&File") );
+	m_menubar1->Append( fileMenu, wxT("&File") );
 
-	edit = new wxMenu();
+	editMenu = new wxMenu();
 	wxMenuItem* undo;
-	undo = new wxMenuItem( edit, wxID_UNDO, wxString( wxT("&Undo") ) + wxT('\t') + wxT("Ctrl+Z"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( undo );
+	undo = new wxMenuItem( editMenu, wxID_UNDO, wxString( wxT("&Undo") ) + wxT('\t') + wxT("Ctrl+Z"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( undo );
 
 	wxMenuItem* redo;
-	redo = new wxMenuItem( edit, wxID_REDO, wxString( wxT("&Redo") ) + wxT('\t') + wxT("Ctrl+Y"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( redo );
+	redo = new wxMenuItem( editMenu, wxID_REDO, wxString( wxT("&Redo") ) + wxT('\t') + wxT("Ctrl+Y"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( redo );
 
-	edit->AppendSeparator();
+	editMenu->AppendSeparator();
+
+	selectMode = new wxMenu();
+	wxMenuItem* selectAllPoints;
+	selectAllPoints = new wxMenuItem( selectMode, wxID_ANY, wxString( wxT("Select All Points") ) , wxEmptyString, wxITEM_RADIO );
+	selectMode->Append( selectAllPoints );
+
+	wxMenuItem* selectFirstPoint;
+	selectFirstPoint = new wxMenuItem( selectMode, ID_SELECT_FIRST_POINT, wxString( wxT("Select First Point") ) , wxEmptyString, wxITEM_RADIO );
+	selectMode->Append( selectFirstPoint );
+
+	editMenu->Append( -1, wxT("Selection Mode"), selectMode );
 
 	wxMenuItem* selectAll;
-	selectAll = new wxMenuItem( edit, ID_SELECT_ALL, wxString( wxT("&Select All") ) + wxT('\t') + wxT("Ctrl+A"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( selectAll );
+	selectAll = new wxMenuItem( editMenu, ID_SELECT_ALL, wxString( wxT("&Select All") ) + wxT('\t') + wxT("Ctrl+A"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( selectAll );
 
 	wxMenuItem* selectNone;
-	selectNone = new wxMenuItem( edit, ID_SELECT_NONE, wxString( wxT("&Select None") ) + wxT('\t') + wxT("Ctrl+Shift+A"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( selectNone );
+	selectNone = new wxMenuItem( editMenu, ID_SELECT_NONE, wxString( wxT("&Select None") ) + wxT('\t') + wxT("Ctrl+Shift+A"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( selectNone );
 
 	wxMenuItem* cut;
-	cut = new wxMenuItem( edit, ID_CUT, wxString( wxT("Cu&t") ) + wxT('\t') + wxT("Ctrl+X"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( cut );
+	cut = new wxMenuItem( editMenu, ID_CUT, wxString( wxT("Cu&t") ) + wxT('\t') + wxT("Ctrl+X"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( cut );
 
 	wxMenuItem* copy;
-	copy = new wxMenuItem( edit, ID_COPY, wxString( wxT("&Copy") ) + wxT('\t') + wxT("Ctrl+C"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( copy );
+	copy = new wxMenuItem( editMenu, ID_COPY, wxString( wxT("&Copy") ) + wxT('\t') + wxT("Ctrl+C"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( copy );
 
 	wxMenuItem* paste;
-	paste = new wxMenuItem( edit, ID_PASTE, wxString( wxT("&Paste") ) + wxT('\t') + wxT("Ctrl+V"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( paste );
+	paste = new wxMenuItem( editMenu, ID_PASTE, wxString( wxT("&Paste") ) + wxT('\t') + wxT("Ctrl+V"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( paste );
 
 	wxMenuItem* clear;
-	clear = new wxMenuItem( edit, ID_CLEAR, wxString( wxT("Cl&ear") ) + wxT('\t') + wxT("Delete"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( clear );
+	clear = new wxMenuItem( editMenu, ID_CLEAR, wxString( wxT("Cl&ear") ) + wxT('\t') + wxT("Delete"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( clear );
 
 	wxMenuItem* duplicate;
-	duplicate = new wxMenuItem( edit, ID_DUPLICATE, wxString( wxT("&Duplicate") ) + wxT('\t') + wxT("Ctrl+D"), wxEmptyString, wxITEM_NORMAL );
-	edit->Append( duplicate );
+	duplicate = new wxMenuItem( editMenu, ID_DUPLICATE, wxString( wxT("&Duplicate") ) + wxT('\t') + wxT("Ctrl+D"), wxEmptyString, wxITEM_NORMAL );
+	editMenu->Append( duplicate );
 
-	m_menubar1->Append( edit, wxT("&Edit") );
+	m_menubar1->Append( editMenu, wxT("&Edit") );
 
-	view = new wxMenu();
+	viewMenu = new wxMenu();
 	wxMenuItem* canvasSize;
-	canvasSize = new wxMenuItem( view, ID_CANVAS_SIZE, wxString( wxT("&Canvas Size...") ) , wxEmptyString, wxITEM_NORMAL );
-	view->Append( canvasSize );
+	canvasSize = new wxMenuItem( viewMenu, ID_CANVAS_SIZE, wxString( wxT("&Canvas Size...") ) , wxEmptyString, wxITEM_NORMAL );
+	viewMenu->Append( canvasSize );
 
 	wxMenuItem* shrinkWrap;
-	shrinkWrap = new wxMenuItem( view, ID_SHRINK_WRAP, wxString( wxT("&Shrink Wrap") ) + wxT('\t') + wxT("Ctrl+E"), wxEmptyString, wxITEM_NORMAL );
-	view->Append( shrinkWrap );
+	shrinkWrap = new wxMenuItem( viewMenu, ID_SHRINK_WRAP, wxString( wxT("&Shrink Wrap") ) + wxT('\t') + wxT("Ctrl+E"), wxEmptyString, wxITEM_NORMAL );
+	viewMenu->Append( shrinkWrap );
 
-	view->AppendSeparator();
+	viewMenu->AppendSeparator();
 
 	wxMenuItem* zoomIn;
-	zoomIn = new wxMenuItem( view, ID_ZOOM_IN, wxString( wxT("Zoom &In") ) + wxT('\t') + wxT("Ctrl++"), wxEmptyString, wxITEM_NORMAL );
-	view->Append( zoomIn );
+	zoomIn = new wxMenuItem( viewMenu, ID_ZOOM_IN, wxString( wxT("Zoom &In") ) + wxT('\t') + wxT("Ctrl++"), wxEmptyString, wxITEM_NORMAL );
+	viewMenu->Append( zoomIn );
 
 	wxMenuItem* zoomOut;
-	zoomOut = new wxMenuItem( view, ID_ZOOM_OUT, wxString( wxT("Zoom &Out") ) + wxT('\t') + wxT("Ctrl+-"), wxEmptyString, wxITEM_NORMAL );
-	view->Append( zoomOut );
+	zoomOut = new wxMenuItem( viewMenu, ID_ZOOM_OUT, wxString( wxT("Zoom &Out") ) + wxT('\t') + wxT("Ctrl+-"), wxEmptyString, wxITEM_NORMAL );
+	viewMenu->Append( zoomOut );
 
 	wxMenuItem* resetZoom;
-	resetZoom = new wxMenuItem( view, ID_RESET_ZOOM, wxString( wxT("&Reset Zoom") ) + wxT('\t') + wxT("Ctrl+0"), wxEmptyString, wxITEM_NORMAL );
-	view->Append( resetZoom );
+	resetZoom = new wxMenuItem( viewMenu, ID_RESET_ZOOM, wxString( wxT("&Reset Zoom") ) + wxT('\t') + wxT("Ctrl+0"), wxEmptyString, wxITEM_NORMAL );
+	viewMenu->Append( resetZoom );
 
 	wxMenuItem* zoom;
-	zoom = new wxMenuItem( view, ID_ZOOM, wxString( wxT("&Zoom...") ) , wxEmptyString, wxITEM_NORMAL );
-	view->Append( zoom );
+	zoom = new wxMenuItem( viewMenu, ID_ZOOM, wxString( wxT("&Zoom...") ) , wxEmptyString, wxITEM_NORMAL );
+	viewMenu->Append( zoom );
 
-	view->AppendSeparator();
+	viewMenu->AppendSeparator();
 
 	wxMenuItem* modifyGrid;
-	modifyGrid = new wxMenuItem( view, ID_MODIFY_GRID, wxString( wxT("&Modify Grid...") ) , wxEmptyString, wxITEM_NORMAL );
-	view->Append( modifyGrid );
+	modifyGrid = new wxMenuItem( viewMenu, ID_MODIFY_GRID, wxString( wxT("&Modify Grid...") ) , wxEmptyString, wxITEM_NORMAL );
+	viewMenu->Append( modifyGrid );
 
 	wxMenuItem* showGrid;
-	showGrid = new wxMenuItem( view, ID_SHOW_GRID, wxString( wxT("Show &Grid") ) + wxT('\t') + wxT("Ctrl+G"), wxEmptyString, wxITEM_CHECK );
-	view->Append( showGrid );
+	showGrid = new wxMenuItem( viewMenu, ID_SHOW_GRID, wxString( wxT("Show &Grid") ) + wxT('\t') + wxT("Ctrl+G"), wxEmptyString, wxITEM_CHECK );
+	viewMenu->Append( showGrid );
 
 	wxMenuItem* snapToGrid;
-	snapToGrid = new wxMenuItem( view, ID_SNAP_TO_GRID, wxString( wxT("Snap &To Grid") ) , wxEmptyString, wxITEM_CHECK );
-	view->Append( snapToGrid );
+	snapToGrid = new wxMenuItem( viewMenu, ID_SNAP_TO_GRID, wxString( wxT("Snap &To Grid") ) , wxEmptyString, wxITEM_CHECK );
+	viewMenu->Append( snapToGrid );
 
-	m_menubar1->Append( view, wxT("&View") );
+	wxMenuItem* snapToPoint;
+	snapToPoint = new wxMenuItem( viewMenu, ID_SNAP_TO_POINT, wxString( wxT("Snap &To Point") ) , wxEmptyString, wxITEM_CHECK );
+	viewMenu->Append( snapToPoint );
+
+	m_menubar1->Append( viewMenu, wxT("&View") );
 
 	playMenu = new wxMenu();
 	wxMenuItem* play;
@@ -164,7 +179,7 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	bSizer4 = new wxBoxSizer( wxVERTICAL );
 
 	morphanPanel = new MorphanPanel( main, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	bSizer4->Add( morphanPanel, 7, wxEXPAND, 5 );
+	bSizer4->Add( morphanPanel, 1, wxEXPAND, 5 );
 
 	wxBoxSizer* bSizer6;
 	bSizer6 = new wxBoxSizer( wxHORIZONTAL );
@@ -240,6 +255,13 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	keyFrameOpacity = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, 0 );
 	fgSizer1->Add( keyFrameOpacity, 0, wxALL, 5 );
 
+	m_staticText10 = new wxStaticText( main, wxID_ANY, wxT("Duration:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText10->Wrap( -1 );
+	fgSizer1->Add( m_staticText10, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	keyFrameSecs = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 5000, 1000 );
+	fgSizer1->Add( keyFrameSecs, 0, wxALL, 5 );
+
 
 	sbSizer3->Add( fgSizer1, 0, wxEXPAND, 5 );
 
@@ -258,7 +280,7 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	m_staticText8->Wrap( -1 );
 	fgSizer2->Add( m_staticText8, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	outlineColor = new wxColourPickerCtrl( main, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	outlineColor = new wxColourPickerCtrl( main, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE|wxCLRP_SHOW_LABEL );
 	fgSizer2->Add( outlineColor, 0, wxALL, 5 );
 
 	m_staticText91 = new wxStaticText( main, wxID_ANY, wxT("Width:"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -272,7 +294,7 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	m_staticText81->Wrap( -1 );
 	fgSizer2->Add( m_staticText81, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	fillColor = new wxColourPickerCtrl( main, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE );
+	fillColor = new wxColourPickerCtrl( main, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE|wxCLRP_SHOW_LABEL );
 	fgSizer2->Add( fillColor, 0, wxALL, 5 );
 
 
@@ -324,22 +346,22 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	toolSizer->Add( toolbtn8, 0, wxALL, 5 );
 
 	toolbtn9 = new wxBitmapToggleButton( main, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
-	toolbtn9->SetToolTip( wxT("Bezier") );
+	toolbtn9->SetToolTip( wxT("Move Point") );
 
 	toolSizer->Add( toolbtn9, 0, wxALL, 5 );
 
 	toolbtn10 = new wxBitmapToggleButton( main, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
-	toolbtn10->SetToolTip( wxT("Bezier") );
+	toolbtn10->SetToolTip( wxT("Move Object") );
 
 	toolSizer->Add( toolbtn10, 0, wxALL, 5 );
 
 	toolbtn11 = new wxBitmapToggleButton( main, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
-	toolbtn11->SetToolTip( wxT("Line") );
+	toolbtn11->SetToolTip( wxT("Duplicate") );
 
 	toolSizer->Add( toolbtn11, 0, wxALL, 5 );
 
 	toolbtn12 = new wxBitmapToggleButton( main, wxID_ANY, wxNullBitmap, wxDefaultPosition, wxDefaultSize, wxBU_AUTODRAW );
-	toolbtn12->SetToolTip( wxT("Line") );
+	toolbtn12->SetToolTip( wxT("Select Objects") );
 
 	toolSizer->Add( toolbtn12, 0, wxALL, 5 );
 
@@ -379,6 +401,7 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	this->Connect( modifyGrid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnModifyGrid ) );
 	this->Connect( showGrid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnShowGrid ) );
 	this->Connect( snapToGrid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnSnapToGrid ) );
+	this->Connect( snapToPoint->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnSnapToPoints ) );
 	this->Connect( play->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnPlay ) );
 	m_button1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnNextFrame ), NULL, this );
 	m_button2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnPrevFrame ), NULL, this );
@@ -414,6 +437,7 @@ MorphanGUI::~MorphanGUI()
 	this->Disconnect( ID_MODIFY_GRID, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnModifyGrid ) );
 	this->Disconnect( ID_SHOW_GRID, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnShowGrid ) );
 	this->Disconnect( ID_SNAP_TO_GRID, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnSnapToGrid ) );
+	this->Disconnect( ID_SNAP_TO_POINT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnSnapToPoints ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnPlay ) );
 	m_button1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnNextFrame ), NULL, this );
 	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnPrevFrame ), NULL, this );

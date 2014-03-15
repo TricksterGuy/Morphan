@@ -22,6 +22,13 @@
 #include "Circle.hpp"
 #include "CircleTool.hpp"
 
+Primitive* Circle::Copy() const
+{
+    Primitive* primitive = new Circle(center, edge);
+    CopyAttributes(primitive);
+    return primitive;
+}
+
 std::vector<wxRealPoint> Circle::GetControlPoints() const
 {
     return {center, edge};
@@ -41,4 +48,10 @@ void Circle::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
     CircleTool::Draw(dc, center, edge);
+}
+
+wxRect Circle::GetBounds() const
+{
+    float radius = distance(center, edge);
+    return wxRect(center.x - radius, center.y - radius, 2 * radius, 2 * radius);
 }

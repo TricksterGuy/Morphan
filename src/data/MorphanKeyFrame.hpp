@@ -30,6 +30,8 @@ class MorphanKeyFrame
     public:
         MorphanKeyFrame() : x(0), y(0), scale_x(1.0f), scale_y(1.0f), rotation(0), opacity(100), secs(1.0f) {}
         ~MorphanKeyFrame();
+        void Dispose();
+        MorphanKeyFrame Copy();
         const std::vector<Primitive*> GetPrimitives() const {return primitives;}
         void Add(Primitive* primitive);
         void Write(MorphanKeyFrameProto* proto) const;
@@ -39,6 +41,11 @@ class MorphanKeyFrame
         void SetRotation(float nrotation) {rotation = nrotation;}
         void SetOpacity(float nopacity) {opacity = nopacity;}
         void SetSecs(float nsecs) {secs = nsecs;}
+        void GetPosition(int& nx, int& ny) const {nx = x; ny = y;}
+        void GetScale(float& nsx, float& nsy) const {nsx = scale_x; nsy = scale_y;}
+        float GetRotation() const {return rotation;}
+        float GetOpacity() const {return opacity;}
+        float GetSecs() const {return secs;}
     private:
         int x, y;
         float scale_x, scale_y;

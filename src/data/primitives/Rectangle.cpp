@@ -22,6 +22,13 @@
 #include "Rectangle.hpp"
 #include "RectangleTool.hpp"
 
+Primitive* Rectangle::Copy() const
+{
+    Primitive* primitive = new Rectangle(start, end);
+    CopyAttributes(primitive);
+    return primitive;
+}
+
 std::vector<wxRealPoint> Rectangle::GetControlPoints() const
 {
     return {start, end};
@@ -41,4 +48,9 @@ void Rectangle::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
     RectangleTool::Draw(dc, start, end);
+}
+
+wxRect Rectangle::GetBounds() const
+{
+    return wxRect(start, end);
 }

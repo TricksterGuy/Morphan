@@ -22,6 +22,13 @@
 #include "Polygon.hpp"
 #include "PolygonTool.hpp"
 
+Primitive* Polygon::Copy() const
+{
+    Primitive* primitive = new Polygon(points);
+    CopyAttributes(primitive);
+    return primitive;
+}
+
 void Polygon::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
@@ -34,4 +41,23 @@ bool Polygon::SetControlPoints(const std::vector<wxRealPoint>& npoints)
     points = npoints;
 
     return true;
+}
+
+wxRect Polygon::GetBounds() const
+{
+    float minx, miny, maxx, maxy;
+    minx = miny = 1e9;
+    maxx = maxy = -1e9;
+    for (const auto& pt : points)
+    {
+        if (pt.y > maxy)
+            maxy = pt.y;
+        if (pt.y < miny)
+            miny = pt.y;
+        if (pt.x > maxx)
+            maxx = pt.x;
+        if (pt.x < minx)
+            minx = pt.x;
+    }
+    return wxRect(wxPoint(minx, miny), wxPoint(maxx, maxy));
 }

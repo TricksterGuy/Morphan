@@ -22,6 +22,13 @@
 #include "ConvexPolygon.hpp"
 #include "ConvexPolygonTool.hpp"
 
+Primitive* ConvexPolygon::Copy() const
+{
+    Primitive* primitive = new ConvexPolygon(center, edge, num_sides);
+    CopyAttributes(primitive);
+    return primitive;
+}
+
 std::vector<wxRealPoint> ConvexPolygon::GetControlPoints() const
 {
     return {center, edge};
@@ -42,3 +49,41 @@ void ConvexPolygon::Draw(wxGCDC& dc) const
     Primitive::Draw(dc);
     ConvexPolygonTool::Draw(dc, center, edge, num_sides);
 }
+
+wxRect ConvexPolygon::GetBounds() const
+{
+    std::vector<wxPoint> points = ConvexPolygon::GetPoints(center, edge, num_sides);
+    float minx, miny, maxx, maxy;
+    minx = miny = 1e9;
+    maxx = maxy = -1e9;
+    for (const auto& pt : points)
+    {
+        if (pt.y > maxy)
+            maxy = pt.y;
+        if (pt.y < miny)
+            miny = pt.y;
+        if (pt.x > maxx)
+            maxx = pt.x;
+        if (pt.x < minx)
+            minx = pt.x;
+    }
+    return wxRect(wxPoint(minx, miny), wxPoint(maxx, maxy));
+}
+
+// TODO use templates.
+std::vector<wxPoint> ConvexPolygon::GetPoints(const wxRealPoint& center, const wxRealPoint& edge, int sides)
+{
+    std::vector<wxPoint> points;
+    points.push_back(edge);
+
+    float angle = atan2(edge.y - center.y, edge.x - center.x);
+    float radius = distance(center, edge);
+    for (int i = 1; i < sides; i++)
+    {
+        angle += 2 * PI / sides;
+        points.push_back(wxRealPoint(radius * cos(angle) + center.x, radius * sin(angle) + center.y));
+    }
+
+    return points;
+}
+

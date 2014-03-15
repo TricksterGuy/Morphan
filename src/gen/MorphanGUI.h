@@ -37,23 +37,25 @@ class wxDocParentFrame;
 
 ///////////////////////////////////////////////////////////////////////////
 
-#define ID_SELECT_ALL 1000
-#define ID_SELECT_NONE 1001
-#define ID_CUT 1002
-#define ID_COPY 1003
-#define ID_PASTE 1004
-#define ID_CLEAR 1005
-#define ID_DUPLICATE 1006
-#define ID_CANVAS_SIZE 1007
-#define ID_SHRINK_WRAP 1008
-#define ID_ZOOM_IN 1009
-#define ID_ZOOM_OUT 1010
-#define ID_RESET_ZOOM 1011
-#define ID_ZOOM 1012
-#define ID_MODIFY_GRID 1013
-#define ID_SHOW_GRID 1014
-#define ID_SNAP_TO_GRID 1015
-#define ID_ABOUT 1016
+#define ID_SELECT_FIRST_POINT 1000
+#define ID_SELECT_ALL 1001
+#define ID_SELECT_NONE 1002
+#define ID_CUT 1003
+#define ID_COPY 1004
+#define ID_PASTE 1005
+#define ID_CLEAR 1006
+#define ID_DUPLICATE 1007
+#define ID_CANVAS_SIZE 1008
+#define ID_SHRINK_WRAP 1009
+#define ID_ZOOM_IN 1010
+#define ID_ZOOM_OUT 1011
+#define ID_RESET_ZOOM 1012
+#define ID_ZOOM 1013
+#define ID_MODIFY_GRID 1014
+#define ID_SHOW_GRID 1015
+#define ID_SNAP_TO_GRID 1016
+#define ID_SNAP_TO_POINT 1017
+#define ID_ABOUT 1018
 
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MorphanGUI
@@ -64,10 +66,11 @@ class MorphanGUI : public wxDocParentFrame
 
 	protected:
 		wxMenuBar* m_menubar1;
-		wxMenu* file;
+		wxMenu* fileMenu;
 		wxMenu* menuRecent;
-		wxMenu* edit;
-		wxMenu* view;
+		wxMenu* editMenu;
+		wxMenu* selectMode;
+		wxMenu* viewMenu;
 		wxMenu* playMenu;
 		wxMenu* helpMenu;
 		wxPanel* main;
@@ -88,6 +91,8 @@ class MorphanGUI : public wxDocParentFrame
 		wxSpinCtrl* keyFrameRotation;
 		wxStaticText* m_staticText9;
 		wxSpinCtrl* keyFrameOpacity;
+		wxStaticText* m_staticText10;
+		wxSpinCtrl* keyFrameSecs;
 		wxStaticText* m_staticText8;
 		wxColourPickerCtrl* outlineColor;
 		wxStaticText* m_staticText91;
@@ -126,6 +131,7 @@ class MorphanGUI : public wxDocParentFrame
 		virtual void OnModifyGrid( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnShowGrid( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSnapToGrid( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnSnapToPoints( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPlay( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNextFrame( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPrevFrame( wxCommandEvent& event ) { event.Skip(); }
@@ -139,7 +145,7 @@ class MorphanGUI : public wxDocParentFrame
 
 	public:
 
-		MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Morphan"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 704,544 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
+		MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Morphan"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 720,600 ), long style = wxDEFAULT_FRAME_STYLE|wxTAB_TRAVERSAL );
 
 		~MorphanGUI();
 

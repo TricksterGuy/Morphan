@@ -22,6 +22,13 @@
 #include "Line.hpp"
 #include "LineTool.hpp"
 
+Primitive* Line::Copy() const
+{
+    Primitive* primitive = new Line(start, end);
+    CopyAttributes(primitive);
+    return primitive;
+}
+
 std::vector<wxRealPoint> Line::GetControlPoints() const
 {
     return {start, end};
@@ -41,4 +48,9 @@ void Line::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
     LineTool::Draw(dc, start, end);
+}
+
+wxRect Line::GetBounds() const
+{
+    return wxRect(start, end);
 }

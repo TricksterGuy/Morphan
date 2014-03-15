@@ -22,6 +22,13 @@
 #include "BezierCurve.hpp"
 #include "BezierTool.hpp"
 
+Primitive* BezierCurve::Copy() const
+{
+    Primitive* primitive = new BezierCurve(points);
+    CopyAttributes(primitive);
+    return primitive;
+}
+
 void BezierCurve::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
@@ -35,4 +42,9 @@ bool BezierCurve::SetControlPoints(const std::vector<wxRealPoint>& npoints)
     points = npoints;
 
     return true;
+}
+
+wxRect BezierCurve::GetBounds() const
+{
+    return wxRect();
 }

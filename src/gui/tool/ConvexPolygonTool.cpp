@@ -22,8 +22,6 @@
 #include "ConvexPolygon.hpp"
 #include "ConvexPolygonTool.hpp"
 
-#define PI 3.14159265f
-
 Primitive* ConvexPolygonTool::Create()
 {
     return new ConvexPolygon(points[0], points[1], num_sides);
@@ -41,15 +39,6 @@ void ConvexPolygonTool::Preview(wxGCDC& dc, const wxPoint& mouse, bool is_end)
 
 void ConvexPolygonTool::Draw(wxGCDC& dc, const wxRealPoint& center, const wxRealPoint& edge, int num_sides)
 {
-    std::vector<wxPoint> points;
-    points.push_back(edge);
-
-    float angle = atan2(edge.y - center.y, edge.x - center.x);
-    float radius = distance(center, edge);
-    for (int i = 1; i < num_sides; i++)
-    {
-        angle += 2 * PI / num_sides;
-        points.push_back(wxRealPoint(radius * cos(angle) + center.x, radius * sin(angle) + center.y));
-    }
+    std::vector<wxPoint> points = ConvexPolygon::GetPoints(center, edge, num_sides);
     dc.DrawPolygon(points.size(), points.data(), 0, 0);
 }

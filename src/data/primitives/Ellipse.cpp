@@ -22,6 +22,13 @@
 #include "Ellipse.hpp"
 #include "EllipseTool.hpp"
 
+Primitive* Ellipse::Copy() const
+{
+    Primitive* primitive = new Ellipse(center, edge);
+    CopyAttributes(primitive);
+    return primitive;
+}
+
 std::vector<wxRealPoint> Ellipse::GetControlPoints() const
 {
     return {center, edge};
@@ -41,4 +48,11 @@ void Ellipse::Draw(wxGCDC& dc) const
 {
     Primitive::Draw(dc);
     EllipseTool::Draw(dc, center, edge);
+}
+
+wxRect Ellipse::GetBounds() const
+{
+    float ar = abs(center.x - edge.x);
+    float br = abs(center.y - edge.y);
+    return wxRect(center.x - ar, center.y - br, 2 * ar, 2 * br);
 }

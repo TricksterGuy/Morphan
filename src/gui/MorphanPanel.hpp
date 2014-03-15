@@ -27,13 +27,13 @@
 
 class MorphanView;
 
-class MorphanPanel : public wxPanel
+class MorphanPanel : public wxScrolledCanvas
 {
    public:
-       MorphanPanel(wxWindow* Parent = NULL, wxWindowID Id = wxID_ANY, const wxPoint& Position = wxDefaultPosition, const wxSize& Size = wxDefaultSize, long Style = wxVSCROLL);
+       MorphanPanel(wxWindow* Parent = NULL, wxWindowID Id = wxID_ANY, const wxPoint& Position = wxDefaultPosition, const wxSize& Size = wxDefaultSize, long Style = wxVSCROLL|wxHSCROLL);
        ~MorphanPanel();
        void SetView(MorphanView* nview) {view = nview;}
-       void OnPaint(wxPaintEvent& event);
+       void OnDraw(wxDC& dc);
    private:
        MorphanView* view;
 };

@@ -25,17 +25,43 @@
 
 IMPLEMENT_DYNAMIC_CLASS(Morphan, wxDocument)
 
+void Morphan::Dispose()
+{
+    for (unsigned int i = 0; i < frames.size(); i++)
+    {
+        frames[i].Dispose();
+    }
+    frames.clear();
+}
+
 void Morphan::Add(int frame, Primitive* primitive)
 {
-    for (unsigned int i = frame; i < frames.size(); i++)
+    frames[frame].Add(primitive);
+    for (unsigned int i = frame + 1; i < frames.size(); i++)
     {
-        frames[i].Add(primitive);
+        frames[i].Add(primitive->Copy());
     }
+}
+
+void Morphan::Add(int frame)
+{
+    frames.insert(frames.begin() + frame, frames[frame].Copy());
+}
+
+void Morphan::Delete(int frame, Primitive* primitive)
+{
+
+}
+
+void Morphan::Delete(int frame)
+{
+    frames[frame].Dispose();
+    frames.erase(frames.begin() + frame);
 }
 
 bool Morphan::DeleteContents()
 {
-    frames.clear();
+    Dispose();
     return true;
 }
 
@@ -70,7 +96,7 @@ bool Morphan::DoOpenDocument(const wxString& file)
         return false;
     }
 
-    frames.clear();
+    Dispose();
     for (const auto& mkfproto : morphproto.frames())
     {
         frames.push_back(MorphanKeyFrame());
@@ -84,9 +110,7 @@ bool Morphan::DoOpenDocument(const wxString& file)
 bool Morphan::OnNewDocument()
 {
     bool ret = wxDocument::OnNewDocument();
-    frames.clear();
+    Dispose();
     frames.push_back(MorphanKeyFrame());
     return ret;
 }
-
-

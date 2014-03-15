@@ -19,38 +19,17 @@
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
 
-#ifndef MORPHAN_HPP
-#define MORPHAN_HPP
+ #include "MovePointTool.hpp"
 
-#include "MorphanKeyFrame.hpp"
-#include <wx/docview.h>
-#include <vector>
-
-class Morphan : public wxDocument
+std::vector<Primitive*> MovePointTool::Modify(const wxRealPoint& origin)
 {
-    public:
-        Morphan() : frames(1) {}
-        ~Morphan() {}
-        void Dispose();
-        bool DeleteContents();
-        int NumFrames() const {return frames.size();}
-        const MorphanKeyFrame& Get(int frame) const {return frames[frame];}
-        MorphanKeyFrame& Get(int frame) {return frames[frame];}
-        /*** Adds primitive to key frame */
-        void Add(int frame, Primitive* primitive);
-        /*** Adds new key frame */
-        void Add(int frame);
-        /*** Deletes primitive from frame */
-        void Delete(int frame, Primitive* primitive);
-        /*** Deletes keyframe */
-        void Delete(int frame);
-        bool OnNewDocument();
-    protected:
-        bool DoSaveDocument(const wxString& file);
-        bool DoOpenDocument(const wxString& file);
-    private:
-        std::vector<MorphanKeyFrame> frames;
-        DECLARE_DYNAMIC_CLASS(Morphan)
-};
+    std::vector<Primitive*> new_guys;
+    for (const PrimitiveSelection& ps : selection)
+    {
+        std::vector<wxRealPoint> control = ps.primitive->GetControlPoints();
+        control[ps.point_id] = origin;
+        ps.primitive->SetControlPoints(control);
+    }
 
-#endif
+    return new_guys;
+}

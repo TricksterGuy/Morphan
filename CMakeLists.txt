@@ -58,12 +58,15 @@ set(SRC_MORPHAN
 	src/gui/images/BezierCurve.cpp
 	src/gui/images/Circle.cpp
 	src/gui/images/ConvexPolygon.cpp
+	src/gui/images/Duplicate.cpp
 	src/gui/images/Ellipse.cpp
 	src/gui/images/Line.cpp
+	src/gui/images/MoveObject.cpp
+	src/gui/images/MovePoint.cpp
 	src/gui/images/Polygon.cpp
 	src/gui/images/Rectangle.cpp
+	src/gui/images/Select.cpp
 
-	src/gui/tool/Tool.cpp
 	src/gui/tool/ArcTool.cpp
 	src/gui/tool/BezierTool.cpp
 	src/gui/tool/CircleTool.cpp
@@ -72,6 +75,12 @@ set(SRC_MORPHAN
 	src/gui/tool/LineTool.cpp
 	src/gui/tool/PolygonTool.cpp
 	src/gui/tool/RectangleTool.cpp
+
+	src/gui/tool/ModifyTool.cpp
+	src/gui/tool/DuplicateTool.cpp
+	src/gui/tool/MoveObjectTool.cpp
+	src/gui/tool/MovePointTool.cpp
+    src/gui/tool/SelectTool.cpp
 )
 
 

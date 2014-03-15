@@ -29,16 +29,20 @@ class Arc : public Primitive
     public:
         Arc() {}
         Arc(const wxRealPoint& start, const wxRealPoint& second, const wxRealPoint& end);
+        Primitive* Copy() const;
         std::vector<wxRealPoint> GetControlPoints() const;
         bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
         Type GetType() const {return Type::ARC;}
+        wxRect GetBounds() const;
+        static bool FindCenter(const wxRealPoint& start, const wxRealPoint& second, const wxRealPoint& end, wxRealPoint& center);
+        static bool IsClockwise(const wxRealPoint& start, const wxRealPoint& end, const wxRealPoint& center);
     private:
         wxRealPoint start;
         wxRealPoint second;
         wxRealPoint end;
 
-        float radius;
+        void UpdateMinMax(float radius, float theta, float& minx, float& miny, float& maxx, float& maxy) const;
 };
 
 #endif
