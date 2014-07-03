@@ -19,24 +19,38 @@
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
 
-#ifndef MORPHAN_PANEL_HPP
-#define MORPHAN_PANEL_HPP
+#ifndef CLOCK_HPP
+#define CLOCK_HPP
 
-#include <wx/panel.h>
-#include "MorphanView.hpp"
+#include <vector>
+#include <wx/timer.h>
+#include <wx/wx.h>
 
-class MorphanView;
-
-class MorphanPanel : public wxScrolledCanvas
+/**
+  * This class is a clock that runs code to update views contents based on a framerate.
+  * When creating an instance of this class be sure to call run after creating one.
+  */
+class Clock : public wxTimer
 {
-   public:
-       MorphanPanel(wxWindow* Parent = NULL, wxWindowID Id = wxID_ANY, const wxPoint& Position = wxDefaultPosition, const wxSize& Size = wxDefaultSize, long Style = wxVSCROLL|wxHSCROLL);
-       ~MorphanPanel();
-       void SetView(MorphanView* nview) {view = nview;}
-       void OnDraw(wxDC& dc);
-   private:
-       MorphanView* view;
+    public:
+        Clock(unsigned int rate = 1);
+        ~Clock();
+
+        void Add(wxWindow* owner);
+        void Remove(wxWindow* owner);
+        void Pause();
+        void Run();
+        void Stop();
+        bool IsPaused();
+
+        unsigned int GetFramerate() const;
+        void SetFramerate(unsigned int rate);
+
+        virtual void Notify();
+    private:
+        unsigned int framerate;
+        bool paused;
+        std::vector<wxWindow*> owners;
 };
 
-
- #endif
+#endif

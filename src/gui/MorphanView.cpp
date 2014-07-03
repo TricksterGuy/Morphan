@@ -115,7 +115,7 @@ void MorphanView::OnDraw(wxDC& dc)
     for (const Primitive* p : keyFrame.GetPrimitives())
     {
         p->Draw(gcdc);
-        //gcdc.DrawRectangle(p->GetBounds());
+        gcdc.DrawRectangle(p->GetBounds());
 
         if (show_points)
         {
@@ -142,6 +142,7 @@ void MorphanView::OnDraw(wxDC& dc)
         {
             ps.primitive->SetOutline(*wxRED);
             ps.primitive->Draw(gcdc);
+            gcdc.DrawRectangle(ps.primitive->GetBounds());
             if (show_points)
             {
                 gcdc.SetPen(cpbox);
@@ -292,6 +293,22 @@ void MorphanView::DeleteFrame()
         current_frame = min(current_frame + 1, GetDocument()->NumFrames() - 1);
         panel->Refresh();
     }
+}
+
+void MorphanView::DeleteSelection()
+{
+    if (!modifyTool) return;
+    if (!modifyTool->HasSelection()) return;
+
+    const std::set<PrimitiveSelection>& selection = modifyTool->GetSelection();
+    for (const PrimitiveSelection& item : selection)
+    {
+        Primitive* primitive = item.primitive;
+        MorphanKeyFrame& frame = GetCurrentFrame();
+        frame.Delete(primitive);
+    }
+    modifyTool->Clear();
+    panel->Refresh();
 }
 
 Morphan* MorphanView::GetDocument()

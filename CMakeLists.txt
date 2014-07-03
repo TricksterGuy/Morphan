@@ -33,25 +33,17 @@ set(SRC_MORPHAN
 	src/data/Morphan.cpp
 	src/data/MorphanKeyFrame.cpp
 
-	src/data/primitives/Arc.cpp
-	src/data/primitives/BezierCurve.cpp
-	src/data/primitives/Circle.cpp
-	src/data/primitives/ConvexPolygon.cpp
-	src/data/primitives/Ellipse.cpp
-	src/data/primitives/Line.cpp
-	src/data/primitives/Polygon.cpp
-	src/data/primitives/Primitive.cpp
-	src/data/primitives/PrimitiveFactory.cpp
-	src/data/primitives/Rectangle.cpp
-
 	src/gen/GridSizeGUI.cpp
 	src/gen/MorphanGUI.cpp
+	src/gen/MorphanPlayer.cpp
 	src/gen/Morphan.pb.cc
 
+    src/gui/Clock.cpp
 	src/gui/GridSizeDialog.cpp
 	src/gui/MorphanApp.cpp
 	src/gui/MorphanFrame.cpp
 	src/gui/MorphanPanel.cpp
+	src/gui/MorphanPlayerPanel.cpp
 	src/gui/MorphanView.cpp
 
 	src/gui/images/Arc.cpp
@@ -66,7 +58,22 @@ set(SRC_MORPHAN
 	src/gui/images/Polygon.cpp
 	src/gui/images/Rectangle.cpp
 	src/gui/images/Select.cpp
+)
 
+set(SRC_PRIMITIVES
+	src/data/primitives/Arc.cpp
+	src/data/primitives/BezierCurve.cpp
+	src/data/primitives/Circle.cpp
+	src/data/primitives/ConvexPolygon.cpp
+	src/data/primitives/Ellipse.cpp
+	src/data/primitives/Line.cpp
+	src/data/primitives/Polygon.cpp
+	src/data/primitives/Primitive.cpp
+	src/data/primitives/PrimitiveFactory.cpp
+	src/data/primitives/Rectangle.cpp
+)
+
+set(SRC_TOOLS
 	src/gui/tool/ArcTool.cpp
 	src/gui/tool/BezierTool.cpp
 	src/gui/tool/CircleTool.cpp
@@ -75,7 +82,6 @@ set(SRC_MORPHAN
 	src/gui/tool/LineTool.cpp
 	src/gui/tool/PolygonTool.cpp
 	src/gui/tool/RectangleTool.cpp
-
 	src/gui/tool/ModifyTool.cpp
 	src/gui/tool/DuplicateTool.cpp
 	src/gui/tool/MoveObjectTool.cpp
@@ -83,11 +89,11 @@ set(SRC_MORPHAN
     src/gui/tool/SelectTool.cpp
 )
 
-
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 set(wxWidgets_USE_LIBS xrc xml html adv gl net core base)
 find_package(wxWidgets REQUIRED)
 find_package(GTK2 REQUIRED gtk)
+find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 pkg_search_module(PROTOBUF REQUIRED protobuf)
 
 IF(DEBUG_MODE)
@@ -108,16 +114,50 @@ include_directories(${morphan_SOURCE_DIR}/src/gui/tool)
 include_directories(${GTK2_INCLUDE_DIRS})
 include_directories(${PROTOBUF_INCLUDEDIR})
 
+add_library(
+    primitives
+    ${SRC_PRIMITIVES}
+)
+
+add_library(
+    tools
+    ${SRC_TOOLS}
+)
+
 add_executable(
 	morphan
 	${SRC_MORPHAN}
 )
 
+add_executable(
+    ArcTest
+    src/test/ArcTest.cpp
+)
+
+target_link_libraries(
+    tools
+    primitives
+)
+
 target_link_libraries(
 	morphan
+	primitives
+	tools
 	${wxWidgets_LIBRARIES}
 	${GTK2_LIBRARIES}
 	${PROTOBUF_LIBRARIES}
 )
+
+target_link_libraries(
+    ArcTest
+	primitives
+	tools
+	${wxWidgets_LIBRARIES}
+	${GTK2_LIBRARIES}
+	${PROTOBUF_LIBRARIES}
+    ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY}
+)
+
+add_test(arc ArcTest)
 
 install(PROGRAMS ${CMAKE_CURRENT_BINARY_DIR}/morphan DESTINATION bin)

@@ -50,10 +50,9 @@ void ArcTool::Draw(wxGCDC& dc, const wxRealPoint& start, const wxRealPoint& seco
     if (!Arc::FindCenter(start, second, end, center))
         return;
 
-    dc.CrossHair(center);
+    //dc.CrossHair(center);
     if (Arc::IsClockwise(start, second, end))
         dc.DrawArc(end, start, center);
     else
         dc.DrawArc(start, end, center);
-
 }

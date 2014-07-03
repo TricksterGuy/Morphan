@@ -176,6 +176,12 @@ void MorphanFrame::OnCanvasSize(wxCommandEvent& event)
     }
 }
 
+void MorphanFrame::OnClear(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    view->DeleteSelection();
+}
+
 void MorphanFrame::OnZoomIn(wxCommandEvent& event)
 {
     MorphanView* view = GetMorphanView();

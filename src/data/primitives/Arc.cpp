@@ -105,44 +105,45 @@ wxRect Arc::GetBounds() const
 {
     wxRect rect;
     wxRealPoint center;
-    if (!Arc::FindCenter(start, second, end, center))
+    if (!Arc::FindCenter(start, second, end, center)) {
         return rect;
-
-    float i = atan2(start.y - center.y, start.x - center.x);
-    float f = atan2(end.y - center.y, end.x - center.x);
-
-    float t0;
-    float tf;
-    //if (Arc::IsClockwise(start, second, end))
-    //{
-    //    t0 = f;
-    //    tf = i;
-    //}
-    //else
-    {
-        t0 = i;
-        tf = f;
-
-        if (tf < 0) tf += 2 * PI;
-        if (t0 > tf) tf += 2 * PI;
     }
 
     float radius = distance(start, center);
-    float minx, maxx, miny, maxy;
-    minx = miny = 1e9;
-    maxx = maxy = -1e9;
 
-    for (float theta = -1; theta <= 2; theta += 0.5f)
+    float minx, miny, maxx, maxy;
+    float starta, enda;
+
+    starta = atan2(-start.y + center.y, start.x - center.x);
+    enda = atan2(-end.y + center.y, end.x - center.x);
+
+    if (enda < 0) enda += 2 * PI;
+    if (starta < 0) starta += 2 * PI;
+
+    minx = min(start.x, end.x);
+    maxx = max(start.x, end.x);
+    miny = min(start.y, end.y);
+    maxy = max(start.y, end.y);
+
+    bool test_in = !IsClockwise(start, second, end);
+    if (starta > enda)
     {
-        if (t0 <= theta * PI && theta * PI <= tf)
-        {
-            UpdateMinMax(radius, theta * PI, minx, miny, maxx, maxy);
-        }
+        float temp = enda;
+        enda = starta;
+        starta = temp;
+        test_in = !test_in;
     }
-    UpdateMinMax(radius, t0, minx, miny, maxx, maxy);
-    UpdateMinMax(radius, tf, minx, miny, maxx, maxy);
 
-    return wxRect(wxPoint(minx + center.x, miny + center.y), wxPoint(maxx + center.x, maxy + center.y));
+    if ((starta < PI && PI < enda) == test_in)
+        minx = center.x - radius;
+    if ((starta < PI / 2 && PI / 2 < enda) == test_in)
+        miny = center.y - radius;
+    if ((starta < 0 && 0 < enda) == test_in)
+        maxx = center.x + radius;
+    if ((starta < 3 * PI / 2 && 3 * PI / 2 < enda) == test_in)
+        maxy = center.y + radius;
+
+    return wxRect(wxPoint(minx, miny), wxPoint(maxx, maxy));
 }
 
 bool Arc::FindCenter(const wxRealPoint& start, const wxRealPoint& second, const wxRealPoint& end, wxRealPoint& center)
@@ -162,18 +163,4 @@ bool Arc::IsClockwise(const wxRealPoint& start, const wxRealPoint& second, const
     wxRealPoint acvec(end.x - start.x, end.y - start.y);
     float cross = abvec.x * acvec.y - abvec.y * acvec.x;
     return cross > 0;
-}
-
-void Arc::UpdateMinMax(float radius, float theta, float& minx, float& miny, float& maxx, float& maxy) const
-{
-    float px = radius * cos(theta);
-    float py = radius * sin(theta);
-    if (py > maxy)
-        maxy = py;
-    if (py < miny)
-        miny = py;
-    if (px > maxx)
-        maxx = px;
-    if (px < minx)
-        minx = px;
 }

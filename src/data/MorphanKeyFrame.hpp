@@ -22,7 +22,7 @@
 #ifndef MORPHAN_KEY_FRAME_HPP
 #define MORPHAN_KEY_FRAME_HPP
 
-#include <vector>
+#include <set>
 #include "Primitive.hpp"
 
 class MorphanKeyFrame
@@ -32,8 +32,9 @@ class MorphanKeyFrame
         ~MorphanKeyFrame();
         void Dispose();
         MorphanKeyFrame Copy();
-        const std::vector<Primitive*> GetPrimitives() const {return primitives;}
+        const std::set<Primitive*> GetPrimitives() const {return primitives;}
         void Add(Primitive* primitive);
+        void Delete(Primitive* primitive);
         void Write(MorphanKeyFrameProto* proto) const;
         void Read(const MorphanKeyFrameProto& proto);
         void SetPosition(int nx, int ny);
@@ -52,7 +53,7 @@ class MorphanKeyFrame
         float rotation;
         float opacity;
         float secs;
-        std::vector<Primitive*> primitives;
+        std::set<Primitive*> primitives;
 };
 
 #endif

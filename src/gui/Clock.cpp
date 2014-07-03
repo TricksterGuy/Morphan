@@ -1,5 +1,5 @@
 /******************************************************************************************************
- * Morphan
+ * Tile Map Editor
  * Copyright (C) 2009-2014 Brandon Whitehead (tricksterguy87[AT]gmail[DOT]com)
  *
  * This software is provided 'as-is', without any express or implied warranty.
@@ -19,24 +19,59 @@
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
 
-#ifndef MORPHAN_PANEL_HPP
-#define MORPHAN_PANEL_HPP
+#include "Clock.hpp"
 
-#include <wx/panel.h>
-#include "MorphanView.hpp"
-
-class MorphanView;
-
-class MorphanPanel : public wxScrolledCanvas
+Clock::Clock(unsigned int rate) : framerate(rate), paused(true)
 {
-   public:
-       MorphanPanel(wxWindow* Parent = NULL, wxWindowID Id = wxID_ANY, const wxPoint& Position = wxDefaultPosition, const wxSize& Size = wxDefaultSize, long Style = wxVSCROLL|wxHSCROLL);
-       ~MorphanPanel();
-       void SetView(MorphanView* nview) {view = nview;}
-       void OnDraw(wxDC& dc);
-   private:
-       MorphanView* view;
-};
+}
 
+Clock::~Clock()
+{
+    owners.clear();
+}
 
- #endif
+void Clock::Add(wxWindow* owner)
+{
+    owners.push_back(owner);
+}
+
+void Clock::Pause()
+{
+    paused = true;
+    Stop();
+}
+
+bool Clock::IsPaused()
+{
+    return paused;
+}
+
+void Clock::Run()
+{
+    paused = false;
+    Start(1000 / framerate, wxTIMER_CONTINUOUS);
+}
+
+void Clock::Stop()
+{
+    owners.clear();
+    wxTimer::Stop();
+}
+
+unsigned int Clock::GetFramerate() const
+{
+    return framerate;
+}
+
+void Clock::SetFramerate(unsigned int rate)
+{
+    framerate = rate;
+}
+
+void Clock::Notify()
+{
+    for (unsigned int i = 0; i < owners.size(); i++)
+    {
+        owners[i]->Refresh();
+    }
+}

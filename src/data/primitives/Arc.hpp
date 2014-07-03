@@ -37,6 +37,7 @@ class Arc : public Primitive
         wxRect GetBounds() const;
         static bool FindCenter(const wxRealPoint& start, const wxRealPoint& second, const wxRealPoint& end, wxRealPoint& center);
         static bool IsClockwise(const wxRealPoint& start, const wxRealPoint& end, const wxRealPoint& center);
+        static bool AngleBetween(float angle, float start, float width);
     private:
         wxRealPoint start;
         wxRealPoint second;

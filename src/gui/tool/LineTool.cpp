@@ -41,6 +41,3 @@ void LineTool::Draw(wxGCDC& dc, const wxRealPoint& start, const wxRealPoint& end
 {
     dc.DrawLine(start, end);
 }
-
-
-

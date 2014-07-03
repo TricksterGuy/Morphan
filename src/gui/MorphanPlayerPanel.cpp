@@ -19,24 +19,29 @@
  * 3. This notice may not be removed or altered from any source distribution.
  ******************************************************************************************************/
 
-#ifndef MORPHAN_PANEL_HPP
-#define MORPHAN_PANEL_HPP
+ #include "MorphanPlayerPanel.hpp"
 
-#include <wx/panel.h>
-#include "MorphanView.hpp"
-
-class MorphanView;
-
-class MorphanPanel : public wxScrolledCanvas
+MorphanPlayerPanel::MorphanPlayerPanel(wxWindow* Parent, wxWindowID Id, const wxPoint& Position, const wxSize& Size, long Style) :
+    wxScrolledCanvas(Parent, Id, Position, Size, Style)
 {
-   public:
-       MorphanPanel(wxWindow* Parent = NULL, wxWindowID Id = wxID_ANY, const wxPoint& Position = wxDefaultPosition, const wxSize& Size = wxDefaultSize, long Style = wxVSCROLL|wxHSCROLL);
-       ~MorphanPanel();
-       void SetView(MorphanView* nview) {view = nview;}
-       void OnDraw(wxDC& dc);
-   private:
-       MorphanView* view;
-};
+    clock.Add(this);
+}
 
+MorphanPlayerPanel::~MorphanPlayerPanel()
+{
 
- #endif
+}
+
+void MorphanPlayerPanel::OnDraw(wxDC& dc)
+{
+
+    time++;
+}
+
+void MorphanPlayerPanel::OnPlay(Morphan* toPlay)
+{
+    morphan = toPlay;
+    clock.SetFramerate(60);
+    clock.Run();
+    time = 0;
+}

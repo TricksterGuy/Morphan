@@ -44,7 +44,8 @@ class MorphanFrame : public MorphanGUI
         void OnTool(wxCommandEvent& event);
         void UpdateStatusBar();
 
-
+        // Edit
+        void OnClear(wxCommandEvent& event);
         // View
         void OnCanvasSize(wxCommandEvent& event);
 		void OnZoomIn(wxCommandEvent& event);

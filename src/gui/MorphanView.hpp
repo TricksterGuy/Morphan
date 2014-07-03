@@ -57,6 +57,7 @@ class MorphanView : public wxView
         void PrevFrame();
         void AddFrame();
         void DeleteFrame();
+        void DeleteSelection();
 
         Morphan* GetDocument();
         wxSize GetSize();

@@ -51,7 +51,13 @@ MorphanKeyFrame MorphanKeyFrame::Copy()
 
 void MorphanKeyFrame::Add(Primitive* primitive)
 {
-    primitives.push_back(primitive);
+    primitives.insert(primitive);
+}
+
+void MorphanKeyFrame::Delete(Primitive* primitive)
+{
+    primitives.erase(primitive);
+    delete primitive;
 }
 
 void MorphanKeyFrame::SetPosition(int nx, int ny)
@@ -75,10 +81,10 @@ void MorphanKeyFrame::Write(MorphanKeyFrameProto* proto) const
     proto->set_rotation(rotation);
     proto->set_opacity(opacity);
     proto->set_secs(secs);
-    for (unsigned int j = 0; j < primitives.size(); j++)
+    for (Primitive* p : primitives)
     {
         PrimitiveProto* pproto = proto->add_primitives();
-        PrimitiveFactory::Write(primitives[j], pproto);
+        PrimitiveFactory::Write(p, pproto);
     }
 }
 
@@ -96,6 +102,6 @@ void MorphanKeyFrame::Read(const MorphanKeyFrameProto& proto)
     {
         Primitive* primitive = PrimitiveFactory::Read(pproto);
         if (primitive)
-            primitives.push_back(primitive);
+            primitives.insert(primitive);
     }
 }
