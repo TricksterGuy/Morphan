@@ -115,7 +115,6 @@ void MorphanView::OnDraw(wxDC& dc)
     for (const Primitive* p : keyFrame.GetPrimitives())
     {
         p->Draw(gcdc);
-        gcdc.DrawRectangle(p->GetBounds());
 
         if (show_points)
         {
@@ -142,7 +141,6 @@ void MorphanView::OnDraw(wxDC& dc)
         {
             ps.primitive->SetOutline(*wxRED);
             ps.primitive->Draw(gcdc);
-            gcdc.DrawRectangle(ps.primitive->GetBounds());
             if (show_points)
             {
                 gcdc.SetPen(cpbox);
