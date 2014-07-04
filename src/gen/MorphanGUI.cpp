@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Nov  5 2013)
+// C++ code generated with wxFormBuilder (version Jul  3 2014)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -12,7 +12,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDocParentFrame( manager, parent, id, title, pos, size, style )
+MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent,  wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDocParentFrame( manager, parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
@@ -217,14 +217,14 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	m_staticText1->Wrap( -1 );
 	fgSizer1->Add( m_staticText1, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	keyFrameX = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 10, 0 );
+	keyFrameX = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, -1000, 1000, 0 );
 	fgSizer1->Add( keyFrameX, 0, wxALL, 5 );
 
 	m_staticText2 = new wxStaticText( main, wxID_ANY, wxT("Y:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText2->Wrap( -1 );
 	fgSizer1->Add( m_staticText2, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	keyFrameY = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 10, 0 );
+	keyFrameY = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, -1000, 1000, 0 );
 	fgSizer1->Add( keyFrameY, 0, wxALL, 5 );
 
 	m_staticText5 = new wxStaticText( main, wxID_ANY, wxT("ScaleX:"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -259,7 +259,7 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	m_staticText10->Wrap( -1 );
 	fgSizer1->Add( m_staticText10, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	keyFrameSecs = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 5000, 1000 );
+	keyFrameSecs = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 16, 10000, 1000 );
 	fgSizer1->Add( keyFrameSecs, 0, wxALL, 5 );
 
 
@@ -272,7 +272,8 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	sbSizer1 = new wxStaticBoxSizer( new wxStaticBox( main, wxID_ANY, wxT("Object") ), wxVERTICAL );
 
 	wxFlexGridSizer* fgSizer2;
-	fgSizer2 = new wxFlexGridSizer( 0, 2, 0, 0 );
+	fgSizer2 = new wxFlexGridSizer( 4, 2, 0, 0 );
+	fgSizer2->AddGrowableCol( 1 );
 	fgSizer2->SetFlexibleDirection( wxBOTH );
 	fgSizer2->SetNonFlexibleGrowMode( wxFLEX_GROWMODE_SPECIFIED );
 
@@ -281,21 +282,29 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	fgSizer2->Add( m_staticText8, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	outlineColor = new wxColourPickerCtrl( main, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE|wxCLRP_SHOW_LABEL );
-	fgSizer2->Add( outlineColor, 0, wxALL, 5 );
+	fgSizer2->Add( outlineColor, 0, wxALL|wxEXPAND, 5 );
 
 	m_staticText91 = new wxStaticText( main, wxID_ANY, wxT("Width:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText91->Wrap( -1 );
 	fgSizer2->Add( m_staticText91, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	objectWidth = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 1, 128, 0 );
-	fgSizer2->Add( objectWidth, 0, wxALL, 5 );
+	objectWidth = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxSize( 87,-1 ), wxSP_ARROW_KEYS, 1, 128, 0 );
+	fgSizer2->Add( objectWidth, 0, wxALL|wxEXPAND, 5 );
+
+	m_staticText911 = new wxStaticText( main, wxID_ANY, wxT("Filled:"), wxDefaultPosition, wxDefaultSize, 0 );
+	m_staticText911->Wrap( -1 );
+	fgSizer2->Add( m_staticText911, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
+
+	objectFilled = new wxCheckBox( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0 );
+	objectFilled->SetValue(true);
+	fgSizer2->Add( objectFilled, 0, wxALL|wxALIGN_CENTER_VERTICAL|wxALIGN_CENTER_HORIZONTAL|wxEXPAND, 5 );
 
 	m_staticText81 = new wxStaticText( main, wxID_ANY, wxT("Fill:"), wxDefaultPosition, wxDefaultSize, 0 );
 	m_staticText81->Wrap( -1 );
 	fgSizer2->Add( m_staticText81, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
 	fillColor = new wxColourPickerCtrl( main, wxID_ANY, *wxBLACK, wxDefaultPosition, wxDefaultSize, wxCLRP_DEFAULT_STYLE|wxCLRP_SHOW_LABEL );
-	fgSizer2->Add( fillColor, 0, wxALL, 5 );
+	fgSizer2->Add( fillColor, 0, wxALL|wxEXPAND, 5 );
 
 
 	sbSizer1->Add( fgSizer2, 0, wxEXPAND, 0 );
@@ -403,6 +412,7 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	this->Connect( snapToGrid->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnSnapToGrid ) );
 	this->Connect( snapToPoint->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnSnapToPoints ) );
 	this->Connect( play->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnPlay ) );
+	this->Connect( about->GetId(), wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnAbout ) );
 	m_button1->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnNextFrame ), NULL, this );
 	m_button2->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnPrevFrame ), NULL, this );
 	m_button3->Connect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnAddFrame ), NULL, this );
@@ -413,8 +423,10 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, c
 	keyFrameScaleY->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnKeyFrameChanged ), NULL, this );
 	keyFrameRotation->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnKeyFrameChanged ), NULL, this );
 	keyFrameOpacity->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnKeyFrameChanged ), NULL, this );
+	keyFrameSecs->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnKeyFrameChanged ), NULL, this );
 	outlineColor->Connect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( MorphanGUI::OnOutlineChanged ), NULL, this );
 	objectWidth->Connect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnWidthChanged ), NULL, this );
+	objectFilled->Connect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MorphanGUI::OnFilledChanged ), NULL, this );
 	fillColor->Connect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( MorphanGUI::OnFillChanged ), NULL, this );
 }
 
@@ -439,6 +451,7 @@ MorphanGUI::~MorphanGUI()
 	this->Disconnect( ID_SNAP_TO_GRID, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnSnapToGrid ) );
 	this->Disconnect( ID_SNAP_TO_POINT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnSnapToPoints ) );
 	this->Disconnect( wxID_ANY, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnPlay ) );
+	this->Disconnect( ID_ABOUT, wxEVT_COMMAND_MENU_SELECTED, wxCommandEventHandler( MorphanGUI::OnAbout ) );
 	m_button1->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnNextFrame ), NULL, this );
 	m_button2->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnPrevFrame ), NULL, this );
 	m_button3->Disconnect( wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler( MorphanGUI::OnAddFrame ), NULL, this );
@@ -449,8 +462,10 @@ MorphanGUI::~MorphanGUI()
 	keyFrameScaleY->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnKeyFrameChanged ), NULL, this );
 	keyFrameRotation->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnKeyFrameChanged ), NULL, this );
 	keyFrameOpacity->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnKeyFrameChanged ), NULL, this );
+	keyFrameSecs->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnKeyFrameChanged ), NULL, this );
 	outlineColor->Disconnect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( MorphanGUI::OnOutlineChanged ), NULL, this );
 	objectWidth->Disconnect( wxEVT_COMMAND_SPINCTRL_UPDATED, wxSpinEventHandler( MorphanGUI::OnWidthChanged ), NULL, this );
+	objectFilled->Disconnect( wxEVT_COMMAND_CHECKBOX_CLICKED, wxCommandEventHandler( MorphanGUI::OnFilledChanged ), NULL, this );
 	fillColor->Disconnect( wxEVT_COMMAND_COLOURPICKER_CHANGED, wxColourPickerEventHandler( MorphanGUI::OnFillChanged ), NULL, this );
 
 }

@@ -182,6 +182,7 @@ void MorphanView::OnClick(wxMouseEvent& event)
             p->SetFill(fillColor);
             p->SetOutline(outlineColor);
             p->SetWidth(outlineWidth);
+            p->SetFilled(filled);
 
             p->SetId(timeSinceEpoch());
             GetDocument()->Add(current_frame, p);
@@ -267,12 +268,14 @@ void MorphanView::OnKey(wxKeyEvent& event)
 void MorphanView::NextFrame()
 {
     current_frame = min(current_frame + 1, GetDocument()->NumFrames() - 1);
+    if (modifyTool) modifyTool->Clear();
     panel->Refresh();
 }
 
 void MorphanView::PrevFrame()
 {
     current_frame = max(current_frame - 1, 0);
+    if (modifyTool) modifyTool->Clear();
     panel->Refresh();
 }
 
@@ -320,7 +323,7 @@ void MorphanView::SetOutlineColor(const wxColour& color)
     outlineColor = color;
     if (modifyTool && modifyTool->HasSelection())
     {
-        modifyTool->Modify(color, -1, wxNullColour);
+        modifyTool->Modify(color, -1, wxNullColour, -1);
         panel->Refresh();
     }
 }
@@ -330,7 +333,7 @@ void MorphanView::SetOutlineWidth(int width)
     outlineWidth = width;
     if (modifyTool && modifyTool->HasSelection())
     {
-        modifyTool->Modify(wxNullColour, width, wxNullColour);
+        modifyTool->Modify(wxNullColour, width, wxNullColour, -1);
         panel->Refresh();
     }
 }
@@ -340,7 +343,17 @@ void MorphanView::SetFillColor(const wxColour& color)
     fillColor = color;
     if (modifyTool && modifyTool->HasSelection())
     {
-        modifyTool->Modify(wxNullColour, -1, color);
+        modifyTool->Modify(wxNullColour, -1, color, -1);
+        panel->Refresh();
+    }
+}
+
+void MorphanView::SetFilled(bool isfilled)
+{
+    filled = isfilled;
+    if (modifyTool && modifyTool->HasSelection())
+    {
+        modifyTool->Modify(wxNullColour, -1, wxNullColour, filled);
         panel->Refresh();
     }
 }
@@ -393,7 +406,7 @@ void MorphanView::DoSetSize(int width, int height)
 {
     float w = width * zoom;
     float h = height * zoom;
-    wxSize size = panel->GetClientSize();
+    //wxSize size = panel->GetClientSize();
     /*if (w < size.GetWidth() || h < size.GetHeight())
     {
         panel->SetClientSize(w, h);

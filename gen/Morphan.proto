@@ -38,7 +38,8 @@ message PrimitiveProto
 	optional Color outline = 4;
 	optional int32 width = 5 [default = 1];
 	optional Color fill = 6;
-	optional ExtraParams params = 7;
+	optional bool filled = 7;
+	optional ExtraParams params = 8;
 }
 
 message MorphanKeyFrameProto
@@ -50,7 +51,7 @@ message MorphanKeyFrameProto
 	optional float rotation = 5;
 	optional float opacity = 6;
 	repeated PrimitiveProto primitives = 7;
-	optional float secs = 8;
+	optional int32 millisecs = 8;
 }
 
 message MorphanProto

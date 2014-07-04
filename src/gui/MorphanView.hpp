@@ -37,7 +37,7 @@ class MorphanPanel;
 class MorphanView : public wxView
 {
     public:
-        MorphanView() : wxView(), panel(NULL), tool(NULL), modifyTool(NULL), outlineColor(0, 0, 0), outlineWidth(1), fillColor(0, 0, 0),
+        MorphanView() : wxView(), panel(NULL), tool(NULL), modifyTool(NULL), outlineColor(0, 0, 0), outlineWidth(1), fillColor(0, 0, 0), filled(true),
                         grid_width(16), grid_height(16), snap_grid(false), snap_points(false), show_grid(false), show_points(true), zoom(1.0f),
                         current_frame(0), in_window(false), width(256), height(256) {}
         bool OnCreate(wxDocument*, long flags);
@@ -71,6 +71,7 @@ class MorphanView : public wxView
         void SetOutlineColor(const wxColour& color);
         void SetOutlineWidth(int width);
         void SetFillColor(const wxColour& color);
+        void SetFilled(bool filled);
 
         void SetTool(Tool* ntool) {tool = ntool;}
         void SetModifyTool(ModifyTool* ntool) {modifyTool = ntool;}
@@ -93,6 +94,7 @@ class MorphanView : public wxView
         wxColour outlineColor;
         int outlineWidth;
         wxColour fillColor;
+        bool filled;
         int grid_width, grid_height;
         bool snap_grid;
         bool snap_points;

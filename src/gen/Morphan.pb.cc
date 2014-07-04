@@ -97,13 +97,14 @@ void protobuf_AssignDesc_Morphan_2eproto() {
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(ExtraParams));
   PrimitiveProto_descriptor_ = file->message_type(3);
-  static const int PrimitiveProto_offsets_[7] = {
+  static const int PrimitiveProto_offsets_[8] = {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, id_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, type_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, points_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, outline_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, width_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, fill_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, filled_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(PrimitiveProto, params_),
   };
   PrimitiveProto_reflection_ =
@@ -126,7 +127,7 @@ void protobuf_AssignDesc_Morphan_2eproto() {
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, rotation_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, opacity_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, primitives_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, secs_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(MorphanKeyFrameProto, millisecs_),
   };
   MorphanKeyFrameProto_reflection_ =
     new ::google::protobuf::internal::GeneratedMessageReflection(
@@ -208,20 +209,21 @@ void protobuf_AddDesc_Morphan_2eproto() {
     "\n\rMorphan.proto\"3\n\005Color\022\t\n\001r\030\001 \002(\005\022\t\n\001g"
     "\030\002 \002(\005\022\t\n\001b\030\003 \002(\005\022\t\n\001a\030\004 \001(\005\"\035\n\005Point\022\t\n"
     "\001x\030\001 \002(\002\022\t\n\001y\030\002 \002(\002\" \n\013ExtraParams\022\021\n\tnu"
-    "m_sides\030\001 \001(\005\"\250\001\n\016PrimitiveProto\022\n\n\002id\030\001"
+    "m_sides\030\001 \001(\005\"\270\001\n\016PrimitiveProto\022\n\n\002id\030\001"
     " \001(\003\022\023\n\004type\030\002 \002(\0162\005.Type\022\026\n\006points\030\003 \003("
     "\0132\006.Point\022\027\n\007outline\030\004 \001(\0132\006.Color\022\020\n\005wi"
-    "dth\030\005 \001(\005:\0011\022\024\n\004fill\030\006 \001(\0132\006.Color\022\034\n\006pa"
-    "rams\030\007 \001(\0132\014.ExtraParams\"\252\001\n\024MorphanKeyF"
-    "rameProto\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 \001(\005\022\022\n\007scale"
-    "_x\030\003 \001(\002:\0011\022\022\n\007scale_y\030\004 \001(\002:\0011\022\020\n\010rotat"
-    "ion\030\005 \001(\002\022\017\n\007opacity\030\006 \001(\002\022#\n\nprimitives"
-    "\030\007 \003(\0132\017.PrimitiveProto\022\014\n\004secs\030\010 \001(\002\"5\n"
-    "\014MorphanProto\022%\n\006frames\030\001 \003(\0132\025.MorphanK"
-    "eyFrameProto*\201\001\n\004Type\022\013\n\007INVALID\020\000\022\010\n\004LI"
-    "NE\020\001\022\r\n\tRECTANGLE\020\002\022\n\n\006CIRCLE\020\003\022\022\n\016CONVE"
-    "X_POLYGON\020\004\022\013\n\007POLYGON\020\005\022\013\n\007ELLIPSE\020\006\022\007\n"
-    "\003ARC\020\007\022\020\n\014BEZIER_CURVE\020\010", 664);
+    "dth\030\005 \001(\005:\0011\022\024\n\004fill\030\006 \001(\0132\006.Color\022\016\n\006fi"
+    "lled\030\007 \001(\010\022\034\n\006params\030\010 \001(\0132\014.ExtraParams"
+    "\"\257\001\n\024MorphanKeyFrameProto\022\t\n\001x\030\001 \001(\005\022\t\n\001"
+    "y\030\002 \001(\005\022\022\n\007scale_x\030\003 \001(\002:\0011\022\022\n\007scale_y\030\004"
+    " \001(\002:\0011\022\020\n\010rotation\030\005 \001(\002\022\017\n\007opacity\030\006 \001"
+    "(\002\022#\n\nprimitives\030\007 \003(\0132\017.PrimitiveProto\022"
+    "\021\n\tmillisecs\030\010 \001(\005\"5\n\014MorphanProto\022%\n\006fr"
+    "ames\030\001 \003(\0132\025.MorphanKeyFrameProto*\201\001\n\004Ty"
+    "pe\022\013\n\007INVALID\020\000\022\010\n\004LINE\020\001\022\r\n\tRECTANGLE\020\002"
+    "\022\n\n\006CIRCLE\020\003\022\022\n\016CONVEX_POLYGON\020\004\022\013\n\007POLY"
+    "GON\020\005\022\013\n\007ELLIPSE\020\006\022\007\n\003ARC\020\007\022\020\n\014BEZIER_CU"
+    "RVE\020\010", 685);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "Morphan.proto", &protobuf_RegisterTypes);
   Color::default_instance_ = new Color();
@@ -1058,6 +1060,7 @@ const int PrimitiveProto::kPointsFieldNumber;
 const int PrimitiveProto::kOutlineFieldNumber;
 const int PrimitiveProto::kWidthFieldNumber;
 const int PrimitiveProto::kFillFieldNumber;
+const int PrimitiveProto::kFilledFieldNumber;
 const int PrimitiveProto::kParamsFieldNumber;
 #endif  // !_MSC_VER
 
@@ -1085,6 +1088,7 @@ void PrimitiveProto::SharedCtor() {
   outline_ = NULL;
   width_ = 1;
   fill_ = NULL;
+  filled_ = false;
   params_ = NULL;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
@@ -1133,6 +1137,7 @@ void PrimitiveProto::Clear() {
     if (has_fill()) {
       if (fill_ != NULL) fill_->::Color::Clear();
     }
+    filled_ = false;
     if (has_params()) {
       if (params_ != NULL) params_->::ExtraParams::Clear();
     }
@@ -1239,12 +1244,28 @@ bool PrimitiveProto::MergePartialFromCodedStream(
         } else {
           goto handle_uninterpreted;
         }
-        if (input->ExpectTag(58)) goto parse_params;
+        if (input->ExpectTag(56)) goto parse_filled;
         break;
       }
 
-      // optional .ExtraParams params = 7;
+      // optional bool filled = 7;
       case 7: {
+        if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_filled:
+          DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
+                   bool, ::google::protobuf::internal::WireFormatLite::TYPE_BOOL>(
+                 input, &filled_)));
+          set_has_filled();
+        } else {
+          goto handle_uninterpreted;
+        }
+        if (input->ExpectTag(66)) goto parse_params;
+        break;
+      }
+
+      // optional .ExtraParams params = 8;
+      case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_LENGTH_DELIMITED) {
          parse_params:
@@ -1309,10 +1330,15 @@ void PrimitiveProto::SerializeWithCachedSizes(
       6, this->fill(), output);
   }
 
-  // optional .ExtraParams params = 7;
+  // optional bool filled = 7;
+  if (has_filled()) {
+    ::google::protobuf::internal::WireFormatLite::WriteBool(7, this->filled(), output);
+  }
+
+  // optional .ExtraParams params = 8;
   if (has_params()) {
     ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      7, this->params(), output);
+      8, this->params(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1360,11 +1386,16 @@ void PrimitiveProto::SerializeWithCachedSizes(
         6, this->fill(), target);
   }
 
-  // optional .ExtraParams params = 7;
+  // optional bool filled = 7;
+  if (has_filled()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteBoolToArray(7, this->filled(), target);
+  }
+
+  // optional .ExtraParams params = 8;
   if (has_params()) {
     target = ::google::protobuf::internal::WireFormatLite::
       WriteMessageNoVirtualToArray(
-        7, this->params(), target);
+        8, this->params(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1412,7 +1443,12 @@ int PrimitiveProto::ByteSize() const {
           this->fill());
     }
 
-    // optional .ExtraParams params = 7;
+    // optional bool filled = 7;
+    if (has_filled()) {
+      total_size += 1 + 1;
+    }
+
+    // optional .ExtraParams params = 8;
     if (has_params()) {
       total_size += 1 +
         ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
@@ -1470,6 +1506,9 @@ void PrimitiveProto::MergeFrom(const PrimitiveProto& from) {
     if (from.has_fill()) {
       mutable_fill()->::Color::MergeFrom(from.fill());
     }
+    if (from.has_filled()) {
+      set_filled(from.filled());
+    }
     if (from.has_params()) {
       mutable_params()->::ExtraParams::MergeFrom(from.params());
     }
@@ -1512,6 +1551,7 @@ void PrimitiveProto::Swap(PrimitiveProto* other) {
     std::swap(outline_, other->outline_);
     std::swap(width_, other->width_);
     std::swap(fill_, other->fill_);
+    std::swap(filled_, other->filled_);
     std::swap(params_, other->params_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
@@ -1538,7 +1578,7 @@ const int MorphanKeyFrameProto::kScaleYFieldNumber;
 const int MorphanKeyFrameProto::kRotationFieldNumber;
 const int MorphanKeyFrameProto::kOpacityFieldNumber;
 const int MorphanKeyFrameProto::kPrimitivesFieldNumber;
-const int MorphanKeyFrameProto::kSecsFieldNumber;
+const int MorphanKeyFrameProto::kMillisecsFieldNumber;
 #endif  // !_MSC_VER
 
 MorphanKeyFrameProto::MorphanKeyFrameProto()
@@ -1563,7 +1603,7 @@ void MorphanKeyFrameProto::SharedCtor() {
   scale_y_ = 1;
   rotation_ = 0;
   opacity_ = 0;
-  secs_ = 0;
+  millisecs_ = 0;
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
 }
 
@@ -1605,7 +1645,7 @@ void MorphanKeyFrameProto::Clear() {
     scale_y_ = 1;
     rotation_ = 0;
     opacity_ = 0;
-    secs_ = 0;
+    millisecs_ = 0;
   }
   primitives_.Clear();
   ::memset(_has_bits_, 0, sizeof(_has_bits_));
@@ -1724,19 +1764,19 @@ bool MorphanKeyFrameProto::MergePartialFromCodedStream(
           goto handle_uninterpreted;
         }
         if (input->ExpectTag(58)) goto parse_primitives;
-        if (input->ExpectTag(69)) goto parse_secs;
+        if (input->ExpectTag(64)) goto parse_millisecs;
         break;
       }
 
-      // optional float secs = 8;
+      // optional int32 millisecs = 8;
       case 8: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_FIXED32) {
-         parse_secs:
+            ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
+         parse_millisecs:
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   float, ::google::protobuf::internal::WireFormatLite::TYPE_FLOAT>(
-                 input, &secs_)));
-          set_has_secs();
+                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
+                 input, &millisecs_)));
+          set_has_millisecs();
         } else {
           goto handle_uninterpreted;
         }
@@ -1798,9 +1838,9 @@ void MorphanKeyFrameProto::SerializeWithCachedSizes(
       7, this->primitives(i), output);
   }
 
-  // optional float secs = 8;
-  if (has_secs()) {
-    ::google::protobuf::internal::WireFormatLite::WriteFloat(8, this->secs(), output);
+  // optional int32 millisecs = 8;
+  if (has_millisecs()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt32(8, this->millisecs(), output);
   }
 
   if (!unknown_fields().empty()) {
@@ -1848,9 +1888,9 @@ void MorphanKeyFrameProto::SerializeWithCachedSizes(
         7, this->primitives(i), target);
   }
 
-  // optional float secs = 8;
-  if (has_secs()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteFloatToArray(8, this->secs(), target);
+  // optional int32 millisecs = 8;
+  if (has_millisecs()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(8, this->millisecs(), target);
   }
 
   if (!unknown_fields().empty()) {
@@ -1898,9 +1938,11 @@ int MorphanKeyFrameProto::ByteSize() const {
       total_size += 1 + 4;
     }
 
-    // optional float secs = 8;
-    if (has_secs()) {
-      total_size += 1 + 4;
+    // optional int32 millisecs = 8;
+    if (has_millisecs()) {
+      total_size += 1 +
+        ::google::protobuf::internal::WireFormatLite::Int32Size(
+          this->millisecs());
     }
 
   }
@@ -1957,8 +1999,8 @@ void MorphanKeyFrameProto::MergeFrom(const MorphanKeyFrameProto& from) {
     if (from.has_opacity()) {
       set_opacity(from.opacity());
     }
-    if (from.has_secs()) {
-      set_secs(from.secs());
+    if (from.has_millisecs()) {
+      set_millisecs(from.millisecs());
     }
   }
   mutable_unknown_fields()->MergeFrom(from.unknown_fields());
@@ -1993,7 +2035,7 @@ void MorphanKeyFrameProto::Swap(MorphanKeyFrameProto* other) {
     std::swap(rotation_, other->rotation_);
     std::swap(opacity_, other->opacity_);
     primitives_.Swap(&other->primitives_);
-    std::swap(secs_, other->secs_);
+    std::swap(millisecs_, other->millisecs_);
     std::swap(_has_bits_[0], other->_has_bits_[0]);
     _unknown_fields_.Swap(&other->_unknown_fields_);
     std::swap(_cached_size_, other->_cached_size_);

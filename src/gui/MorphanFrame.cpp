@@ -162,6 +162,7 @@ void MorphanFrame::UpdateStatusBar()
     statusBar->SetStatusText(wxString::Format("(%d %d)", size.GetWidth(), size.GetHeight()), 2);
     statusBar->SetStatusText(wxString::Format("%d%%", (int)(100 * view->GetZoom())), 3);
     statusBar->SetStatusText(wxString::Format("(%d, %d)", mouse.x, mouse.y), 4);
+    statusBar->Refresh();
 }
 
 void MorphanFrame::OnCanvasSize(wxCommandEvent& event)
@@ -257,30 +258,30 @@ void MorphanFrame::OnNextFrame(wxCommandEvent& event)
 {
     MorphanView* view = GetMorphanView();
     view->NextFrame();
-    UpdateStatusBar();
     OnKeyFrameChanged();
+    UpdateStatusBar();
 }
 
 void MorphanFrame::OnPrevFrame(wxCommandEvent& event)
 {
     MorphanView* view = GetMorphanView();
     view->PrevFrame();
-    UpdateStatusBar();
     OnKeyFrameChanged();
+    UpdateStatusBar();
 }
 
 void MorphanFrame::OnAddFrame(wxCommandEvent& event)
 {
     MorphanView* view = GetMorphanView();
-    UpdateStatusBar();
     view->AddFrame();
+    UpdateStatusBar();
 }
 
 void MorphanFrame::OnDeleteFrame(wxCommandEvent& event)
 {
     MorphanView* view = GetMorphanView();
-    UpdateStatusBar();
     view->DeleteFrame();
+    UpdateStatusBar();
 }
 
 void MorphanFrame::OnKeyFrameChanged(wxSpinEvent& event)
@@ -290,7 +291,7 @@ void MorphanFrame::OnKeyFrameChanged(wxSpinEvent& event)
     float scale_x, scale_y;
     float rotation;
     float opacity;
-    float secs = 1.0f;
+    int millisecs;
 
     x = keyFrameX->GetValue();
     y = keyFrameY->GetValue();
@@ -298,13 +299,14 @@ void MorphanFrame::OnKeyFrameChanged(wxSpinEvent& event)
     scale_y = keyFrameScaleY->GetValue();
     rotation = keyFrameRotation->GetValue();
     opacity = keyFrameOpacity->GetValue();
+    millisecs = keyFrameSecs->GetValue();
 
     MorphanKeyFrame& keyFrame = view->GetCurrentFrame();
     keyFrame.SetPosition(x, y);
     keyFrame.SetScale(scale_x / 100.f, scale_y / 100.f);
     keyFrame.SetRotation(rotation);
     keyFrame.SetOpacity(opacity / 100.f);
-    keyFrame.SetSecs(secs / 1000.f);
+    keyFrame.SetMilliSecs(millisecs);
 }
 
 void MorphanFrame::OnKeyFrameChanged()
@@ -314,14 +316,14 @@ void MorphanFrame::OnKeyFrameChanged()
     float scale_x, scale_y;
     float rotation;
     float opacity;
-    float secs = 1.0f;
+    float millisecs;
 
     MorphanKeyFrame& keyFrame = view->GetCurrentFrame();
     keyFrame.GetPosition(x, y);
     keyFrame.GetScale(scale_x, scale_y);
     rotation = keyFrame.GetRotation();
     opacity = keyFrame.GetOpacity();
-    secs = keyFrame.GetSecs();
+    millisecs = keyFrame.GetMilliSecs();
 
     keyFrameX->SetValue(x);
     keyFrameY->SetValue(y);
@@ -329,7 +331,7 @@ void MorphanFrame::OnKeyFrameChanged()
     keyFrameScaleY->SetValue(scale_y * 100);
     keyFrameRotation->SetValue(rotation);
     keyFrameOpacity->SetValue(opacity * 100);
-    keyFrameSecs->SetValue(secs * 1000);
+    keyFrameSecs->SetValue(millisecs);
 }
 
 void MorphanFrame::OnOutlineChanged(wxColourPickerEvent& event)
@@ -348,4 +350,10 @@ void MorphanFrame::OnFillChanged(wxColourPickerEvent& event)
 {
     MorphanView* view = GetMorphanView();
     view->SetFillColor(event.GetColour());
+}
+
+void MorphanFrame::OnFilledChanged(wxCommandEvent& event)
+{
+    MorphanView* view = GetMorphanView();
+    view->SetFilled(event.IsChecked());
 }

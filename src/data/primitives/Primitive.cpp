@@ -26,6 +26,7 @@ void Primitive::CopyAttributes(Primitive* primitive, bool same_id) const
     primitive->SetOutline(outline);
     primitive->SetFill(fill);
     primitive->SetWidth(width);
+    primitive->SetFilled(filled);
     if (same_id) primitive->SetId(id);
 }
 
@@ -43,7 +44,10 @@ void Primitive::Move(float x, float y)
 void Primitive::Draw(wxGCDC& dc) const
 {
     dc.SetPen(wxPen(outline, width));
-    dc.SetBrush(wxBrush(fill));
+    if (filled)
+        dc.SetBrush(wxBrush(fill));
+    else
+        dc.SetBrush(*wxTRANSPARENT_BRUSH);
 }
 
 void Primitive::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const

@@ -68,6 +68,7 @@ class MorphanFrame : public MorphanGUI
         void OnKeyFrameChanged();
 		void OnOutlineChanged(wxColourPickerEvent& event);
 		void OnWidthChanged(wxSpinEvent& event);
+		void OnFilledChanged(wxCommandEvent& event);
 		void OnFillChanged(wxColourPickerEvent& event);
     private:
         wxDocManager* manager;

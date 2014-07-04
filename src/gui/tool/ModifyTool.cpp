@@ -48,7 +48,7 @@ void ModifyTool::SetSelection(const std::vector<Primitive*> primitives, const wx
     }
 }
 
-void ModifyTool::Modify(const wxColour& outline, int width, const wxColour& fill)
+void ModifyTool::Modify(const wxColour& outline, int width, const wxColour& fill, int isfilled)
 {
     for (const PrimitiveSelection& ps : selection)
     {
@@ -58,6 +58,8 @@ void ModifyTool::Modify(const wxColour& outline, int width, const wxColour& fill
             ps.primitive->SetWidth(width);
         if (fill.IsOk())
             ps.primitive->SetFill(fill);
+        if (isfilled > 0)
+            ps.primitive->SetFilled(isfilled);
     }
 }
 

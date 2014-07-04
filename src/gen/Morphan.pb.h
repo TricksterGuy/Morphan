@@ -458,10 +458,17 @@ class PrimitiveProto : public ::google::protobuf::Message {
   inline ::Color* release_fill();
   inline void set_allocated_fill(::Color* fill);
 
-  // optional .ExtraParams params = 7;
+  // optional bool filled = 7;
+  inline bool has_filled() const;
+  inline void clear_filled();
+  static const int kFilledFieldNumber = 7;
+  inline bool filled() const;
+  inline void set_filled(bool value);
+
+  // optional .ExtraParams params = 8;
   inline bool has_params() const;
   inline void clear_params();
-  static const int kParamsFieldNumber = 7;
+  static const int kParamsFieldNumber = 8;
   inline const ::ExtraParams& params() const;
   inline ::ExtraParams* mutable_params();
   inline ::ExtraParams* release_params();
@@ -479,6 +486,8 @@ class PrimitiveProto : public ::google::protobuf::Message {
   inline void clear_has_width();
   inline void set_has_fill();
   inline void clear_has_fill();
+  inline void set_has_filled();
+  inline void clear_has_filled();
   inline void set_has_params();
   inline void clear_has_params();
 
@@ -491,9 +500,10 @@ class PrimitiveProto : public ::google::protobuf::Message {
   ::Color* outline_;
   ::Color* fill_;
   ::ExtraParams* params_;
+  bool filled_;
 
   mutable int _cached_size_;
-  ::google::protobuf::uint32 _has_bits_[(7 + 31) / 32];
+  ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
 
   friend void  protobuf_AddDesc_Morphan_2eproto();
   friend void protobuf_AssignDesc_Morphan_2eproto();
@@ -612,12 +622,12 @@ class MorphanKeyFrameProto : public ::google::protobuf::Message {
   inline ::google::protobuf::RepeatedPtrField< ::PrimitiveProto >*
       mutable_primitives();
 
-  // optional float secs = 8;
-  inline bool has_secs() const;
-  inline void clear_secs();
-  static const int kSecsFieldNumber = 8;
-  inline float secs() const;
-  inline void set_secs(float value);
+  // optional int32 millisecs = 8;
+  inline bool has_millisecs() const;
+  inline void clear_millisecs();
+  static const int kMillisecsFieldNumber = 8;
+  inline ::google::protobuf::int32 millisecs() const;
+  inline void set_millisecs(::google::protobuf::int32 value);
 
   // @@protoc_insertion_point(class_scope:MorphanKeyFrameProto)
  private:
@@ -633,8 +643,8 @@ class MorphanKeyFrameProto : public ::google::protobuf::Message {
   inline void clear_has_rotation();
   inline void set_has_opacity();
   inline void clear_has_opacity();
-  inline void set_has_secs();
-  inline void clear_has_secs();
+  inline void set_has_millisecs();
+  inline void clear_has_millisecs();
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
@@ -645,7 +655,7 @@ class MorphanKeyFrameProto : public ::google::protobuf::Message {
   float rotation_;
   float opacity_;
   ::google::protobuf::RepeatedPtrField< ::PrimitiveProto > primitives_;
-  float secs_;
+  ::google::protobuf::int32 millisecs_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(8 + 31) / 32];
@@ -1083,15 +1093,37 @@ inline void PrimitiveProto::set_allocated_fill(::Color* fill) {
   }
 }
 
-// optional .ExtraParams params = 7;
-inline bool PrimitiveProto::has_params() const {
+// optional bool filled = 7;
+inline bool PrimitiveProto::has_filled() const {
   return (_has_bits_[0] & 0x00000040u) != 0;
 }
-inline void PrimitiveProto::set_has_params() {
+inline void PrimitiveProto::set_has_filled() {
   _has_bits_[0] |= 0x00000040u;
 }
-inline void PrimitiveProto::clear_has_params() {
+inline void PrimitiveProto::clear_has_filled() {
   _has_bits_[0] &= ~0x00000040u;
+}
+inline void PrimitiveProto::clear_filled() {
+  filled_ = false;
+  clear_has_filled();
+}
+inline bool PrimitiveProto::filled() const {
+  return filled_;
+}
+inline void PrimitiveProto::set_filled(bool value) {
+  set_has_filled();
+  filled_ = value;
+}
+
+// optional .ExtraParams params = 8;
+inline bool PrimitiveProto::has_params() const {
+  return (_has_bits_[0] & 0x00000080u) != 0;
+}
+inline void PrimitiveProto::set_has_params() {
+  _has_bits_[0] |= 0x00000080u;
+}
+inline void PrimitiveProto::clear_has_params() {
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline void PrimitiveProto::clear_params() {
   if (params_ != NULL) params_->::ExtraParams::Clear();
@@ -1282,26 +1314,26 @@ MorphanKeyFrameProto::mutable_primitives() {
   return &primitives_;
 }
 
-// optional float secs = 8;
-inline bool MorphanKeyFrameProto::has_secs() const {
+// optional int32 millisecs = 8;
+inline bool MorphanKeyFrameProto::has_millisecs() const {
   return (_has_bits_[0] & 0x00000080u) != 0;
 }
-inline void MorphanKeyFrameProto::set_has_secs() {
+inline void MorphanKeyFrameProto::set_has_millisecs() {
   _has_bits_[0] |= 0x00000080u;
 }
-inline void MorphanKeyFrameProto::clear_has_secs() {
+inline void MorphanKeyFrameProto::clear_has_millisecs() {
   _has_bits_[0] &= ~0x00000080u;
 }
-inline void MorphanKeyFrameProto::clear_secs() {
-  secs_ = 0;
-  clear_has_secs();
+inline void MorphanKeyFrameProto::clear_millisecs() {
+  millisecs_ = 0;
+  clear_has_millisecs();
 }
-inline float MorphanKeyFrameProto::secs() const {
-  return secs_;
+inline ::google::protobuf::int32 MorphanKeyFrameProto::millisecs() const {
+  return millisecs_;
 }
-inline void MorphanKeyFrameProto::set_secs(float value) {
-  set_has_secs();
-  secs_ = value;
+inline void MorphanKeyFrameProto::set_millisecs(::google::protobuf::int32 value) {
+  set_has_millisecs();
+  millisecs_ = value;
 }
 
 // -------------------------------------------------------------------

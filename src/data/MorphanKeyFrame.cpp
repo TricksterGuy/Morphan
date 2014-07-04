@@ -42,7 +42,7 @@ MorphanKeyFrame MorphanKeyFrame::Copy()
     frame.y = y;
     frame.scale_x = scale_x;
     frame.scale_y = scale_y;
-    frame.secs = secs;
+    frame.millisecs = millisecs;
     frame.opacity = opacity;
     frame.rotation = rotation;
 
@@ -89,7 +89,7 @@ void MorphanKeyFrame::Write(MorphanKeyFrameProto* proto) const
     proto->set_scale_y(scale_y);
     proto->set_rotation(rotation);
     proto->set_opacity(opacity);
-    proto->set_secs(secs);
+    proto->set_millisecs(millisecs);
     for (Primitive* p : primitives)
     {
         PrimitiveProto* pproto = proto->add_primitives();
@@ -105,7 +105,7 @@ void MorphanKeyFrame::Read(const MorphanKeyFrameProto& proto)
     scale_y = proto.scale_y();
     rotation = proto.rotation();
     opacity = proto.opacity();
-    secs = proto.secs();
+    millisecs = proto.millisecs();
 
     for (const auto& pproto : proto.primitives())
     {

@@ -53,16 +53,19 @@ class Primitive
         void SetOutline(const wxColour& ncolor) {outline = ncolor;}
         void SetWidth(float nwidth) {width = nwidth;}
         void SetFill(const wxColour& ncolor) {fill = ncolor;}
+        void SetFilled(bool isfilled) {filled = isfilled;}
         long long GetId() const {return id;}
         const wxColour& GetOutline() const {return outline;}
         float GetWidth() const {return width;}
         const wxColour& GetFill() const {return fill;}
+        bool IsFilled() const {return filled;}
     private:
         long long id;
     protected:
         wxColour outline, fill;
         /*** Width of outline */
         float width;
+        bool filled;
 };
 
 static inline float distance(const wxRealPoint& a, const wxRealPoint& b)

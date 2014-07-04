@@ -56,7 +56,7 @@ void MorphanPlayerPanel::OnDraw(wxDC& dc)
 
     const MorphanKeyFrame& cur = morphan->Get(frame);
     const MorphanKeyFrame& next = morphan->Get(frame + 1 < morphan->NumFrames() ? frame + 1 : frame);
-    unsigned long cur_length = cur.GetSecs() * 1000;
+    unsigned long cur_length = cur.GetMilliSecs();
 
     for (Primitive* p : cur.GetPrimitives())
     {
@@ -73,7 +73,7 @@ void MorphanPlayerPanel::OnPlay(Morphan* toPlay)
     for (int i = 0; i < morphan->NumFrames(); i++)
     {
         MorphanKeyFrame& key_frame = morphan->Get(i);
-        int key_time = (int)(key_frame.GetSecs() * 1000);
+        int key_time = (int)(key_frame.GetMilliSecs());
         time_map[sum] = i;
         sum += key_time;
     }

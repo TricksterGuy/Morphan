@@ -56,7 +56,7 @@ class ModifyTool : public wxClientData
         /*** Preview Modification */
         virtual std::set<PrimitiveSelection> PreviewModify(const wxRealPoint& origin);
         /*** Performs the attribute modification */
-        virtual void Modify(const wxColour& outline, int width, const wxColour& fill);
+        virtual void Modify(const wxColour& outline, int width, const wxColour& fill, int isfilled);
         /*** Sets selection of primitives */
         void SetSelection(const std::vector<Primitive*> primitives, const wxRealPoint& point, bool reset = false);
         /*** Gets selection */

@@ -47,6 +47,8 @@ void PrimitiveFactory::Write(Primitive* primitive, PrimitiveProto* proto)
     colorproto->set_b(primitive->GetFill().Blue());
     colorproto->set_a(primitive->GetFill().Alpha());
 
+    proto->set_filled(primitive->IsFilled());
+
     /// Todo fix this
     ConvexPolygon* cp = dynamic_cast<ConvexPolygon*>(primitive);
     if (cp)
@@ -71,6 +73,8 @@ Primitive* PrimitiveFactory::Read(const PrimitiveProto& proto)
 
     const Color& fillColor = proto.fill();
     wxColour fill(fillColor.r(), fillColor.g(), fillColor.b(), fillColor.a());
+
+    bool is_filled = proto.filled();
 
     int num_sides = proto.has_params() ? proto.params().num_sides() : 3;
 
@@ -118,6 +122,7 @@ Primitive* PrimitiveFactory::Read(const PrimitiveProto& proto)
     created->SetOutline(outline);
     created->SetWidth(width);
     created->SetFill(fill);
+    created->SetFilled(is_filled);
 
     return created;
 }

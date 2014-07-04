@@ -33,7 +33,7 @@ struct PrimitivePtrComp
 class MorphanKeyFrame
 {
     public:
-        MorphanKeyFrame() : x(0), y(0), scale_x(1.0f), scale_y(1.0f), rotation(0), opacity(100), secs(1.0f) {}
+        MorphanKeyFrame() : x(0), y(0), scale_x(1.0f), scale_y(1.0f), rotation(0), opacity(100), millisecs(1000) {}
         ~MorphanKeyFrame();
         void Dispose();
         MorphanKeyFrame Copy();
@@ -47,18 +47,18 @@ class MorphanKeyFrame
         void SetScale(float nsx, float nsy);
         void SetRotation(float nrotation) {rotation = nrotation;}
         void SetOpacity(float nopacity) {opacity = nopacity;}
-        void SetSecs(float nsecs) {secs = nsecs;}
+        void SetMilliSecs(float nmillisecs) {millisecs = nmillisecs;}
         void GetPosition(int& nx, int& ny) const {nx = x; ny = y;}
         void GetScale(float& nsx, float& nsy) const {nsx = scale_x; nsy = scale_y;}
         float GetRotation() const {return rotation;}
         float GetOpacity() const {return opacity;}
-        float GetSecs() const {return secs;}
+        float GetMilliSecs() const {return millisecs;}
     private:
         int x, y;
         float scale_x, scale_y;
         float rotation;
         float opacity;
-        float secs;
+        int millisecs;
         std::set<Primitive*, PrimitivePtrComp> primitives;
 };
 

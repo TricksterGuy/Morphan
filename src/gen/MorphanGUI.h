@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////
-// C++ code generated with wxFormBuilder (version Nov  5 2013)
+// C++ code generated with wxFormBuilder (version Jul  3 2014)
 // http://www.wxformbuilder.org/
 //
 // PLEASE DO "NOT" EDIT THIS FILE!
@@ -31,6 +31,7 @@ class wxDocParentFrame;
 #include <wx/spinctrl.h>
 #include <wx/statbox.h>
 #include <wx/clrpicker.h>
+#include <wx/checkbox.h>
 #include <wx/bmpbuttn.h>
 #include <wx/statusbr.h>
 #include <wx/frame.h>
@@ -97,6 +98,8 @@ class MorphanGUI : public wxDocParentFrame
 		wxColourPickerCtrl* outlineColor;
 		wxStaticText* m_staticText91;
 		wxSpinCtrl* objectWidth;
+		wxStaticText* m_staticText911;
+		wxCheckBox* objectFilled;
 		wxStaticText* m_staticText81;
 		wxColourPickerCtrl* fillColor;
 		wxGridSizer* toolSizer;
@@ -133,6 +136,7 @@ class MorphanGUI : public wxDocParentFrame
 		virtual void OnSnapToGrid( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnSnapToPoints( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPlay( wxCommandEvent& event ) { event.Skip(); }
+		virtual void OnAbout( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnNextFrame( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnPrevFrame( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnAddFrame( wxCommandEvent& event ) { event.Skip(); }
@@ -140,6 +144,7 @@ class MorphanGUI : public wxDocParentFrame
 		virtual void OnKeyFrameChanged( wxSpinEvent& event ) { event.Skip(); }
 		virtual void OnOutlineChanged( wxColourPickerEvent& event ) { event.Skip(); }
 		virtual void OnWidthChanged( wxSpinEvent& event ) { event.Skip(); }
+		virtual void OnFilledChanged( wxCommandEvent& event ) { event.Skip(); }
 		virtual void OnFillChanged( wxColourPickerEvent& event ) { event.Skip(); }
 
 
