@@ -50,6 +50,15 @@ void Rectangle::Draw(wxGCDC& dc) const
     RectangleTool::Draw(dc, start, end);
 }
 
+void Rectangle::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+{
+    Rectangle* other = dynamic_cast<Rectangle*>(next);
+    assert(other);
+    wxRealPoint nstart = interpolate(start, other->start, delta, length);
+    wxRealPoint nend = interpolate(end, other->end, delta, length);
+    RectangleTool::Draw(dc, nstart, nend);
+}
+
 wxRect Rectangle::GetBounds() const
 {
     return wxRect(start, end);

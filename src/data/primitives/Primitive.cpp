@@ -45,3 +45,9 @@ void Primitive::Draw(wxGCDC& dc) const
     dc.SetPen(wxPen(outline, width));
     dc.SetBrush(wxBrush(fill));
 }
+
+void Primitive::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+{
+    dc.SetPen(wxPen(interpolate(outline, next->outline, delta, length), interpolate(width, next->width, delta, length)));
+    dc.SetBrush(wxBrush(interpolate(fill, next->fill, delta, length)));
+}

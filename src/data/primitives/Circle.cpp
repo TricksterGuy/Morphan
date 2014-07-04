@@ -50,6 +50,16 @@ void Circle::Draw(wxGCDC& dc) const
     CircleTool::Draw(dc, center, edge);
 }
 
+void Circle::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+{
+    Primitive::Draw(dc, next, delta, length);
+    Circle* ncircle = dynamic_cast<Circle*>(next);
+    assert(ncircle);
+    wxRealPoint ncenter = interpolate(center, ncircle->center, delta, length);
+    wxRealPoint nedge = interpolate(edge, ncircle->edge, delta, length);
+    CircleTool::Draw(dc, ncenter, nedge);
+}
+
 wxRect Circle::GetBounds() const
 {
     float radius = distance(center, edge);

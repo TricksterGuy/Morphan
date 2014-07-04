@@ -36,6 +36,7 @@ class Morphan : public wxDocument
         int NumFrames() const {return frames.size();}
         const MorphanKeyFrame& Get(int frame) const {return frames[frame];}
         MorphanKeyFrame& Get(int frame) {return frames[frame];}
+        const std::vector<MorphanKeyFrame>& GetFrames() const {return frames;}
         /*** Adds primitive to key frame */
         void Add(int frame, Primitive* primitive);
         /*** Adds new key frame */

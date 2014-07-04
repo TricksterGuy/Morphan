@@ -101,6 +101,18 @@ void Arc::Draw(wxGCDC& dc) const
     ArcTool::Draw(dc, start, second, end);
 }
 
+void Arc::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+{
+    Primitive::Draw(dc, next, delta, length);
+    dc.SetBrush(*wxTRANSPARENT_BRUSH);
+    Arc* narc = dynamic_cast<Arc*>(next);
+    assert(narc);
+    wxRealPoint nstart = interpolate(start, narc->start, delta, length);
+    wxRealPoint nsecond = interpolate(second, narc->second, delta, length);
+    wxRealPoint nend = interpolate(end, narc->end, delta, length);
+    ArcTool::Draw(dc, nstart, nsecond, nend);
+}
+
 wxRect Arc::GetBounds() const
 {
     wxRect rect;

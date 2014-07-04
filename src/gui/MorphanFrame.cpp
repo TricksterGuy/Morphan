@@ -42,6 +42,7 @@
 #include "icons.hpp"
 
 #include "GridSizeDialog.hpp"
+#include "MorphanPlayer.h"
 
 MorphanFrame::MorphanFrame(wxDocManager* nmanager, wxFrame* window) : MorphanGUI(nmanager, window), manager(nmanager), tool(NULL), modifyTool(NULL)
 {
@@ -242,6 +243,14 @@ void MorphanFrame::OnSnapToPoints(wxCommandEvent& event)
 {
     MorphanView* view = GetMorphanView();
     view->SetPointSnap(event.IsChecked());
+}
+
+void MorphanFrame::OnPlay(wxCommandEvent& event)
+{
+    Morphan* morphan = GetMorphan();
+    MorphanPlayer* player = new MorphanPlayer(this);
+    player->OnPlay(morphan);
+    player->Show();
 }
 
 void MorphanFrame::OnNextFrame(wxCommandEvent& event)

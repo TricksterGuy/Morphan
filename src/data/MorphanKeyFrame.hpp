@@ -25,6 +25,11 @@
 #include <set>
 #include "Primitive.hpp"
 
+struct PrimitivePtrComp
+{
+  bool operator()(const Primitive* lhs, const Primitive* rhs) const  {return lhs->GetId() < rhs->GetId();}
+};
+
 class MorphanKeyFrame
 {
     public:
@@ -32,9 +37,10 @@ class MorphanKeyFrame
         ~MorphanKeyFrame();
         void Dispose();
         MorphanKeyFrame Copy();
-        const std::set<Primitive*> GetPrimitives() const {return primitives;}
+        const std::set<Primitive*, PrimitivePtrComp> GetPrimitives() const {return primitives;}
         void Add(Primitive* primitive);
         void Delete(Primitive* primitive);
+        Primitive* FindMatching(Primitive* p) const;
         void Write(MorphanKeyFrameProto* proto) const;
         void Read(const MorphanKeyFrameProto& proto);
         void SetPosition(int nx, int ny);
@@ -53,7 +59,7 @@ class MorphanKeyFrame
         float rotation;
         float opacity;
         float secs;
-        std::set<Primitive*> primitives;
+        std::set<Primitive*, PrimitivePtrComp> primitives;
 };
 
 #endif

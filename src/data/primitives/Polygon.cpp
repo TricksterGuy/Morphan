@@ -35,6 +35,17 @@ void Polygon::Draw(wxGCDC& dc) const
     PolygonTool::Draw(dc, points);
 }
 
+void Polygon::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+{
+    Polygon* other = dynamic_cast<Polygon*>(next);
+    assert(other);
+    assert(points.size() == other->points.size());
+    std::vector<wxRealPoint> npoints;
+    for (unsigned int i = 0; i < points.size(); i++)
+        npoints.push_back(interpolate(points[i], other->points[i], delta, length));
+    PolygonTool::Draw(dc, npoints);
+}
+
 bool Polygon::SetControlPoints(const std::vector<wxRealPoint>& npoints)
 {
     if (npoints.size() < 3) return false;

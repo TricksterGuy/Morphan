@@ -33,6 +33,7 @@ class Polygon : public Primitive
         std::vector<wxRealPoint> GetControlPoints() const {return points;}
         bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
+        void Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const;
         wxRect GetBounds() const;
         Type GetType() const {return Type::POLYGON;}
     private:

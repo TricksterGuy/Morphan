@@ -46,6 +46,7 @@ class Primitive
         virtual bool SetControlPoints(const std::vector<wxRealPoint>& points) = 0;
         virtual wxRect GetBounds() const = 0;
         virtual void Draw(wxGCDC& dc) const;
+        virtual void Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const;
         virtual Type GetType() const {return Type::INVALID;}
         void CopyAttributes(Primitive* primitive, bool same_id = true) const;
         void SetId(long long nid) {id = nid;}
@@ -71,5 +72,41 @@ static inline float distance(const wxRealPoint& a, const wxRealPoint& b)
 
 static inline float min(float x, float y) {return x > y ? y : x;}
 static inline float max(float x, float y) {return x > y ? x : y;}
+
+static inline float interpolate(int first, int second, unsigned long delta, unsigned long length)
+{
+    if (first == second) return first;
+    float percent = 1.0 * delta / length;
+    return first * (1.0f - percent) + second * percent;
+}
+
+static inline double interpolate(float first, float second, unsigned long delta, unsigned long length)
+{
+    if (first == second) return first;
+    double percent = 1.0 * delta / length;
+    return first * (1.0 - percent) + second * percent;
+}
+
+static inline double interpolate(double first, double second, unsigned long delta, unsigned long length)
+{
+    if (first == second) return first;
+    float percent = 1.0 * delta / length;
+    return first * (1.0f - percent) + second * percent;
+}
+
+static inline wxRealPoint interpolate(const wxRealPoint& first, const wxRealPoint& second, unsigned long delta, unsigned long length)
+{
+    if (first == second) return first;
+    return wxRealPoint(interpolate(first.x, second.x, delta, length), interpolate(first.y, second.y, delta, length));
+}
+
+static inline wxColour interpolate(const wxColour& first, const wxColour& second, unsigned long delta, unsigned long length)
+{
+    if (first == second) return first;
+    return wxColour(interpolate(first.Red(), second.Red(), delta, length),
+                    interpolate(first.Green(), second.Green(), delta, length),
+                    interpolate(first.Blue(), second.Blue(), delta, length),
+                    interpolate(first.Alpha(), second.Alpha(), delta, length));
+}
 
 #endif

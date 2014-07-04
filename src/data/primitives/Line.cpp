@@ -50,6 +50,15 @@ void Line::Draw(wxGCDC& dc) const
     LineTool::Draw(dc, start, end);
 }
 
+void Line::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+{
+    Line* other = dynamic_cast<Line*>(next);
+    assert(other);
+    wxRealPoint nstart = interpolate(start, other->start, delta, length);
+    wxRealPoint nend = interpolate(end, other->end, delta, length);
+    LineTool::Draw(dc, nstart, nend);
+}
+
 wxRect Line::GetBounds() const
 {
     return wxRect(start, end);

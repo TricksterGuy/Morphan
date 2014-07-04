@@ -33,6 +33,7 @@ class ConvexPolygon : public Primitive
         std::vector<wxRealPoint> GetControlPoints() const;
         bool SetControlPoints(const std::vector<wxRealPoint>& points);
         void Draw(wxGCDC& dc) const;
+        void Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const;
         Type GetType() const {return Type::CONVEX_POLYGON;}
         wxRect GetBounds() const;
         int GetNumSides() const {return num_sides;}

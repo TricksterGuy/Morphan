@@ -56,6 +56,8 @@ class MorphanFrame : public MorphanGUI
 		void OnShowGrid(wxCommandEvent& event);
 		void OnSnapToGrid(wxCommandEvent& event);
 		void OnSnapToPoints(wxCommandEvent& event);
+		// Play
+		void OnPlay(wxCommandEvent& event);
 		// KeyFrame Control
 		void OnNextFrame(wxCommandEvent& event);
 		void OnPrevFrame(wxCommandEvent& event);

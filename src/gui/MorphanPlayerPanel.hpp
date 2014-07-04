@@ -32,11 +32,12 @@ class MorphanPlayerPanel : public wxScrolledCanvas
        MorphanPlayerPanel(wxWindow* Parent = NULL, wxWindowID Id = wxID_ANY, const wxPoint& Position = wxDefaultPosition, const wxSize& Size = wxDefaultSize, long Style = wxVSCROLL|wxHSCROLL);
        ~MorphanPlayerPanel();
        void OnDraw(wxDC& dc);
-       void OnPlay(Morphan* morphan_);
+       void OnPlay(Morphan* toPlay);
    private:
        Morphan* morphan;
        Clock clock;
        unsigned long time;
+       std::map<unsigned int, int> time_map;
 };
 
 

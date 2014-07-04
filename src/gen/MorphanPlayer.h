@@ -18,6 +18,8 @@ class MorphanPlayerPanel;
 #include <wx/string.h>
 #include <wx/sizer.h>
 #include <wx/dialog.h>
+#include "Morphan.hpp"
+#include "MorphanPlayerPanel.hpp"
 
 ///////////////////////////////////////////////////////////////////////////
 
@@ -25,18 +27,17 @@ class MorphanPlayerPanel;
 ///////////////////////////////////////////////////////////////////////////////
 /// Class MorphanPlayer
 ///////////////////////////////////////////////////////////////////////////////
-class MorphanPlayer : public wxDialog 
+class MorphanPlayer : public wxDialog
 {
 	private:
-	
+
 	protected:
 		MorphanPlayerPanel* morphanPlayerPanel;
-	
 	public:
-		
 		MorphanPlayer( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxT("Player"), const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxSize( 649,599 ), long style = wxDEFAULT_DIALOG_STYLE );
 		~MorphanPlayer();
-	
+		void OnPlay(Morphan* morphan) {morphanPlayerPanel->OnPlay(morphan);}
+
 };
 
 #endif //__MorphanPlayer__

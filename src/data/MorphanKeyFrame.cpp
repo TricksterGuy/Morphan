@@ -60,6 +60,15 @@ void MorphanKeyFrame::Delete(Primitive* primitive)
     delete primitive;
 }
 
+Primitive* MorphanKeyFrame::FindMatching(Primitive* primitive) const
+{
+    const auto& it = primitives.find(primitive);
+    if (it != primitives.end())
+        return *it;
+    else
+        return NULL;
+}
+
 void MorphanKeyFrame::SetPosition(int nx, int ny)
 {
     x = nx;

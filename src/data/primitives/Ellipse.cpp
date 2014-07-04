@@ -50,6 +50,16 @@ void Ellipse::Draw(wxGCDC& dc) const
     EllipseTool::Draw(dc, center, edge);
 }
 
+void Ellipse::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+{
+    Primitive::Draw(dc, next, delta, length);
+    Ellipse* other = dynamic_cast<Ellipse*>(next);
+    assert(other);
+    wxRealPoint ncenter = interpolate(center, other->center, delta, length);
+    wxRealPoint nedge = interpolate(edge, other->edge, delta, length);
+    EllipseTool::Draw(dc, ncenter, nedge);
+}
+
 wxRect Ellipse::GetBounds() const
 {
     float ar = abs(center.x - edge.x);
