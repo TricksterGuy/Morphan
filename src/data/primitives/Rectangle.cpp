@@ -44,19 +44,20 @@ bool Rectangle::SetControlPoints(const std::vector<wxRealPoint>& points)
     return true;
 }
 
-void Rectangle::Draw(wxGCDC& dc) const
+void Rectangle::Draw(MorphanDrawContext& context) const
 {
-    Primitive::Draw(dc);
-    RectangleTool::Draw(dc, start, end);
+    Primitive::Draw(context);
+    RectangleTool::Draw(context.gcdc, start, end);
 }
 
-void Rectangle::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+void Rectangle::Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const
 {
+    Primitive::Draw(context, next, delta, length);
     Rectangle* other = dynamic_cast<Rectangle*>(next);
     assert(other);
     wxRealPoint nstart = interpolate(start, other->start, delta, length);
     wxRealPoint nend = interpolate(end, other->end, delta, length);
-    RectangleTool::Draw(dc, nstart, nend);
+    RectangleTool::Draw(context.gcdc, nstart, nend);
 }
 
 wxRect Rectangle::GetBounds() const

@@ -41,17 +41,34 @@ void Primitive::Move(float x, float y)
     SetControlPoints(cpoints);
 }
 
-void Primitive::Draw(wxGCDC& dc) const
+void Primitive::Draw(MorphanDrawContext& context) const
 {
-    dc.SetPen(wxPen(outline, width));
+    context.gcdc.SetPen(wxPen(blend(outline, context.opacity), width));
     if (filled)
-        dc.SetBrush(wxBrush(fill));
+        context.gcdc.SetBrush(wxBrush(blend(fill, context.opacity)));
     else
-        dc.SetBrush(*wxTRANSPARENT_BRUSH);
+        context.gcdc.SetBrush(*wxTRANSPARENT_BRUSH);
 }
 
-void Primitive::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+void Primitive::Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const
 {
-    dc.SetPen(wxPen(interpolate(outline, next->outline, delta, length), interpolate(width, next->width, delta, length)));
-    dc.SetBrush(wxBrush(interpolate(fill, next->fill, delta, length)));
+    context.gcdc.SetPen(wxPen(blend(interpolate(outline, next->outline, delta, length), delta * 1.0f / length * context.opacity),
+                              interpolate(width, next->width, delta, length)));
+    float fill_opacity = interpolate(filled, next->filled, delta, length) * context.opacity;
+    if (filled && next->filled)
+    {
+        context.gcdc.SetBrush(wxBrush(blend(interpolate(fill, next->fill, delta, length), fill_opacity)));
+    }
+    else if (filled && !next->filled)
+    {
+        context.gcdc.SetBrush(wxBrush(blend(fill, fill_opacity)));
+    }
+    else if (!filled && next->filled)
+    {
+        context.gcdc.SetBrush(wxBrush(blend(next->fill, fill_opacity)));
+    }
+    else
+    {
+        context.gcdc.SetBrush(*wxTRANSPARENT_BRUSH);
+    }
 }

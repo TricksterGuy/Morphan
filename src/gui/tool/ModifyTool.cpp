@@ -23,7 +23,19 @@
 
 wxRealPoint INVALID_POINT(1e9, 1e9);
 
-void ModifyTool::SetSelection(const std::vector<Primitive*> primitives, const wxRealPoint& point, bool reset)
+void DoModify(Primitive* primitive, const wxColour& outline, int width, const wxColour& fill, int isfilled)
+{
+    if (outline.IsOk())
+        primitive->SetOutline(outline);
+    if (width > 0)
+        primitive->SetWidth(width);
+    if (fill.IsOk())
+        primitive->SetFill(fill);
+    if (isfilled > 0)
+        primitive->SetFilled(isfilled);
+}
+
+void ModifyTool::SetSelection(const std::vector<Primitive*>& primitives, const wxRealPoint& point, bool reset)
 {
     if (reset)
         selection.clear();
@@ -46,27 +58,45 @@ void ModifyTool::SetSelection(const std::vector<Primitive*> primitives, const wx
 
         selection.insert(PrimitiveSelection(primitive, minpt));
     }
+
+    selected_object = selection.begin();
+}
+
+void ModifyTool::SelectNext()
+{
+    if (selected_object == selection.end()) return;
+    selected_object++;
+}
+
+void ModifyTool::SelectPrevious()
+{
+    if (selected_object == selection.begin()) return;
+    selected_object--;
 }
 
 void ModifyTool::Modify(const wxColour& outline, int width, const wxColour& fill, int isfilled)
 {
-    for (const PrimitiveSelection& ps : selection)
+    if (mode == SelectionMode::ALL)
     {
-        if (outline.IsOk())
-            ps.primitive->SetOutline(outline);
-        if (width > 0)
-            ps.primitive->SetWidth(width);
-        if (fill.IsOk())
-            ps.primitive->SetFill(fill);
-        if (isfilled > 0)
-            ps.primitive->SetFilled(isfilled);
+        for (const PrimitiveSelection& ps : selection)
+        {
+            ::DoModify(ps.primitive, outline, width, fill, isfilled);
+        }
+    }
+    else
+    {
+        ::DoModify(selected_object->primitive, outline, width, fill, isfilled);
     }
 }
 
 std::set<PrimitiveSelection> ModifyTool::PreviewModify(const wxRealPoint& origin)
 {
     std::set<PrimitiveSelection> newselection;
-    std::set<PrimitiveSelection> old = selection;
+    std::set<PrimitiveSelection> old;
+    if (mode == SelectionMode::ALL)
+        old = selection;
+    else
+        old.insert(*selected_object);
     int id = 0;
     for (const PrimitiveSelection& ps : old)
     {

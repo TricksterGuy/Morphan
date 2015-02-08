@@ -44,20 +44,20 @@ bool Ellipse::SetControlPoints(const std::vector<wxRealPoint>& points)
     return true;
 }
 
-void Ellipse::Draw(wxGCDC& dc) const
+void Ellipse::Draw(MorphanDrawContext& context) const
 {
-    Primitive::Draw(dc);
-    EllipseTool::Draw(dc, center, edge);
+    Primitive::Draw(context);
+    EllipseTool::Draw(context.gcdc, center, edge);
 }
 
-void Ellipse::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+void Ellipse::Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const
 {
-    Primitive::Draw(dc, next, delta, length);
+    Primitive::Draw(context, next, delta, length);
     Ellipse* other = dynamic_cast<Ellipse*>(next);
     assert(other);
     wxRealPoint ncenter = interpolate(center, other->center, delta, length);
     wxRealPoint nedge = interpolate(edge, other->edge, delta, length);
-    EllipseTool::Draw(dc, ncenter, nedge);
+    EllipseTool::Draw(context.gcdc, ncenter, nedge);
 }
 
 wxRect Ellipse::GetBounds() const

@@ -27,6 +27,7 @@
 #include <wx/dcgraph.h>
 
 #include "Morphan.pb.h"
+#include "MorphanDrawContext.hpp"
 
 #define PI 3.14159265f
 
@@ -38,15 +39,15 @@ static inline long long timeSinceEpoch()
 class Primitive
 {
     public:
-        Primitive(unsigned long nid = 0) : id(nid), outline(0, 0, 0), fill(0, 0, 0), width(10) {}
+        Primitive(unsigned long nid = 0) : id(nid), outline(0, 0, 0), fill(0, 0, 0), filled(true), width(10) {}
         virtual ~Primitive() {}
         virtual Primitive* Copy() const = 0;
         virtual void Move(float x, float y);
         virtual std::vector<wxRealPoint> GetControlPoints() const = 0;
         virtual bool SetControlPoints(const std::vector<wxRealPoint>& points) = 0;
         virtual wxRect GetBounds() const = 0;
-        virtual void Draw(wxGCDC& dc) const;
-        virtual void Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const;
+        virtual void Draw(MorphanDrawContext& context) const;
+        virtual void Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const;
         virtual Type GetType() const {return Type::INVALID;}
         void CopyAttributes(Primitive* primitive, bool same_id = true) const;
         void SetId(long long nid) {id = nid;}
@@ -63,9 +64,9 @@ class Primitive
         long long id;
     protected:
         wxColour outline, fill;
+        bool filled;
         /*** Width of outline */
         float width;
-        bool filled;
 };
 
 static inline float distance(const wxRealPoint& a, const wxRealPoint& b)
@@ -110,6 +111,11 @@ static inline wxColour interpolate(const wxColour& first, const wxColour& second
                     interpolate(first.Green(), second.Green(), delta, length),
                     interpolate(first.Blue(), second.Blue(), delta, length),
                     interpolate(first.Alpha(), second.Alpha(), delta, length));
+}
+
+static inline wxColour blend(const wxColour& color, float opacity)
+{
+    return wxColour(color.Red(), color.Green(), color.Blue(), color.Alpha() * opacity);
 }
 
 #endif

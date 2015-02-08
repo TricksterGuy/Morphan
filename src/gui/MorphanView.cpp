@@ -112,9 +112,10 @@ void MorphanView::OnDraw(wxDC& dc)
     wxPen cpbox(*wxBLACK, 2);
     wxBrush cpfill(*wxWHITE);
 
+    MorphanDrawContext context(gcdc, keyFrame.GetOpacity());
     for (const Primitive* p : keyFrame.GetPrimitives())
     {
-        p->Draw(gcdc);
+        p->Draw(context);
 
         if (show_points)
         {
@@ -137,10 +138,11 @@ void MorphanView::OnDraw(wxDC& dc)
     {
         std::set<PrimitiveSelection> selection = modifyTool->PreviewModify(mouse);
         cpbox.SetColour(*wxRED);
+        MorphanDrawContext context(gcdc, 1.0f);
         for (PrimitiveSelection ps : selection)
         {
             ps.primitive->SetOutline(*wxRED);
-            ps.primitive->Draw(gcdc);
+            ps.primitive->Draw(context);
             if (show_points)
             {
                 gcdc.SetPen(cpbox);
@@ -194,7 +196,7 @@ void MorphanView::OnClick(wxMouseEvent& event)
     else
     {
         const std::set<PrimitiveSelection>& selection = modifyTool->GetSelection();
-        std::vector<Primitive*> primitives = GetPrimitivesAt(mouse);
+         std::vector<Primitive*> primitives = GetPrimitivesAt(mouse);
         // No selection but we got primitives, set our selection.
         if (selection.empty() && !primitives.empty())
         {
@@ -467,7 +469,6 @@ std::vector<Primitive*> MorphanView::GetPrimitivesAt(const wxRealPoint& position
 
 wxRealPoint MorphanView::GetClosestPoint(const wxRealPoint& position)
 {
-    std::vector<Primitive*> primitives;
     Morphan* morphan = GetDocument();
     MorphanKeyFrame& frame = morphan->Get(current_frame);
 

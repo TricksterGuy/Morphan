@@ -27,7 +27,7 @@
 class ConvexPolygonTool : public Tool
 {
     public:
-        ConvexPolygonTool() {}
+        ConvexPolygonTool() : num_sides(3) {}
         Primitive* Create();
         bool CanCreate() const;
         void SetNumSides(int nsides) {num_sides = nsides;}

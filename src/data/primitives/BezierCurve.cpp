@@ -29,10 +29,10 @@ Primitive* BezierCurve::Copy() const
     return primitive;
 }
 
-void BezierCurve::Draw(wxGCDC& dc) const
+void BezierCurve::Draw(MorphanDrawContext& context) const
 {
-    Primitive::Draw(dc);
-    BezierTool::Draw(dc, points);
+    Primitive::Draw(context);
+    BezierTool::Draw(context.gcdc, points);
 }
 
 bool BezierCurve::SetControlPoints(const std::vector<wxRealPoint>& npoints)

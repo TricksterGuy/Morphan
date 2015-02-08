@@ -94,23 +94,23 @@ bool Arc::SetControlPoints(const std::vector<wxRealPoint>& points)
     return true;
 }
 
-void Arc::Draw(wxGCDC& dc) const
+void Arc::Draw(MorphanDrawContext& context) const
 {
-    Primitive::Draw(dc);
-    dc.SetBrush(*wxTRANSPARENT_BRUSH);
-    ArcTool::Draw(dc, start, second, end);
+    Primitive::Draw(context);
+    context.gcdc.SetBrush(*wxTRANSPARENT_BRUSH);
+    ArcTool::Draw(context.gcdc, start, second, end);
 }
 
-void Arc::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+void Arc::Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const
 {
-    Primitive::Draw(dc, next, delta, length);
-    dc.SetBrush(*wxTRANSPARENT_BRUSH);
+    Primitive::Draw(context, next, delta, length);
+    context.gcdc.SetBrush(*wxTRANSPARENT_BRUSH);
     Arc* narc = dynamic_cast<Arc*>(next);
     assert(narc);
     wxRealPoint nstart = interpolate(start, narc->start, delta, length);
     wxRealPoint nsecond = interpolate(second, narc->second, delta, length);
     wxRealPoint nend = interpolate(end, narc->end, delta, length);
-    ArcTool::Draw(dc, nstart, nsecond, nend);
+    ArcTool::Draw(context.gcdc, nstart, nsecond, nend);
 }
 
 wxRect Arc::GetBounds() const

@@ -20,6 +20,7 @@
  ******************************************************************************************************/
 
  #include "MorphanPlayerPanel.hpp"
+ #include "MorphanDrawContext.hpp"
 
 unsigned long getMilliTime()
 {
@@ -49,7 +50,7 @@ void MorphanPlayerPanel::OnDraw(wxDC& dc)
 
     long delta = getMilliTime() - time;
     std::map<unsigned int, int>::const_iterator it = time_map.lower_bound(delta);
-    it--;
+    --it;
     unsigned long delta_frame = delta - it->first;
     int frame = it->second;
     if (frame == -1) return;
@@ -57,11 +58,13 @@ void MorphanPlayerPanel::OnDraw(wxDC& dc)
     const MorphanKeyFrame& cur = morphan->Get(frame);
     const MorphanKeyFrame& next = morphan->Get(frame + 1 < morphan->NumFrames() ? frame + 1 : frame);
     unsigned long cur_length = cur.GetMilliSecs();
+    float opacity = interpolate(cur.GetOpacity(), next.GetOpacity(), delta_frame, cur_length);
 
+    MorphanDrawContext context(gcdc, opacity);
     for (Primitive* p : cur.GetPrimitives())
     {
         Primitive* np = next.FindMatching(p);
-        p->Draw(gcdc, np, delta_frame, cur_length);
+        p->Draw(context, np, delta_frame, cur_length);
     }
 }
 

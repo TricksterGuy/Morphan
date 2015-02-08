@@ -32,7 +32,7 @@ class BezierCurve : public Primitive
         Primitive* Copy() const;
         std::vector<wxRealPoint> GetControlPoints() const {return points;}
         bool SetControlPoints(const std::vector<wxRealPoint>& npoints);
-        void Draw(wxGCDC& dc) const;
+        void Draw(MorphanDrawContext& context) const;
         wxRect GetBounds() const;
         Type GetType() const {return Type::BEZIER_CURVE;}
     private:

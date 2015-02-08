@@ -32,8 +32,8 @@ class Ellipse : public Primitive
         Primitive* Copy() const;
         std::vector<wxRealPoint> GetControlPoints() const;
         bool SetControlPoints(const std::vector<wxRealPoint>& points);
-        void Draw(wxGCDC& dc) const;
-        void Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const;
+        void Draw(MorphanDrawContext& context) const;
+        void Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const;
         wxRect GetBounds() const;
         Type GetType() const {return Type::ELLIPSE;}
     private:

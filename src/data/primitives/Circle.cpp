@@ -44,20 +44,20 @@ bool Circle::SetControlPoints(const std::vector<wxRealPoint>& points)
     return true;
 }
 
-void Circle::Draw(wxGCDC& dc) const
+void Circle::Draw(MorphanDrawContext& context) const
 {
-    Primitive::Draw(dc);
-    CircleTool::Draw(dc, center, edge);
+    Primitive::Draw(context);
+    CircleTool::Draw(context.gcdc, center, edge);
 }
 
-void Circle::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+void Circle::Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const
 {
-    Primitive::Draw(dc, next, delta, length);
+    Primitive::Draw(context, next, delta, length);
     Circle* ncircle = dynamic_cast<Circle*>(next);
     assert(ncircle);
     wxRealPoint ncenter = interpolate(center, ncircle->center, delta, length);
     wxRealPoint nedge = interpolate(edge, ncircle->edge, delta, length);
-    CircleTool::Draw(dc, ncenter, nedge);
+    CircleTool::Draw(context.gcdc, ncenter, nedge);
 }
 
 wxRect Circle::GetBounds() const

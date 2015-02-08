@@ -44,20 +44,20 @@ bool ConvexPolygon::SetControlPoints(const std::vector<wxRealPoint>& points)
     return true;
 }
 
-void ConvexPolygon::Draw(wxGCDC& dc) const
+void ConvexPolygon::Draw(MorphanDrawContext& context) const
 {
-    Primitive::Draw(dc);
-    ConvexPolygonTool::Draw(dc, center, edge, num_sides);
+    Primitive::Draw(context);
+    ConvexPolygonTool::Draw(context.gcdc, center, edge, num_sides);
 }
 
-void ConvexPolygon::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+void ConvexPolygon::Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const
 {
-    Primitive::Draw(dc, next, delta, length);
+    Primitive::Draw(context, next, delta, length);
     ConvexPolygon* other = dynamic_cast<ConvexPolygon*>(next);
     assert(other);
     wxRealPoint ncenter = interpolate(center, other->center, delta, length);
     wxRealPoint nedge = interpolate(edge, other->edge, delta, length);
-    ConvexPolygonTool::Draw(dc, ncenter, nedge, num_sides);
+    ConvexPolygonTool::Draw(context.gcdc, ncenter, nedge, num_sides);
 }
 
 wxRect ConvexPolygon::GetBounds() const

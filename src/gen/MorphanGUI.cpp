@@ -12,7 +12,7 @@
 
 ///////////////////////////////////////////////////////////////////////////
 
-MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent,  wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDocParentFrame( manager, parent, id, title, pos, size, style )
+MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDocParentFrame( manager, parent, id, title, pos, size, style )
 {
 	this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
@@ -252,7 +252,7 @@ MorphanGUI::MorphanGUI( wxDocManager* manager, wxFrame* parent,  wxWindowID id, 
 	m_staticText9->Wrap( -1 );
 	fgSizer1->Add( m_staticText9, 0, wxALL|wxALIGN_CENTER_VERTICAL, 5 );
 
-	keyFrameOpacity = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, 0 );
+	keyFrameOpacity = new wxSpinCtrl( main, wxID_ANY, wxEmptyString, wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS, 0, 100, 100 );
 	fgSizer1->Add( keyFrameOpacity, 0, wxALL, 5 );
 
 	m_staticText10 = new wxStaticText( main, wxID_ANY, wxT("Duration:"), wxDefaultPosition, wxDefaultSize, 0 );

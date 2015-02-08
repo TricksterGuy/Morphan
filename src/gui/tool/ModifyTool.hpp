@@ -28,6 +28,8 @@
 #include <wx/dcgraph.h>
 #include "Primitive.hpp"
 
+enum class SelectionMode {ALL, FIRST};
+
 extern wxRealPoint INVALID_POINT;
 
 static inline bool IsValidPoint(const wxRealPoint& point)
@@ -51,23 +53,33 @@ class ModifyTool : public wxClientData
     public:
         ModifyTool() {}
         virtual ~ModifyTool() {}
-        /*** Performs the main modification */
         virtual std::vector<Primitive*> Modify(const wxRealPoint& origin) = 0;
+        /*** Performs the main modification */
+        void DoModify(PrimitiveSelection& ps, const wxRealPoint& origin);
         /*** Preview Modification */
-        virtual std::set<PrimitiveSelection> PreviewModify(const wxRealPoint& origin);
+        std::set<PrimitiveSelection> PreviewModify(const wxRealPoint& origin);
         /*** Performs the attribute modification */
-        virtual void Modify(const wxColour& outline, int width, const wxColour& fill, int isfilled);
+        void Modify(const wxColour& outline, int width, const wxColour& fill, int isfilled);
+        /*** Sets selection mode */
+        void SetSelectionMode(SelectionMode nmode) {mode = nmode;}
         /*** Sets selection of primitives */
-        void SetSelection(const std::vector<Primitive*> primitives, const wxRealPoint& point, bool reset = false);
+        void SetSelection(const std::vector<Primitive*>& primitives, const wxRealPoint& point, bool reset = false);
+        /*** Selects next object in selection */
+        void SelectNext();
+        /*** Selects previous object in selection */
+        void SelectPrevious();
         /*** Gets selection */
         const std::set<PrimitiveSelection>& GetSelection() const {return selection;}
+        /*** Gets selected Object */
+        std::set<PrimitiveSelection>::iterator GetSelectedObject() const {return selected_object;}
         /*** Has Selection */
         bool HasSelection() const {return !selection.empty();}
         /*** Clears selection */
-        void Clear() {selection.clear();}
+        void Clear() {selection.clear(); selected_object = selection.end();}
     protected:
         std::set<PrimitiveSelection> selection;
-
+        std::set<PrimitiveSelection>::iterator selected_object;
+        SelectionMode mode;
 };
 
 #endif

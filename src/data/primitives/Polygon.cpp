@@ -29,21 +29,22 @@ Primitive* Polygon::Copy() const
     return primitive;
 }
 
-void Polygon::Draw(wxGCDC& dc) const
+void Polygon::Draw(MorphanDrawContext& context) const
 {
-    Primitive::Draw(dc);
-    PolygonTool::Draw(dc, points);
+    Primitive::Draw(context);
+    PolygonTool::Draw(context.gcdc, points);
 }
 
-void Polygon::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+void Polygon::Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const
 {
+    Primitive::Draw(context, next, delta, length);
     Polygon* other = dynamic_cast<Polygon*>(next);
     assert(other);
     assert(points.size() == other->points.size());
     std::vector<wxRealPoint> npoints;
     for (unsigned int i = 0; i < points.size(); i++)
         npoints.push_back(interpolate(points[i], other->points[i], delta, length));
-    PolygonTool::Draw(dc, npoints);
+    PolygonTool::Draw(context.gcdc, npoints);
 }
 
 bool Polygon::SetControlPoints(const std::vector<wxRealPoint>& npoints)

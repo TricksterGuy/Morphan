@@ -44,19 +44,20 @@ bool Line::SetControlPoints(const std::vector<wxRealPoint>& points)
     return true;
 }
 
-void Line::Draw(wxGCDC& dc) const
+void Line::Draw(MorphanDrawContext& context) const
 {
-    Primitive::Draw(dc);
-    LineTool::Draw(dc, start, end);
+    Primitive::Draw(context);
+    LineTool::Draw(context.gcdc, start, end);
 }
 
-void Line::Draw(wxGCDC& dc, Primitive* next, unsigned long delta, unsigned long length) const
+void Line::Draw(MorphanDrawContext& context, Primitive* next, unsigned long delta, unsigned long length) const
 {
+    Primitive::Draw(context, next, delta, length);
     Line* other = dynamic_cast<Line*>(next);
     assert(other);
     wxRealPoint nstart = interpolate(start, other->start, delta, length);
     wxRealPoint nend = interpolate(end, other->end, delta, length);
-    LineTool::Draw(dc, nstart, nend);
+    LineTool::Draw(context.gcdc, nstart, nend);
 }
 
 wxRect Line::GetBounds() const
